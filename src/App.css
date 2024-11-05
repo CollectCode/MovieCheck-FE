@@ -1,0 +1,93 @@
+body {
+  background-color: black;
+}
+
+.app {
+  display: flex; /* Flexbox 사용 */
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  min-height: 100vh; /* 최소 높이 설정 */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 30px;
+  background-color: #111;
+}
+
+.header-nav a {
+  color: #fff;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+  flex: 1;
+}
+
+.navigation-bar {
+  width: 200px;
+  background-color: #222;
+}
+
+.navigation-bar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.navigation-bar li {
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.navigation-bar li:hover {
+  background-color: #333;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  background-color: #333;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.movie-card img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+}

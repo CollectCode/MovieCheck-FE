@@ -1,0 +1,23 @@
+.footer {
+  background-color: #000; /* 배경색 */
+  color: #fff; /* 글자색 */
+  padding: 20px; /* 패딩 */
+  text-align: center; /* 중앙 정렬 */
+  margin-top: 0; /* 여백 제거 */
+  position: relative; /* 위치 설정 */
+}
+
+.footer-content {
+  max-width: 1200px; /* 최대 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
+}
+
+.footer-title {
+  font-size: 24px; /* 제목 크기 */
+  margin: 0; /* 마진 제거 */
+}
+
+.footer-description {
+  font-size: 14px; /* 설명 글자 크기 */
+  margin-top: 0px; /* 위쪽 마진 */
+}
