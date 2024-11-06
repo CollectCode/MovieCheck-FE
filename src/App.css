@@ -35,17 +35,23 @@ body {
 }
 
 .navigation-bar {
+  margin-top: 60px;
+  z-index:9999;
+  position: fixed;
+  border-radius: 15px;
+  font-size: 18px;
   width: 200px;
   background-color: #222;
 }
 
 .navigation-bar ul {
   list-style-type: none;
-  padding: 0;
+  padding: 0px 15px;
 }
 
 .navigation-bar li {
-  padding: 15px;
+  padding: 10px;
+  margin: 20px 0px;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -55,8 +61,10 @@ body {
 }
 
 .main-content {
+
   flex-grow: 1;
   padding: 20px;
+  margin-left: 200px;
 }
 
 .search-bar {
@@ -96,4 +104,9 @@ body {
 
 .pagination button {
   margin: 0 5px;
+}
+
+.genrechoice  {
+  font-size: 30px;
+  font-weight: bold;
 }

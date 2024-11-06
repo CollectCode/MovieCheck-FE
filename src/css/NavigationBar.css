@@ -1,8 +1,8 @@
 .navigation-bar {
+  font-size: 20px;
   background-color: #333; /* 네비게이션 배경색 */
   color: #fff; /* 글자색 */
-  padding: 10px 20px; /* 패딩 */
-  width: 100%; /* 너비 100% */
+  padding: 15px; /* 패딩 */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
   
@@ -14,7 +14,7 @@
 .navigation-bar li {
   padding: 15px; /* 항목 패딩 */
   cursor: pointer; /* 커서 포인터 변경 */
-  transition: background 0.3s; /* 배경 색상 전환 효과 */
+  transition: background 0.5s; /* 배경 색상 전환 효과 */
   color: #fff; /* 텍스트 색상 */
 }
 

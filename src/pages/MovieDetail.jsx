@@ -12,7 +12,7 @@ const MovieDetail = () => {
             <h1>영화 제목</h1>
             <div className="movie-introduction">
                 <img src={poster} alt="영화 이미지" className="movie-image" />
-                <div className="movie-info">
+                <div className="movie-info"> 
                     <h2>소개</h2>
                     <p>
                         영화에서 가장 믿을 수 있는 시리즈인 <strong>에이리언</strong>의 리부트 스토리.

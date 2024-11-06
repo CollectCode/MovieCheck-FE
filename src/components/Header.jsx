@@ -10,9 +10,9 @@ const Header = () => {
       </h1>
       <SearchBar />
       <nav className="header-nav">
-        <a href="/">마이페이지</a>
-        <a href="/">로그인</a>
-        <a href="/">회원가입</a>
+        <Link to="/mypage">마이페이지</Link>
+        <Link to="/login">로그인</Link>
+        <Link to="/join">회원가입</Link>
       </nav>
     </header>
   );

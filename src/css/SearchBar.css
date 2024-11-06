@@ -1,5 +1,13 @@
 .search-bar {
+    display: flex;
     width: 50%; /* 너비를 80%로 설정 (원하는 비율로 조정 가능) */
     margin: auto auto; /* 중앙 정렬 */
-    border-radius: 4px; /* 모서리 둥글게 */
+    border-radius: 20px; /* 모서리 둥글게 */
+}
+
+.search-button  {
+    height: 40px;
+    margin: 0px 10px;
+    width: 60px;
+    border-radius: 8px;
 }

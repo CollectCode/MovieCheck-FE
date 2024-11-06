@@ -1,5 +1,6 @@
 import React from 'react';
 import MovieCard from './MovieCard';
+import PageNation from './Pagenation';
 import '../css/MovieGrid.css'; // 스타일 시트
 
 const movies = [
@@ -18,10 +19,13 @@ const movies = [
 
 const MovieGrid = () => {
   return (
-    <div className="movie-grid">
-      {movies.map((movie) => (
-        <MovieCard key={movie.id} title={movie.title} poster={movie.poster} />
-      ))}
+    <div className="wrap_movie_grid">
+      <div className="movie-grid">
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} title={movie.title} poster={movie.poster} />
+        ))}
+      </div>
+      <PageNation />
     </div>
   );
 };
