@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 
 const Header = () => {
   return (
@@ -7,6 +8,7 @@ const Header = () => {
       <h1>
         <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>무비 체크</Link>
       </h1>
+      <SearchBar />
       <nav className="header-nav">
         <a href="/">마이페이지</a>
         <a href="/">로그인</a>
