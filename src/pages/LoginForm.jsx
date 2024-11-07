@@ -19,6 +19,7 @@ const LoginForm = () => {
         <div className="input-group">
           <label className="logininfo">ID</label>
           <input
+            className="input-info"
             type="text"
             placeholder="ID 입력"
             value={id}
@@ -30,6 +31,7 @@ const LoginForm = () => {
           <label className="logininfo">PASSWORD</label>
           <input
             type="password"
+            className="input-info"
             placeholder="비밀번호 입력"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

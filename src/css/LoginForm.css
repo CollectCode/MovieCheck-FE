@@ -1,7 +1,7 @@
   .login-container {
     width: 300px;
-    margin: 80px 600px;
-    padding: 150px;
+    margin: 120px 600px;
+    padding: 75px;
     background-color: #444;
     border-radius: 25px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -12,7 +12,7 @@
   }
 
   .logintitle {
-    text-align: center;
+    text-align: left;
     font-size: 40px;
     color: #ffffff;
     font-weight: bold;
@@ -28,12 +28,12 @@
     margin-bottom: 5px;
   }
   
-  input {
+  .input-info {
     margin: 10px 10px 0px 0px;
     width: 100%;
     padding: 10px;
-    border: none;
-    border-radius: 4px;
+    border: 3px solid #245cc2;
+    border-radius: 8px;
   }
   
   .button-group {

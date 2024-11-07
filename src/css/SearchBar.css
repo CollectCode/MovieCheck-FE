@@ -3,11 +3,15 @@
     width: 50%; /* 너비를 80%로 설정 (원하는 비율로 조정 가능) */
     margin: auto auto; /* 중앙 정렬 */
     border-radius: 20px; /* 모서리 둥글게 */
+    height: 40px;
 }
 
 .search-button  {   
     height: 40px;
-    margin-top: 10px;
     width: 60px;
     border-radius: 8px;
+}
+
+.search-input   {
+    margin-right: 20px;
 }

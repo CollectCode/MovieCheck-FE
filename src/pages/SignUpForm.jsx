@@ -18,7 +18,7 @@ const SignupForm = () => {
 
   return (
     <div className="signup-container">
-      <h2>회 원 가 입</h2>
+      <h2 className="signup-title">회 원 가 입</h2>
       <form onSubmit={handleSignup}>
         <div className="signup-input-group">
             <label>이메일 :</label>
