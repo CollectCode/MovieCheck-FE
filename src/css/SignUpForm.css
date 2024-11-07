@@ -1,0 +1,73 @@
+.signup-container {
+  width: 700px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #444;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: white;
+}
+
+.signup-input-group {
+  margin: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px; /* 패딩 조정 */
+  border-radius: 5px; /* 모서리 둥글게 */
+}
+
+.signup-input-group label {
+  flex: 10px 0 100px; /* 레이블의 넓이를 고정 (필요 시 값을 증가) */
+  margin-right: 20px; /* 레이블과 입력 필드 사이의 간격 */
+  font-weight: bold;
+}
+
+.signup-input-group input {
+  flex: 1; /* 입력 필드가 남은 공간을 차지하도록 설정 */
+  padding: 10px; /* 상하 여백을 동일하게 설정 */
+  border: 1px dotted #03b66b;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  color: #333;
+  min-width: 200px; /* 최소 너비 설정 */
+  height: 35px; /* 입력 필드 높이 설정 */
+}
+
+.signup-input-group button {
+  width: 100px; /* 버튼의 고정 너비 */
+  margin-left: 10px; /* 입력 필드와 버튼 사이의 간격 */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 40px; /* 버튼 높이 설정 */
+}
+
+.signup-input-group button:hover {
+  background-color: #0056b3; /* 버튼 호버 효과 */
+}
+
+.signup-gender-group {
+  margin: 20px 50px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-weight: bold;
+}
+
+.signup-gender-group label {
+  color: white;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

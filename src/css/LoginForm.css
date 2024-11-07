@@ -1,0 +1,89 @@
+  .login-container {
+    width: 300px;
+    margin: 80px 600px;
+    padding: 150px;
+    background-color: #444;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .logininfo    {
+    color: #ffffff;
+  }
+
+  .logintitle {
+    text-align: center;
+    font-size: 40px;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 60px;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    margin: 10px 10px 0px 0px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .button-group {
+    margin-top: 30px;
+    width: 320px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .button-group > .loginbtn {
+    width: 100%;
+    background-color: #4CAF50;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .button-group > .signupbtn {
+    width: 30%;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .button-group > .findidbtn {
+    width: 33%;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .button-group > .findpwbtn {
+    width: 33%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"] {
+    color: white;
+    font-size: 20px;
+  }
+  
+  button[type="button"] {
+    color: white;
+    font-size: 20px;
+  }
+  

@@ -1,6 +1,6 @@
 import React from 'react';
-import MovieCard from './MovieCard';
-import PageNation from './Pagenation';
+import MovieCard from '../components/MovieCard';
+import PageNation from '../components/Pagenation';
 import '../css/MovieGrid.css'; // 스타일 시트
 
 const movies = [
