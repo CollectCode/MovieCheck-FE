@@ -17,7 +17,7 @@ const LoginForm = () => {
   const handleLoginClick = async (e) => {
     e.preventDefault();
     // 로그인 로직을 여기에 추가
-    const requestLoginData = {id : id, passwd : passwd};
+    const requestLoginData = {id : id, passwd : password};
     console.log("requestLoginData : " + requestLoginData);
     try {
         let response = await axios({
