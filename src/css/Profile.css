@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    position: relative  ;
 }   
 
 .profile-picture img {

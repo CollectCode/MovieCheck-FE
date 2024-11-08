@@ -1,23 +1,50 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/LoginForm.css';
 
 // LoginForm page
 const LoginForm = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  let navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const resetInput = () => {
+      setId("");
+      setPassword("");
+      document.getElementsByClassName("input-info").value = "";
+  }
+  const handleLoginClick = async (e) => {
     e.preventDefault();
     // 로그인 로직을 여기에 추가
-    console.log('ID:', id);
-    console.log('Password:', password);
-  };
+    const requestLoginData = {id : id, passwd : passwd};
+    console.log("requestLoginData : " + requestLoginData);
+    try {
+        let response = await axios({
+                                    method : 'post',
+                                    url : '/api/users/login',
+                                    headers: {'Content-Type': 'application/json'},
+                                    data : JSON.stringify(requestLoginData),
+                                    });
+        console.log("Login response status : " + response.status);
+        console.log("Login response : " + response);
+        if(response.status >= 200 && response.status < 300) {
+          alert("게시글이 정상적으로 생성되었습니다.");
+        }
+        if(response.status >= 400)      {
+          alert("생성이 정상적으로 되지 않았습니다.");
+        }
+        navigate("/");
+      } catch(err) {
+        console.log(err);
+        resetInput();
+      }
+    };
 
   return (
     <div className="login-container">
       <div className="logintitle">로그인</div>
-      <form className="login-forms" onSubmit={handleLogin}>
+      <form className="login-forms" onSubmit={handleLoginClick}>
         <div className="login-input-group">
           <label className="logininfo">ID</label>
           <input
