@@ -1,14 +1,14 @@
 .profile-container {
     max-width: 800px;
     margin: 100px auto;
-    padding: 30px;
+    padding: 40px;
     background-color: #444;
     border-radius: 25px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .profile-title {
-    text-align: center;
+    text-align: left;
     
 }
 
@@ -16,14 +16,13 @@
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-}
+}   
 
 .profile-picture img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: black;
+    width: 200px; /* 이미지 크기 조절 */
+    height: 200px; /* 이미지 크기 조절 */
+    border-radius: 30%; /* 이미지도 동그라미 모양 */
+    object-fit: cover; /* 비율 유지 */
 }
 
 .profile-form-group {
@@ -33,6 +32,7 @@
 .profile-label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .profile-label > span   {
@@ -74,7 +74,7 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
-    transition: 0.4s;
+    transition: 0.3s;
     font-size: 17px;
     font-weight: bold;
 }
@@ -105,7 +105,7 @@
 }
 
 .profile-check  {
-    padding: 8px 15px;
+    padding: 7px 15px;
     margin: 7px;
     border: none;
     border-radius: 4px;
@@ -167,7 +167,34 @@
 
 .choosedgenre   {
     font-weight: bold;
-    margin-left: 180px;
-    margin-right: 20px;
+    margin: 10px 20px 20px 180px;
     font-size: 20px;
+}
+
+.user-image:hover {
+    opacity: 40%;
+    .overlay    {
+        display: block;
+        z-index: 100000;
+    }
+}
+
+.profile-face   {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.overlay {
+    position: absolute; /* 절대 위치 설정 */
+    top:40%;
+    color: white; /* 텍스트 색상 */
+    background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+    padding: 5px 10px; /* 패딩 추가 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    display: flex; /* 플렉스 박스 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    transition: opacity 0.3s ease; /* 부드러운 전환 효과 */
 }

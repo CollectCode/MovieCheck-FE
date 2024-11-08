@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/LoginForm.css';
 
 // LoginForm page
@@ -41,8 +42,8 @@ const LoginForm = () => {
         </div>
         <div className="button-group">
           <button className="loginbtn" type="submit">로그인</button>
-          <div className="signupbtn">&nbsp;회원가입&nbsp;&nbsp;&nbsp;|</div>
-          <div className="findidbtn">아이디 찾기&nbsp;&nbsp;&nbsp;|</div>
+          <Link className="signupbtn" to="/signup">회원가입&nbsp;&nbsp;&nbsp;</Link>
+          <div className="findidbtn">아이디 찾기&nbsp;&nbsp;&nbsp;</div>
           <div className="findpwbtn">비밀번호 찾기</div>
         </div>
       </form>

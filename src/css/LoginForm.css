@@ -1,6 +1,6 @@
   .login-container {
     width: 300px;
-    margin: 120px 600px;
+    margin: 140px 600px;
     padding: 75px;
     background-color: #444;
     border-radius: 25px;
@@ -46,6 +46,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    
   }
   
   .button-group > .loginbtn {
@@ -56,6 +57,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    
   }
 
   .button-group > .signupbtn {
@@ -65,6 +67,9 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 15px;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 14px;
   }
 
   .button-group > .findidbtn {

@@ -25,7 +25,7 @@ const SignupForm = () => {
             <label>이메일 :</label>
             <input
               type="email"
-              placeholder="이메일을 입력해 주세요"
+              placeholder="example@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -56,7 +56,7 @@ const SignupForm = () => {
           <label>닉네임 :</label>
           <input
             type="text"
-            placeholder="사용하실 닉네임을 입력해 주세요"
+            placeholder="사용할 닉네임을 입력"
             required
           />
           <button type="button">중복확인</button>
