@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// MovieCard components
 const MovieCard = ({ key, title, poster }) => {
   return (
     <div className="movie-card">

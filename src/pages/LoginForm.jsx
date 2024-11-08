@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import '../css/LoginForm.css'; // CSS 파일을 따로 만들어 스타일링을 적용할 수 있습니다.
+import '../css/LoginForm.css';
 
+// LoginForm page
 const LoginForm = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // 로그인 로직을 여기에 추가하세요.
+    // 로그인 로직을 여기에 추가
     console.log('ID:', id);
     console.log('Password:', password);
   };
@@ -15,8 +16,8 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <div className="logintitle">로그인</div>
-      <form onSubmit={handleLogin}>
-        <div className="input-group">
+      <form className="login-forms" onSubmit={handleLogin}>
+        <div className="login-input-group">
           <label className="logininfo">ID</label>
           <input
             className="input-info"
@@ -27,7 +28,7 @@ const LoginForm = () => {
             required
           />
         </div>
-        <div className="input-group">
+        <div className="login-input-group">
           <label className="logininfo">PASSWORD</label>
           <input
             type="password"

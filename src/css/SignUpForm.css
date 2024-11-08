@@ -1,9 +1,9 @@
 .signup-container {
   width: 700px;
-  margin: 80px auto;
+  margin: 130px auto;
   padding: 20px;
   background-color: #444;
-  border-radius: 8px;
+  border-radius: 25px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   text-align: center;
   color: white;
@@ -25,8 +25,8 @@
 }
 
 .signup-input-group label {
-  flex: 10px 0 100px; /* 레이블의 넓이를 고정 (필요 시 값을 증가) */
-  margin-right: 20px; /* 레이블과 입력 필드 사이의 간격 */
+  display: block;
+  margin-right: 80px; /* 레이블과 입력 필드 사이의 간격 */
   font-weight: bold;
   font-size: 20px;
 }
@@ -38,8 +38,10 @@
   border-radius: 5px;
   background-color: #f0f0f0;
   color: #333;
-  min-width: 200px; /* 최소 너비 설정 */
-  height: 35px; /* 입력 필드 높이 설정 */
+  height: 25px; /* 입력 필드 높이 설정 */
+  position: absolute;
+  right: 770px;
+  width: 300px;
 }
 
 .signup-input-group button {
@@ -78,4 +80,10 @@ button[type="submit"] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size:25px;
+  margin: 15px 0px;
+}
+
+button[type="button"] {
+  font-size: 15px;
 }

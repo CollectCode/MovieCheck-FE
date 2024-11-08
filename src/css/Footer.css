@@ -1,23 +1,24 @@
 .footer {
-  background-color: #333; /* 배경색 */
-  color: #fff; /* 글자색 */
-  padding: 20px; /* 패딩 */
-  text-align: center; /* 중앙 정렬 */
-  margin-top: 0; /* 여백 제거 */
-  position: relative; /* 위치 설정 */
+  background-color: #333; 
+  color: #fff; 
+  padding: 20px;
+  text-align: center; 
+  margin-top: 0; 
+  position: relative; 
+  border-radius: 10px;
 }
 
 .footer-content {
-  max-width: 1200px; /* 최대 너비 */
-  margin: 0 auto; /* 중앙 정렬 */
+  max-width: 1200px; 
+  margin: 0 auto; 
 }
 
 .footer-title {
-  font-size: 24px; /* 제목 크기 */
-  margin: 0; /* 마진 제거 */
+  font-size: 24px; 
+  margin: 0; 
 }
 
 .footer-description {
-  font-size: 14px; /* 설명 글자 크기 */
-  margin-top: 0px; /* 위쪽 마진 */
+  font-size: 14px;
+  margin-top: 0px; 
 }

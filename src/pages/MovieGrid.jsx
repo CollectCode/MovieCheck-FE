@@ -3,6 +3,7 @@ import MovieCard from '../components/MovieCard';
 import PageNation from '../components/Pagenation';
 import '../css/MovieGrid.css'; // 스타일 시트
 
+// MovieGrid page
 const movies = [
   { id: 1, title: 'I Am Mother', poster: '/images/movie_poster/3933_poster.jpg' },
   { id: 2, title: '이스케이프 룸', poster: '/images/movie_poster/1125510_poster.jpg' },

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import '../css/SignUpForm.css'; // CSS 파일을 따로 만들어 스타일링을 적용할 수 있습니다.
+import '../css/SignUpForm.css'; 
 
+// signup page
 const SignupForm = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +13,7 @@ const SignupForm = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    // 회원가입 로직을 여기에 추가하세요.
+    // 회원가입 로직을 여기에 추가
     console.log('가입 정보:', { id, password, nickname, email, gender, agree });
   };
 
@@ -29,7 +30,7 @@ const SignupForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button type="button">인증</button>
+            <button type="button">인증하기</button>
         </div>
         <div className="signup-input-group">
           <label>비밀번호 : </label>
@@ -68,7 +69,7 @@ const SignupForm = () => {
               value="남자"
               checked={gender === '남자'}
               onChange={(e) => setGender(e.target.value)}
-            /> 남자
+            /> 남
           </label>
           <label>
             <input
@@ -76,10 +77,10 @@ const SignupForm = () => {
               value="여자"
               checked={gender === '여자'}
               onChange={(e) => setGender(e.target.value)}
-            /> 여자
+            /> 여
           </label>
         </div>  
-        <button type="submit">회원가입</button>
+        <button type="submit">회 원 가 입</button>
       </form>
     </div>
   );

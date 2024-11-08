@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Navigation Components
 const NavigationBar = () => {
   return (
     <nav className="navigation-bar">

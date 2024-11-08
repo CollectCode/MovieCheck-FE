@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/Pagenation.css';
 
+// pagenation components
 const Pagination = () => {
   return (
     <div className="pagination">

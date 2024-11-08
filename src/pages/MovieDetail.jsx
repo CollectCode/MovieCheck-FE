@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/MovieDetail.css';
 
+// MovieDetail page
 const MovieDetail = () => {
 
     const location = useLocation();
