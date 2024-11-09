@@ -18,7 +18,7 @@ const LoginForm = () => {
     e.preventDefault();
     // 로그인 로직을 여기에 추가
     const requestLoginData = {userEmail : id, userPassword : password};
-    console.log("requestLoginData : " + requestLoginData.userEmail + requestLoginData.userPassword);
+    console.log("requestLoginData : " + requestLoginData.userEmail + " " + requestLoginData.userPassword);
     try {
         let response = await axios({
                                     method : 'post',
@@ -29,12 +29,12 @@ const LoginForm = () => {
         console.log("Login response status : " + response.status);
         console.log("Login response : " + response);
         if(response.status >= 200 && response.status < 300) {
-          alert("게시글이 정상적으로 생성되었습니다.");
+          alert("로그인 요청 및 로그인 성공.");
         }
         if(response.status >= 400)      {
-          alert("생성이 정상적으로 되지 않았습니다.");
+          alert("로그인 요청했지만 실패.");
         }
-        navigate("/");
+        navigate("/", {});
       } catch(err) {
         console.log(err);
         resetInput();
