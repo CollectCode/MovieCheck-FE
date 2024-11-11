@@ -8,6 +8,7 @@ import MovieDetail from './pages/MovieDetail';
 import LoginForm from './pages/LoginForm';
 import SignUpForm from './pages/SignUpForm';
 import Profile from './pages/Profile';
+import ProfileUpdate from './pages/ProfileUpdate';
 import './App.css';
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/login" element={<LoginForm />}></Route>
             <Route path="/signup" element={<SignUpForm />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/profileupdate" element={<ProfileUpdate />}></Route>
           </Routes>
           </div>
         </div>

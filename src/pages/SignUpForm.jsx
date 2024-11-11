@@ -106,8 +106,10 @@ const SignupForm = () => {
               onChange={(e) => setGender(e.target.value)}
             /> 여
           </label>
-        </div>  
-        <button type="submit">회 원 가 입</button>
+        </div>
+        <div className="signup-btn">   
+          <button type="submit">회 원 가 입</button>
+        </div>
       </form>
     </div>
   );
