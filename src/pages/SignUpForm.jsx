@@ -93,16 +93,16 @@ const SignupForm = () => {
           <label>
             <input
               type="radio"
-              value="0"
-              checked={gender === '0'}
+              value="1"
+              checked={gender === '1'}
               onChange={(e) => setGender(e.target.value)}
             /> 남
           </label>
           <label>
             <input
               type="radio"
-              value="1"
-              checked={gender === '1'}
+              value="2"
+              checked={gender === '2'}
               onChange={(e) => setGender(e.target.value)}
             /> 여
           </label>
