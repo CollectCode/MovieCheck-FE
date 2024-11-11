@@ -16,7 +16,7 @@ const LoginForm = () => {
   }
   const handleLoginClick = async (e) => {
     e.preventDefault();
-    // 로그인 로직을 여기에 추가
+    // 로그인 로직을 여기에 추가 ㅇㅇ
     const requestLoginData = {userEmail : id, userPassword : password};
     console.log("requestLoginData : " + requestLoginData.userEmail + " " + requestLoginData.userPassword);
     try {
