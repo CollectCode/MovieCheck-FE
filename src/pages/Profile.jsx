@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../css/Profile.css'; // CSS 파일을 임포트합니다.
+import axios from 'axios';
 
 const MyProfile = () => {
     const [profileImage, setProfileImage] = useState('/images/movie_poster/1125510_poster.jpg'); // 기본 프로필 이미지

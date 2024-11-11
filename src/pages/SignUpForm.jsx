@@ -13,7 +13,7 @@ const SignupForm = () => {
   const navigate = useNavigate();
 
   const handleSignup = async(e) => {
-    e.preventDefault();
+      e.preventDefault();
       const requestSignupData = {
         userPassword : password,
         userPasswordConfirm : passwordConfirm,
@@ -22,15 +22,14 @@ const SignupForm = () => {
         userGender : gender,
       }
       try {
-        let response = await axios  ({
-                                      method : 'post',
-                                      url : '/api/users/signup',
-                                      headers: {'Content-Type': 'application/json'},
-                                      data : JSON.stringify(requestSignupData),
-                                    });
+        let response = await axios({
+                                    method : 'post',
+                                    url : '/api/users/login',
+                                    headers: {'Content-Type': 'application/json'},
+                                    data : JSON.stringify(requestSignupData),
+                                   });
         console.log("signup response status : " + response.status);
         console.log("signup response : " + response);
-        console.log('가입 정보:' + " " + " " + password + " " + passwordConfirm + " " + nickname + " " + email + " " + gender);
         if(response.status >= 200 && response.status < 300) {
           alert("로그인 요청 및 로그인 성공.");
         }
