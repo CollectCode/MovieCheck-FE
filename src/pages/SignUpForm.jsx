@@ -1,21 +1,47 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/SignUpForm.css'; 
+import axios from 'axios';
 
 // signup page
 const SignupForm = () => {
-  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
-  const [agree, setAgree] = useState(false);
   const [gender, setGender] = useState('');
+  const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async(e) => {
     e.preventDefault();
-    // 회원가입 로직을 여기에 추가
-    console.log('가입 정보:', { id, password, nickname, email, gender, agree });
-  };
+      const requestSignupData = {
+        userPassword : password,
+        userPasswordConfirm : passwordConfirm,
+        userName : nickname,
+        userEmail : email,
+        userGender : gender,
+      }
+      try {
+        let response = await axios  ({
+                                      method : 'post',
+                                      url : '/api/users/signup',
+                                      headers: {'Content-Type': 'application/json'},
+                                      data : JSON.stringify(requestSignupData),
+                                    });
+        console.log("signup response status : " + response.status);
+        console.log("signup response : " + response);
+        console.log('가입 정보:' + " " + " " + password + " " + passwordConfirm + " " + nickname + " " + email + " " + gender);
+        if(response.status >= 200 && response.status < 300) {
+          alert("로그인 요청 및 로그인 성공.");
+        }
+        if(response.status >= 400)      {
+          alert("로그인 요청했지만 실패.");
+        }
+        navigate("/", {});
+      } catch(err) {
+        console.log(err);
+      }
+    };
 
   return (
     <div className="signup-container">
@@ -57,6 +83,8 @@ const SignupForm = () => {
           <input
             type="text"
             placeholder="사용할 닉네임을 입력"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
             required
           />
           <button type="button">중복확인</button>
@@ -66,16 +94,16 @@ const SignupForm = () => {
           <label>
             <input
               type="radio"
-              value="남자"
-              checked={gender === '남자'}
+              value="0"
+              checked={gender === '0'}
               onChange={(e) => setGender(e.target.value)}
             /> 남
           </label>
           <label>
             <input
               type="radio"
-              value="여자"
-              checked={gender === '여자'}
+              value="1"
+              checked={gender === '1'}
               onChange={(e) => setGender(e.target.value)}
             /> 여
           </label>

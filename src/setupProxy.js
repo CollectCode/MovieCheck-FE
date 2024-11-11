@@ -6,7 +6,7 @@ module.exports = function(app)  {
     app.use(
         createProxyMiddleware({
             target : 'http://localhost:8080',
-            changeOrigin: true, 
+            changeOrigin: true,
             pathFilter : '/api', // 문법 변경으로 인해 createProxyMiddleware안에 pathFilter로 지정해줘야함
         })
     )

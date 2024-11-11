@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../css/Profile.css'; // CSS 파일을 임포트합니다.
 
 const MyProfile = () => {
