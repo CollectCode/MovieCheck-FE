@@ -24,7 +24,7 @@ const SignupForm = () => {
       try {
         let response = await axios({
                                     method : 'post',
-                                    url : '/api/users/login',
+                                    url : '/api/users/signup',
                                     headers: {'Content-Type': 'application/json'},
                                     data : JSON.stringify(requestSignupData),
                                    });
