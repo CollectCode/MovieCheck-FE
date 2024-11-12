@@ -11,6 +11,8 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
   const [content, setContent] = useState('');
+  const [checkEmail, setCheckEmail] = useState(false);
+  const [checkName, setCheckName] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async(e) => {
@@ -23,26 +25,73 @@ const SignupForm = () => {
         userGender : gender,
         userContent : content,
       }
+      if(checkEmail && checkName) {
       try {
-        let response = await axios({
+          let response = await axios({
+                                      method : 'post',
+                                      url : '/api/users/signup',
+                                      headers: {'Content-Type': 'application/json'},
+                                      data : JSON.stringify(requestSignupData),
+                                    });
+          console.log("signup response status : " + response.status);
+          console.log("signup response : " + response);
+          if(response.status >= 200 && response.status < 300) {
+            alert("로그인 요청 및 로그인 성공.");
+          }
+          if(response.status >= 400)      {
+            alert("로그인 요청했지만 실패.");
+          }
+          navigate("/", {});
+        } catch(err) {
+          console.log(err);
+        }
+      } else {
+        alert("이메일 및 닉네임 중복체크 해주세요.");
+      }
+    };
+
+    const handleCheckEmail = async(e) =>  {
+      const requestEmailData =  {
+        userEmail : email,
+        userName : nickname,
+      }
+      let response;
+      try {
+        response = await axios({
                                     method : 'post',
-                                    url : '/api/users/signup',
-                                    headers: {'Content-Type': 'application/json'},
-                                    data : JSON.stringify(requestSignupData),
-                                   });
-        console.log("signup response status : " + response.status);
-        console.log("signup response : " + response);
-        if(response.status >= 200 && response.status < 300) {
-          alert("로그인 요청 및 로그인 성공.");
-        }
-        if(response.status >= 400)      {
-          alert("로그인 요청했지만 실패.");
-        }
-        navigate("/", {});
+                                    url : '/api/users/signup/email',
+                                    headers : {'Content-Type' : 'application/json'},
+                                    data : JSON.stringify(requestEmailData)
+                                  })
+        setCheckEmail(true);
+        console.log("이메일 : " + requestEmailData.userEmail);
+        let msg = response.data.data;
+        alert(msg);
       } catch(err) {
         console.log(err);
       }
-    };
+    }
+
+    const handleCheckName = async(e) =>  {
+      const requestEmailData =  {
+        userEmail : email,
+        userName : nickname,
+      }
+      try {
+        let response = await axios({
+                                    method : 'post',
+                                    url : '/api/users/signup/name',
+                                    headers : {'Content-Type' : 'application/json'},
+                                    data : JSON.stringify(requestEmailData)
+                                  })
+      setCheckName(true);
+      console.log("이메일 : " + requestEmailData.userEmail);
+      let msg = response.data.data;
+      alert(msg);
+      } catch(err) {
+        console.log(err);
+      }
+    }
 
   return (
     <div className="signup-container">
@@ -57,7 +106,7 @@ const SignupForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button type="button">인증하기</button>
+            <button type="button" onClick={handleCheckEmail}>중복확인</button>
         </div>
         <div className="signup-input-group">
           <label>*비밀번호 : </label>
@@ -88,7 +137,7 @@ const SignupForm = () => {
             onChange={(e) => setNickname(e.target.value)}
             required
           />
-          <button type="button">중복확인</button>
+          <button type="button" onClick={handleCheckName}>중복확인</button>
         </div>
         <div className="signup-input-group">
           <label>한줄 소개 : </label>
