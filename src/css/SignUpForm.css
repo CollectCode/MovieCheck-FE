@@ -61,16 +61,15 @@
 }
 
 .signup-gender-group {
-  margin: 20px 50px;
+  margin: 0px 70px;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content:flex-start;
   font-weight: bold;
   font-size: 20px;
 }
 
 .signup-gender-group label {
-  color: white;
+  margin-right: 130px;
 }
 
 .signup-btn > button[type="submit"] {
@@ -82,9 +81,15 @@
   border-radius: 4px;
   cursor: pointer;
   font-size:25px;
-  margin: 15px 0px;
+  margin: 30px 0px;
 }
 
 button[type="button"] {
   font-size: 15px;
+}
+
+.title-notice {
+  font-size: 17px;
+  text-decoration: underline;
+  color:darksalmon
 }

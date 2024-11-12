@@ -10,6 +10,7 @@ const SignupForm = () => {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
+  const [content, setContent] = useState('');
   const navigate = useNavigate();
 
   const handleSignup = async(e) => {
@@ -20,6 +21,7 @@ const SignupForm = () => {
         userName : nickname,
         userEmail : email,
         userGender : gender,
+        userContent : content,
       }
       try {
         let response = await axios({
@@ -44,10 +46,10 @@ const SignupForm = () => {
 
   return (
     <div className="signup-container">
-      <h2 className="signup-title">회 원 가 입</h2>
+      <h2 className="signup-title">회 원 가 입<span className="title-notice"><br></br>&nbsp;&nbsp;*은 필수 기입항목 입니다.</span></h2>
       <form onSubmit={handleSignup}>
         <div className="signup-input-group">
-            <label>이메일 :</label>
+            <label>*이메일 :</label>
             <input
               type="email"
               placeholder="example@example.com"
@@ -58,7 +60,7 @@ const SignupForm = () => {
             <button type="button">인증하기</button>
         </div>
         <div className="signup-input-group">
-          <label>비밀번호 : </label>
+          <label>*비밀번호 : </label>
           <input
             type="password"
             placeholder="비밀번호를 입력해 주세요"
@@ -68,7 +70,7 @@ const SignupForm = () => {
           />
         </div>
         <div className="signup-input-group">
-          <label>비밀번호확인 : </label>
+          <label>*비밀번호확인 : </label>
             <input
               type="password"
               placeholder="비밀번호를 확인해 주세요"
@@ -78,7 +80,7 @@ const SignupForm = () => {
             />
         </div>
         <div className="signup-input-group">
-          <label>닉네임 :</label>
+          <label>*닉네임 :</label>
           <input
             type="text"
             placeholder="사용할 닉네임을 입력"
@@ -88,8 +90,18 @@ const SignupForm = () => {
           />
           <button type="button">중복확인</button>
         </div>
+        <div className="signup-input-group">
+          <label>한줄 소개 : </label>
+            <input
+              type="text"
+              placeholder="본인을 소개해주세요!"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+            />
+        </div>
         <div className="signup-gender-group">
-          <label>성별 :</label>
+          <label className='.signup-gender-group label'>*성별 :</label>
           <label>
             <input
               type="radio"
