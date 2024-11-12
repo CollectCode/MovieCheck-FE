@@ -36,10 +36,10 @@ const SignupForm = () => {
           console.log("signup response status : " + response.status);
           console.log("signup response : " + response);
           if(response.status >= 200 && response.status < 300) {
-            alert("로그인 요청 및 로그인 성공.");
+            alert("가입요청 및 가입성공.");
           }
           if(response.status >= 400)      {
-            alert("로그인 요청했지만 실패.");
+            alert("가입요청 했지만 실패.");
           }
           navigate("/", {});
         } catch(err) {
@@ -53,7 +53,6 @@ const SignupForm = () => {
     const handleCheckEmail = async(e) =>  {
       const requestEmailData =  {
         userEmail : email,
-        userName : nickname,
       }
       let response;
       try {
@@ -63,9 +62,13 @@ const SignupForm = () => {
                                     headers : {'Content-Type' : 'application/json'},
                                     data : JSON.stringify(requestEmailData)
                                   })
-        setCheckEmail(true);
         console.log("이메일 : " + requestEmailData.userEmail);
         let msg = response.data.data;
+        if(msg === '중복된 이메일 입니다.') {
+          setCheckEmail(false);
+        } else {
+          setCheckEmail(true);
+        }
         alert(msg);
       } catch(err) {
         console.log(err);
@@ -73,8 +76,7 @@ const SignupForm = () => {
     }
 
     const handleCheckName = async(e) =>  {
-      const requestEmailData =  {
-        userEmail : email,
+      const requestNameData =  {
         userName : nickname,
       }
       try {
@@ -82,11 +84,16 @@ const SignupForm = () => {
                                     method : 'post',
                                     url : '/api/users/signup/name',
                                     headers : {'Content-Type' : 'application/json'},
-                                    data : JSON.stringify(requestEmailData)
+                                    data : JSON.stringify(requestNameData)
                                   })
       setCheckName(true);
-      console.log("이메일 : " + requestEmailData.userEmail);
+      console.log("닉네임 : " + requestNameData.userName);
       let msg = response.data.data;
+      if(msg === '중복된 닉네임 입니다.') {
+        setCheckName(false);
+      } else {
+        setCheckName(true);
+      }
       alert(msg);
       } catch(err) {
         console.log(err);
