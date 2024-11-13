@@ -18,23 +18,19 @@ const Pagination = ({ totalItems , pageperItems}) => {
       }
   };
 
-  const handlePageClick = (pageNumber) => {
-      setCurrentPage(pageNumber);
-  };
-
   return (
       <div className="pagination-wrap">
         <div className="pagination">
             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
             <span>
-                {Array.from({ length: totalPages }, (_, index) => (
+                {Array.from({ length: (totalItems-Math.floor((currentPage-1)/10)*pageperItems*pageperItems)/pageperItems > pageperItems ? pageperItems : totalItems / pageperItems % pageperItems }, (_, index) => (
                     <button
                         className="pageNums" 
-                        key={index + 1} 
-                        onClick={() => handlePageClick(index + 1)} 
-                        disabled={currentPage === index + 1}
+                        key={index+1} 
+                        onClick={() => setCurrentPage(index+1 + Math.floor((currentPage-1)/10)*10)} 
+                        disabled={(currentPage-1)%10 === index}
                     >
-                      {index + 1}
+                    {index+1 + Math.floor((currentPage-1)/10)*10}
                     </button>
                 ))}
             </span>
