@@ -23,7 +23,7 @@ const Pagination = ({ totalItems , pageperItems}) => {
         <div className="pagination">
             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
             <span>
-                {Array.from({ length: (totalItems-Math.floor((currentPage-1)/10)*pageperItems*pageperItems)/pageperItems > pageperItems ? pageperItems : totalItems / pageperItems % pageperItems }, (_, index) => (
+                {Array.from({ length: (totalItems-Math.floor((currentPage-1)/10)*10*pageperItems)/10 > 10 ? 10 : Math.ceil((totalItems-Math.floor((currentPage-1)/10)*10*pageperItems)/10*10/pageperItems) }, (_, index) => (
                     <button
                         className="pageNums" 
                         key={index+1} 
