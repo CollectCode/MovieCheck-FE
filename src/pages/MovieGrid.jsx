@@ -27,7 +27,7 @@ const MovieGrid = () => {
           <MovieCard key={movie.id} title={movie.title} poster={movie.poster} />
         ))}
       </div>
-      <PageNation totalItems={3000} pageperItems={movies.length}/>
+      <PageNation totalItems={276} pageperItems={movies.length}/>
     </div>
   );
 };
