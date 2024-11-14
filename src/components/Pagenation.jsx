@@ -21,9 +21,10 @@ const Pagination = ({ totalItems , pageperItems}) => {
   return (
       <div className="pagination-wrap">
         <div className="pagination">
-            <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
-            <span>
-                {Array.from({ length: (totalItems-Math.floor((currentPage-1)/10)*10*pageperItems)/10 > 10 ? 10 : Math.ceil((totalItems-Math.floor((currentPage-1)/10)*10*pageperItems)/10*10/pageperItems) }, (_, index) => (
+            <button className="pre-next-button" onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
+                {Array.from({ 
+                    length: (totalItems-Math.floor((currentPage-1)/10)*10*pageperItems)/10 > 10 ? 10 : Math.ceil((totalItems-Math.floor((currentPage-1)/10)*10*pageperItems)/10*10/pageperItems
+                        ) }, (_, index) => (
                     <button
                         className="pageNums" 
                         key={index+1} 
@@ -33,8 +34,7 @@ const Pagination = ({ totalItems , pageperItems}) => {
                     {index+1 + Math.floor((currentPage-1)/10)*10}
                     </button>
                 ))}
-            </span>
-            <button onClick={handleNext} disabled={currentPage === totalPages}>&gt;</button>
+            <button className="pre-next-button" onClick={handleNext} disabled={currentPage === totalPages}>&gt;</button>
         </div>
       </div>
   );

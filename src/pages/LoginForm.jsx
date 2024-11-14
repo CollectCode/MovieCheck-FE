@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../css/LoginForm.css';
 
 // LoginForm page
-const LoginForm = () => {
+const LoginForm = ({setIsLogined}) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   let navigate = useNavigate();
@@ -18,25 +18,29 @@ const LoginForm = () => {
     e.preventDefault();
     // 로그인 로직을 여기에 추가 ㅇㅇ
     const requestLoginData = {userEmail : id, userPassword : password};
+    let msg = "";
+    let response;
     console.log("requestLoginData : " + requestLoginData.userEmail + " " + requestLoginData.userPassword);
     try {
-        let response = await axios({
+        response = await axios({
                                     method : 'post',
                                     url : '/api/users/login',
                                     headers: {'Content-Type': 'application/json'},
                                     data : JSON.stringify(requestLoginData),
                                     });
         console.log("Login response status : " + response.status);
+        console.log("Login response data : " + response.data.msg);
         console.log("Login response : " + response);
+        console.log("Cookie info : " + document.cookie);
+        msg = response.data.msg;
         if(response.status >= 200 && response.status < 300) {
-          alert("로그인 요청 및 로그인 성공.");
+          alert(msg);
+          setIsLogined(true);
+          navigate("/", {});
         }
-        if(response.status >= 400)      {
-          alert("로그인 요청했지만 실패.");
-        }
-        navigate("/", {});
       } catch(err) {
-        console.log(err);
+        let msg = err.response.data.msg;
+        alert(msg);
         resetInput();
       }
     };

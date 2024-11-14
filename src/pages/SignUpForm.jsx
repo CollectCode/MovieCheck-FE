@@ -17,6 +17,7 @@ const SignupForm = () => {
 
   const handleSignup = async(e) => {
       e.preventDefault();
+      
       const requestSignupData = {
         userPassword : password,
         userPasswordConfirm : passwordConfirm,
@@ -25,8 +26,12 @@ const SignupForm = () => {
         userGender : gender,
         userContent : content,
       }
-      if(checkEmail && checkName) {
+      if(checkEmail && checkName && password && passwordConfirm && gender && content) {
       try {
+          if(password !== passwordConfirm) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+          }
           let response = await axios({
                                       method : 'post',
                                       url : '/api/users/signup',
@@ -36,17 +41,17 @@ const SignupForm = () => {
           console.log("signup response status : " + response.status);
           console.log("signup response : " + response);
           if(response.status >= 200 && response.status < 300) {
-            alert("가입요청 및 가입성공.");
+            alert("이제부터 무비체크 회원이십니다.\n 로그인을 해주시기 바랍니다.");
           }
           if(response.status >= 400)      {
             alert("가입요청 했지만 실패.");
           }
-          navigate("/", {});
+          navigate("/login", {});
         } catch(err) {
           console.log(err);
         }
       } else {
-        alert("이메일 및 닉네임 중복체크 해주세요.");
+        alert("중복확인 및 기입누락 확인해주세요.");
       }
     };
 
@@ -63,8 +68,8 @@ const SignupForm = () => {
                                     data : JSON.stringify(requestEmailData)
                                   })
         console.log("이메일 : " + requestEmailData.userEmail);
-        let msg = response.data.data;
-        if(msg === '중복된 이메일 입니다.') {
+        let msg = response.data.msg;
+        if(msg === 'unavailable email') {
           setCheckEmail(false);
         } else {
           setCheckEmail(true);
@@ -88,8 +93,8 @@ const SignupForm = () => {
                                   })
       setCheckName(true);
       console.log("닉네임 : " + requestNameData.userName);
-      let msg = response.data.data;
-      if(msg === '중복된 닉네임 입니다.') {
+      let msg = response.data.msg;
+      if(msg === 'unavailable nickname') {
         setCheckName(false);
       } else {
         setCheckName(true);
@@ -162,7 +167,6 @@ const SignupForm = () => {
             <input
               type="radio"
               value="1"
-              checked={gender === '1'}
               onChange={(e) => setGender(e.target.value)}
             /> 남
           </label>
@@ -170,7 +174,6 @@ const SignupForm = () => {
             <input
               type="radio"
               value="2"
-              checked={gender === '2'}
               onChange={(e) => setGender(e.target.value)}
             /> 여
           </label>

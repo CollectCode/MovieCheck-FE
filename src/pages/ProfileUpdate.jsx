@@ -13,6 +13,11 @@ const MyProfile = () => {
         "드라마/가족", "판타지", "공포", "전쟁", 
         "로맨스", "SF"
     ];
+    const [nickname, setNickname] = useState('');
+    const [password, setPassword] = useState('');
+    const [repassword, setRePassword] = useState('');
+    const [content, setContent] = useState('');
+    const [checkname, setCheckname] = useState(false);
     
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -29,6 +34,31 @@ const MyProfile = () => {
         setSelectedGenre(genre);
         setSelectedButton(genre); // 선택된 버튼의 장르 저장
     };
+
+    const handleCheckName = async(e) =>  {
+        const requestNameData =  {
+          userName : nickname,
+        }
+        try {
+          let response = await axios({
+                                      method : 'post',
+                                      url : '/api/users/signup/name',
+                                      headers : {'Content-Type' : 'application/json'},
+                                      data : JSON.stringify(requestNameData)
+                                    })
+        setCheckname(true);
+        console.log("닉네임 : " + requestNameData.userName);
+        let msg = response.data.data;
+        if(msg === '중복된 닉네임 입니다.') {
+          setCheckname(false);
+        } else {
+          setCheckname(true);
+        }
+        alert(msg);
+        } catch(err) {
+          console.log(err);
+        }
+      }
 
     return (
         <div className="profile-update-container">
@@ -49,21 +79,21 @@ const MyProfile = () => {
                     onChange={handleImageChange}
                 />
                 <div className="profile-update-form-group">
-                    <label className=".profile-update-update-label">변경 닉네임&nbsp;&nbsp;&nbsp;<span>※닉네임 변경은 월 1회 가능합니다.(매월 1일 초기화)</span></label>
-                    <input className="profile-update-input" type="text" placeholder="변경 닉네임" />
-                    <button type='button' className="profile-update-check">중복확인</button>
+                    <label className="profile-update-label">변경 닉네임&nbsp;&nbsp;&nbsp;<span>※닉네임 변경은 월 1회 가능합니다.(매월 1일 초기화)</span></label>
+                    <input className="profile-update-input" type="text" onChange={(e) => setNickname(e.target.value)} placeholder='닉네임을 적어주세용' />
+                    <button type='button' className="profile-update-check" onClick={handleCheckName}>중복확인</button>
                 </div>
                 <div className="profile-update-form-group">
-                    <label className=".profile-update-update-label">비밀번호</label>
-                    <input className="profile-update-input" type="password" placeholder="비밀번호 변경" />
+                    <label className="profile-update-label">비밀번호</label>
+                    <input className="profile-update-input" type="password" placeholder="비밀번호 변경" onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 <div className="profile-update-form-group">
-                    <label className=".profile-update-label">비밀번호 확인</label>
-                    <input className="profile-update-input" type="password" placeholder="비밀번호 확인" />
+                    <label className="profile-update-label">비밀번호 확인</label>
+                    <input className="profile-update-input" type="password" placeholder="비밀번호 확인" onChange={(e) => setRePassword(e.target.value)}/>
                 </div>
                 <div className="profile-update-form-group">
-                    <label className=".profile-update-label">변경 할 한줄 소개</label>
-                    <input className="profile-update-input" type="text" defaultValue="기존 한줄 소개" /> {/* 기존 사용자가 가지고 있던 한줄소개 넣기 */}
+                    <label className="profile-update-label">변경 할 한줄 소개</label>
+                    <input className="profile-update-input" type="text" placeholder="한 줄 소개를 입력해주세요!" onChange={(e) => setContent(e.target.value)}/>
                 </div>
                 <div className="profile-update-selection">
                     <h2>선호 장르 설정</h2>
