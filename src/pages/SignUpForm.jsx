@@ -67,16 +67,18 @@ const SignupForm = () => {
                                     headers : {'Content-Type' : 'application/json'},
                                     data : JSON.stringify(requestEmailData)
                                   })
-        console.log("이메일 : " + requestEmailData.userEmail);
+        
         let msg = response.data.msg;
-        if(msg === 'unavailable email') {
-          setCheckEmail(false);
-        } else {
+        if(response.status >= 200 && response.status < 300){
+          alert(msg);
           setCheckEmail(true);
         }
-        alert(msg);
       } catch(err) {
-        console.log(err);
+        let msg = err.response.data.msg;
+        if(err.response.status > 399 && err.response.status < 500) {
+          alert(msg);
+          setCheckEmail(false);
+        }
       }
     }
 

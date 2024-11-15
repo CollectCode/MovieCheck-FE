@@ -23,15 +23,11 @@ const LoginForm = ({setIsLogined}) => {
     console.log("requestLoginData : " + requestLoginData.userEmail + " " + requestLoginData.userPassword);
     try {
         response = await axios({
-                                    method : 'post',
-                                    url : '/api/users/login',
-                                    headers: {'Content-Type': 'application/json'},
-                                    data : JSON.stringify(requestLoginData),
-                                    });
-        console.log("Login response status : " + response.status);
-        console.log("Login response data : " + response.data.msg);
-        console.log("Login response : " + response);
-        console.log("Cookie info : " + document.cookie);
+                                  method : 'post',
+                                  url : '/api/users/login',
+                                  headers: {'Content-Type': 'application/json'},
+                                  data : JSON.stringify(requestLoginData),
+                                });
         msg = response.data.msg;
         if(response.status >= 200 && response.status < 300) {
           alert(msg);
@@ -39,22 +35,24 @@ const LoginForm = ({setIsLogined}) => {
           navigate("/", {});
         }
       } catch(err) {
-        let msg = err.response.data.msg;
-        alert(msg);
+        msg = err.response.data.msg;
+        if(err.response.status > 399 && err.response.status < 500) {
+          alert(msg);
+        }
         resetInput();
       }
-    };
+    };  
 
   return (
     <div className="login-container">
       <div className="logintitle">로그인</div>
       <form className="login-forms" onSubmit={handleLoginClick}>
         <div className="login-input-group">
-          <label className="logininfo">ID</label>
+          <label className="logininfo">ID(이메일)</label>
           <input
             className="input-info"
             type="text"
-            placeholder="ID 입력"
+            placeholder="ID 입력(이메일)"
             value={id}
             onChange={(e) => setId(e.target.value)}
             required

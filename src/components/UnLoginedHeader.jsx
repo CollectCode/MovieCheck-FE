@@ -11,7 +11,7 @@ const UnLoginedHeader = (userName) => {
       </h1>
       <SearchBar />
       <nav className="header-nav">
-        <Link to="/login">로그인</Link>
+        <Link to="/login">로그인&nbsp;&nbsp;</Link>
         <Link to="/signup">회원가입</Link>
       </nav>
     </header>

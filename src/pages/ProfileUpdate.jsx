@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/ProfileUpdate.css'; // CSS 파일을 임포트합니다.
 import axios from 'axios';
 
 const MyProfile = () => {
-    const [profileImage, setProfileImage] = useState('/images/movie_poster/1125510_poster.jpg'); // 기본 프로필 이미지
+    const [defaultname, setDefaultName] = useState('');
+    const [profileImage, setProfileImage] = useState('./images/user_profile/default.PNG'); // 기본 프로필 이미지
     const [hovered, setHovered] = useState(false); // 마우스 오버 상태
-    const [selectedButton, setSelectedButton] = useState([]);
-    const genres = [
-        "액션", "범죄/스릴러", "애니메이션", "코미디",
-        "드라마/가족", "판타지", "공포", "전쟁", 
-        "로맨스", "SF"
-    ];
+    const [selectedgenre, setSelectedGenre] = useState([]);
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRePassword] = useState('');
     const [content, setContent] = useState('');
     const [checkname, setCheckname] = useState(false);
+    const genres = ["액션", "범죄/스릴러", "애니메이션", "코미디", "드라마/가족", "판타지", "공포", "전쟁", "로맨스", "SF"];
     
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -30,40 +27,64 @@ const MyProfile = () => {
     };
 
     const handleButtonClick = (newgenre) => {
-        if(selectedButton.length < 3)   {
-            setSelectedButton(preButton => [...preButton, newgenre]);
+        if(selectedgenre.length < 3)   {
+            setSelectedGenre(preButton => [...preButton, newgenre]);
         }
     };
 
     const handleDeleteClick = (deletegenre) => {
-        const newArr = selectedButton.filter(item => item !== deletegenre);
-        setSelectedButton(newArr);
+        const newArr = selectedgenre.filter(item => item !== deletegenre);
+        setSelectedGenre(newArr);
     };
 
     const handleCheckName = async(e) =>  {
-        const requestNameData =  {
-          userName : nickname,
+        if(nickname !== defaultname)    {
+            const requestNameData =  {
+            userName : nickname,
+            }
+            try {
+            let response = await axios({
+                                        method : 'post',
+                                        url : '/api/users/signup/name',
+                                        headers : {'Content-Type' : 'application/json'},
+                                        data : JSON.stringify(requestNameData)
+                                        });
+            setCheckname(true);
+            let msg = response.data.msg;
+            if(response.status === 409) {
+                alert(msg);
+                setCheckname(false);
+            } else {
+                setCheckname(true);
+            }
+            alert(msg);
+            } catch(err) {
+                console.log(err);
+            }
+        } else  {
+            alert("Exist nickname");
         }
-        try {
-          let response = await axios({
-                                      method : 'post',
-                                      url : '/api/users/signup/name',
-                                      headers : {'Content-Type' : 'application/json'},
-                                      data : JSON.stringify(requestNameData)
-                                    })
-        setCheckname(true);
-        console.log("닉네임 : " + requestNameData.userName);
-        let msg = response.data.data;
-        if(msg === '중복된 닉네임 입니다.') {
-          setCheckname(false);
-        } else {
-          setCheckname(true);
+    }
+
+    useEffect(() => {
+        const getuser = async() => {
+            try {
+                const response = await axios({
+                                        method:'get',
+                                        url: '/api/users/mypage',
+                                        withCredentials : true,
+                });
+                let user = response.data;
+                setDefaultName(user.data.userName);
+                setNickname(user.data.userName);
+                if(user.data.userProfile !== null) { setProfileImage(user.data.userProfile); }
+                if(user.data.userContent !== null) { setContent(user.data.userContent); }
+            } catch(err)  {
+                console.log(err);
+            }   
         }
-        alert(msg);
-        } catch(err) {
-          console.log(err);
-        }
-      }
+        getuser();
+      }, []);
 
     return (
         <div className="profile-update-container">
@@ -84,8 +105,8 @@ const MyProfile = () => {
                     onChange={handleImageChange}
                 />
                 <div className="profile-update-form-group">
-                    <label className="profile-update-label">변경 닉네임&nbsp;&nbsp;&nbsp;<span>※닉네임 변경은 월 1회 가능합니다.(매월 1일 초기화)</span></label>
-                    <input className="profile-update-input" type="text" onChange={(e) => setNickname(e.target.value)} placeholder='닉네임을 적어주세용' />
+                    <label className="profile-update-label">변경 닉네임</label>
+                    <input className="profile-update-input" type="text" onChange={(e) => setNickname(e.target.value)} defaultValue={nickname} />
                     <button type='button' className="profile-update-check" onClick={handleCheckName}>중복확인</button>
                 </div>
                 <div className="profile-update-form-group">
@@ -98,7 +119,7 @@ const MyProfile = () => {
                 </div>
                 <div className="profile-update-form-group">
                     <label className="profile-update-label">변경 할 한줄 소개</label>
-                    <input className="profile-update-input" type="text" placeholder="한 줄 소개를 입력해주세요!" onChange={(e) => setContent(e.target.value)}/>
+                    <input className="profile-update-input" type="text" defaultValue={content} onChange={(e) => setContent(e.target.value)}/>
                 </div>
                 <div className="profile-update-selection">
                     <h2>선호 장르 설정</h2>
@@ -115,7 +136,7 @@ const MyProfile = () => {
                     <div className='setGenre'>
                         <div className='selectGenre'>선택된 선호 장르(최대 3개) :</div>
                         <div className="choosedgenre">
-                            {selectedButton.map((btn, index) => (
+                            {selectedgenre.map((btn, index) => (
                                 <button key={btn} type='button' id="selected-button" style={{ marginLeft: '25px' }} onClick={() => handleDeleteClick(btn)}>
                                     {index+1}순위: {btn}
                                 </button>

@@ -6,7 +6,7 @@ import '../css/MovieGrid.css'; // 스타일 시트
 // MovieGrid page
 const movies = [
   { id: 1, title: 'I Am Mother', poster: '/images/movie_poster/3933_poster.jpg' },
-  { id: 2, title: '이스케이프 룸', poster: '/images/movie_poster/1125510_poster.jpg' },
+  { id: 2, title: '이스케이프 룸', poster: '/images/movie_poster/1125510_poster.jpg' }, 
   { id: 3, title: 'The Merciless', poster: '/images/movie_poster/889737_poster.jpg' },
   { id: 4, title: 'The Truman Show', poster: '/images/movie_poster/1371727_poster.jpg' },
   { id: 5, title: '어벤저스:인피니티워', poster: '/images/movie_poster/420634_poster.jpg' },
