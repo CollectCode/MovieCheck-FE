@@ -67,8 +67,8 @@
 }
 
 #selected-button    {
-    padding: 10px 25px;
-    margin: 20px;
+    padding: 10px 10px;
+    margin: 10px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
@@ -178,7 +178,15 @@
 
 .choosedgenre   {
     font-weight: bold;
-    margin: 10px 20px 20px 180px;
+    font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+}
+
+.selectGenre    {
+    margin: auto 0;
+    font-weight: bold;
     font-size: 20px;
 }
 
@@ -208,4 +216,9 @@
     align-items: center; /* 수직 중앙 정렬 */
     justify-content: center; /* 수평 중앙 정렬 */
     transition: opacity 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+.setGenre   {
+    display: flex;
+    justify-content: space-evenly;
 }

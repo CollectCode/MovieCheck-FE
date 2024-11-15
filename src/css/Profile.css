@@ -64,18 +64,21 @@
 }
 
 .profile-genre-button {
-    padding: 10px 25px;
-    margin: 20px auto;
+    padding: 12px 24px;
+    margin: 20px 20px;
     border: none;
     border-radius: 5px;
+    background-color: #007bff;
     color: white;
-    font-size: 17px;
     font-weight: bold;
 }
 
 .profile-genres {
-    width: 745px;
+    margin: 0 auto;
+    width: 300px;
     text-align: center;
+    background-color: #c0c1c2;
+    border-radius: 10px;
 }
 
 .profile-buttons {

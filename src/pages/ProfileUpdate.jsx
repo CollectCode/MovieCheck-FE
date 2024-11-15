@@ -6,8 +6,7 @@ import axios from 'axios';
 const MyProfile = () => {
     const [profileImage, setProfileImage] = useState('/images/movie_poster/1125510_poster.jpg'); // 기본 프로필 이미지
     const [hovered, setHovered] = useState(false); // 마우스 오버 상태
-    const [selectedGenre, setSelectedGenre] = useState('');
-    const [selectedButton, setSelectedButton] = useState(null);
+    const [selectedButton, setSelectedButton] = useState([]);
     const genres = [
         "액션", "범죄/스릴러", "애니메이션", "코미디",
         "드라마/가족", "판타지", "공포", "전쟁", 
@@ -30,9 +29,15 @@ const MyProfile = () => {
         }
     };
 
-    const handleButtonClick = (genre) => {
-        setSelectedGenre(genre);
-        setSelectedButton(genre); // 선택된 버튼의 장르 저장
+    const handleButtonClick = (newgenre) => {
+        if(selectedButton.length < 3)   {
+            setSelectedButton(preButton => [...preButton, newgenre]);
+        }
+    };
+
+    const handleDeleteClick = (deletegenre) => {
+        const newArr = selectedButton.filter(item => item !== deletegenre);
+        setSelectedButton(newArr);
     };
 
     const handleCheckName = async(e) =>  {
@@ -106,13 +111,16 @@ const MyProfile = () => {
                                 type='button'
                             >{genre}</button>
                         ))}
+                    </div>
+                    <div className='setGenre'>
+                        <div className='selectGenre'>선택된 선호 장르(최대 3개) :</div>
                         <div className="choosedgenre">
-                            선택된 선호 장르 : {selectedButton && (
-                                <button type='button' id="selected-button" style={{ marginLeft: '25px' }}>
-                                    {selectedButton}
+                            {selectedButton.map((btn, index) => (
+                                <button key={btn} type='button' id="selected-button" style={{ marginLeft: '25px' }} onClick={() => handleDeleteClick(btn)}>
+                                    {index+1}순위: {btn}
                                 </button>
-                            )}
-                            </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
                 <div className="profile-update-buttons">

@@ -9,7 +9,9 @@ const Profile = () => {
     const [profilename, setProfileName] = useState('');
     const [profilegrade, setProfileGrade] = useState('');
     const [profilecontent, setProfileContent] = useState('');
-    const [profilegenre, setProfileGenre] = useState('');
+    const [profilegenre, setProfileGenre] = useState(['드라마/가족','애니메이션','범죄/스릴러']);
+    const [profilelike, setProfileLike] = useState('');
+    const [profiledislike, setProfileDisLike] = useState('');
 
     useEffect(() => {
         const getuser = async() => {
@@ -21,10 +23,13 @@ const Profile = () => {
             });
             let user = response.data;
             console.log(user);
+            console.log(user.data.userProfile);
             setProfileName(user.data.userName);
             setProfileGrade(user.data.userGrade);
-            setProfileContent(user.data.userContent);
-            setProfileGenre(user.data.userGenre);
+            setProfileLike(user.data.userGood);
+            setProfileDisLike(user.data.userBad);
+            if(user.data.userContent !== null) { setProfileContent(user.data.userContent); }
+            if(user.data.userProfile !== null) { setProfileImage(user.data.userProfile); }
             } catch(err)  {
                 console.log(err);
             }
@@ -52,10 +57,20 @@ const Profile = () => {
                     <label className="profile-label">한줄 소개</label>
                     <div className="user-value">{profilecontent}</div>
                 </div>
+                <div className="profile-form-group">
+                    <label className="profile-label">누적 좋아요</label>
+                    <div className="user-value">{profilelike}</div>
+                </div>
+                <div className="profile-form-group">
+                    <label className="profile-label">누적 싫어요</label>
+                    <div className="user-value">{profiledislike}</div>
+                </div>
                 <div className="profile-selection">
                     <h2>선호 장르</h2>
                     <div className="profile-genres">
-                        <button type="button" className="profile-genre-button" value={profilegenre}></button>
+                        {profilegenre.map((genre, index) => (
+                        <button key={genre} type="button" className="profile-genre-button" style={{ 'font-size' : '20px'}}>{index+1}순위 : {genre}</button>
+                        ))}
                     </div>
                 </div>
                 <div className="profile-buttons">
