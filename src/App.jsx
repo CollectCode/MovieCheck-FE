@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <TransitionGroup>
-      <CSSTransition key={location.key} classNames="fade" timeout={650}>
+      <CSSTransition key={location.key} classNames="fade" timeout={400}>
         <div className="app">
           {!!isLogined ? <LoginedHeader setIsLogined={setIsLogined} /> : <UnLoginedHeader />}
           <div className="container">
