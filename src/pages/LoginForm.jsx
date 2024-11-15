@@ -8,15 +8,17 @@ const LoginForm = ({setIsLogined}) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   let navigate = useNavigate();
-
+  
+  // 리셋 버튼
   const resetInput = () => {
       setId("");
       setPassword("");
       document.getElementsByClassName("input-info").value = "";
   }
+
+  // 로그인 버튼 클릭 이벤트
   const handleLoginClick = async (e) => {
     e.preventDefault();
-    // 로그인 로직을 여기에 추가 ㅇㅇ
     const requestLoginData = {userEmail : id, userPassword : password};
     let msg = "";
     let response;

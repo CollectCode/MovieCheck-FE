@@ -18,7 +18,6 @@ const movies = [
   // 추가 영화 데이터
 ];
 
-// useEffect를 통해 영화의 갯수 전부 가져오기
 const MovieGrid = () => {
   return (
     <div className="wrap_movie_grid">

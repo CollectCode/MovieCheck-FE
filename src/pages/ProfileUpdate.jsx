@@ -6,19 +6,22 @@ import axios from 'axios';
 const MyProfile = () => {
     const [defaultname, setDefaultName] = useState('');
     const [profileImage, setProfileImage] = useState('./images/user_profile/default.PNG'); // 기본 프로필 이미지
-    const [hovered, setHovered] = useState(false); // 마우스 오버 상태
+    const [hovered, setHovered] = useState(false);
     const [selectedgenre, setSelectedGenre] = useState([]);
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const [repassword, setRePassword] = useState('');
     const [content, setContent] = useState('');
     const [checkname, setCheckname] = useState(false);
-    const genres = ["액션", "범죄/스릴러", "애니메이션", "코미디", "드라마/가족", "판타지", "공포", "전쟁", "로맨스", "SF"];
-    
+    const [genres, setGenres] = useState(["액션", "범죄/스릴러", "애니메이션", "코미디", "드라마/가족", "판타지", "공포", "전쟁", "로맨스", "SF"]);
+    const [comment, setComment] = useState('중복확인');
+
+    //프로필 이미지 교체
     const handleImageChange = (event) => {
         const file = event.target.files[0];
+        console.log(file);
         if (file) {
-            const reader = new FileReader();
+            const reader = new FileReader(); // Filereader 로드
             reader.onloadend = () => {
                 setProfileImage(reader.result); // 선택한 이미지를 상태로 업데이트
             };
@@ -26,17 +29,23 @@ const MyProfile = () => {
         }
     };
 
+    // 선호장르 추가이벤트
     const handleButtonClick = (newgenre) => {
         if(selectedgenre.length < 3)   {
+            const newarr = genres.filter(item => item !== newgenre);
+            setGenres(newarr);
             setSelectedGenre(preButton => [...preButton, newgenre]);
         }
     };
 
+    // 선호장르 제거이벤트
     const handleDeleteClick = (deletegenre) => {
-        const newArr = selectedgenre.filter(item => item !== deletegenre);
-        setSelectedGenre(newArr);
+        const newarr = selectedgenre.filter(item => item !== deletegenre);
+        setSelectedGenre(newarr);
+        setGenres(preButton => [...preButton, deletegenre]);
     };
 
+    // 닉네임 중복체크
     const handleCheckName = async(e) =>  {
         if(nickname !== defaultname)    {
             const requestNameData =  {
@@ -55,6 +64,7 @@ const MyProfile = () => {
                 alert(msg);
                 setCheckname(false);
             } else {
+                setComment('확인완료');
                 setCheckname(true);
             }
             alert(msg);
@@ -86,6 +96,13 @@ const MyProfile = () => {
         getuser();
       }, []);
 
+      useEffect(() => {
+        if(checkname)   {
+            setCheckname(false);
+            setComment('중복확인');
+        }
+      }, [nickname])
+
     return (
         <div className="profile-update-container">
             <form>
@@ -107,15 +124,7 @@ const MyProfile = () => {
                 <div className="profile-update-form-group">
                     <label className="profile-update-label">변경 닉네임</label>
                     <input className="profile-update-input" type="text" onChange={(e) => setNickname(e.target.value)} defaultValue={nickname} />
-                    <button type='button' className="profile-update-check" onClick={handleCheckName}>중복확인</button>
-                </div>
-                <div className="profile-update-form-group">
-                    <label className="profile-update-label">비밀번호</label>
-                    <input className="profile-update-input" type="password" placeholder="비밀번호 변경" onChange={(e) => setPassword(e.target.value)}/>
-                </div>
-                <div className="profile-update-form-group">
-                    <label className="profile-update-label">비밀번호 확인</label>
-                    <input className="profile-update-input" type="password" placeholder="비밀번호 확인" onChange={(e) => setRePassword(e.target.value)}/>
+                    <button type='button' className="profile-update-check" onClick={handleCheckName} disabled={checkname}>{comment}</button>
                 </div>
                 <div className="profile-update-form-group">
                     <label className="profile-update-label">변경 할 한줄 소개</label>

@@ -5,6 +5,8 @@ import SearchBar from './SearchBar';
 
 // Header components
 const LoginedHeader = ({setIsLogined}, nickName) => {
+
+  // 로그아웃 버튼 클릭 이벤트
   const handleLogout = async() =>  {
     try {
       const response = await axios ({

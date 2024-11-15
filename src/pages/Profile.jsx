@@ -9,10 +9,11 @@ const Profile = () => {
     const [profilename, setProfileName] = useState('');
     const [profilegrade, setProfileGrade] = useState('');
     const [profilecontent, setProfileContent] = useState('');
-    const [profilegenre, setProfileGenre] = useState(['드라마/가족','애니메이션','범죄/스릴러']);
+    const [profilegenre, setProfileGenre] = useState([]);
     const [profilelike, setProfileLike] = useState('');
     const [profiledislike, setProfileDisLike] = useState('');
 
+    // 첫 마운트시 유저 정보 Get
     useEffect(() => {
         const getuser = async() => {
             try {

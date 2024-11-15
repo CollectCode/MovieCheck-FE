@@ -15,6 +15,7 @@ const SignupForm = () => {
   const [checkName, setCheckName] = useState(false);
   const navigate = useNavigate();
 
+  // 회원가입 버튼클릭 이벤트
   const handleSignup = async(e) => {
       e.preventDefault();
       
@@ -54,7 +55,8 @@ const SignupForm = () => {
         alert("중복확인 및 기입누락 확인해주세요.");
       }
     };
-
+    
+    // 이메일 중복체크 이벤트
     const handleCheckEmail = async(e) =>  {
       const requestEmailData =  {
         userEmail : email,
@@ -82,6 +84,7 @@ const SignupForm = () => {
       }
     }
 
+    // 닉네임 중복체크 이벤트
     const handleCheckName = async(e) =>  {
       const requestNameData =  {
         userName : nickname,
