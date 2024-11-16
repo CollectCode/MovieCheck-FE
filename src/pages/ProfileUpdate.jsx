@@ -13,7 +13,7 @@ const MyProfile = () => {
     const [repassword, setRePassword] = useState('');
     const [content, setContent] = useState('');
     const [checkname, setCheckname] = useState(false);
-    const [genres, setGenres] = useState(["액션", "범죄/스릴러", "애니메이션", "코미디", "드라마/가족", "판타지", "공포", "전쟁", "로맨스", "SF"]);
+    const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마/가족", "판타지", "공포", "전쟁", "로맨스", "SF"]);
     const [comment, setComment] = useState('중복확인');
 
     //프로필 이미지 교체
@@ -76,6 +76,45 @@ const MyProfile = () => {
         }
     }
 
+    // 내 정보 수정 요청
+    const handleUpdate = async(e) =>    {
+        const userDto = { userName : nickname ,
+                          userContent : content
+        };
+        const genredata = selectedgenre.map(item => ({
+            genreName: item
+        }));
+        let msg;
+        try {
+            let response = await axios({
+                                        method:'put',
+                                        url:'/api/users/update',
+                                        headers: { 'Content-Type' : 'application/json' },
+                                        data: JSON.stringify(userDto),
+                                        withCredentials : true,
+            });
+            let response2 = await axios({
+                                        method:'put',
+                                        url:'/api/user-genre/genres',
+                                        headers: { 'Content-Type' : 'application/json' },
+                                        data: JSON.stringify(genredata),
+                                        withCredentials : true,
+            });
+            console.log("요청 1 status : " + response.status);
+            console.log("요청 1 data : " + response.data);
+            console.log("요청 1 msg : " + response.data.msg);
+            console.log("요청 2 status : " + response2.status);
+            console.log("요청 2 data : " + response2.data);
+            console.log("요청 2 msg : " + response2.data.msg);
+        } catch(err)    {
+            msg = err.response.data.msg;
+            console.log(err);
+            alert(msg);
+        }
+        
+    }
+
+    // 첫 마운트시 작동하는 함수
     useEffect(() => {
         const getuser = async() => {
             try {
@@ -96,6 +135,7 @@ const MyProfile = () => {
         getuser();
       }, []);
 
+      // nickname이 변경될때마다 작동하는 함수
       useEffect(() => {
         if(checkname)   {
             setCheckname(false);
@@ -154,7 +194,7 @@ const MyProfile = () => {
                     </div>
                 </div>
                 <div className="profile-update-buttons">
-                    <Link to="/profile"><button type="submit" className="profile-update-save">저장</button></Link>
+                    <Link to="/profile"><button type="submit" className="profile-update-save" onClick={handleUpdate}>저장</button></Link>
                     <Link to="/profile"><button className="profile-update-cancel">취소</button></Link>
                 </div>
             </form>
