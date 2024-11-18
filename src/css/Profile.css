@@ -63,6 +63,11 @@
     text-align: center;
 }
 
+.like-buttons   {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .profile-genre-button {
     padding: 12px 24px;
     margin: 20px 20px;

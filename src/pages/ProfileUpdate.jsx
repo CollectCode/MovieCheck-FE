@@ -13,7 +13,7 @@ const MyProfile = () => {
     const [repassword, setRePassword] = useState('');
     const [content, setContent] = useState('');
     const [checkname, setCheckname] = useState(false);
-    const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마/가족", "판타지", "공포", "전쟁", "로맨스", "SF"]);
+    const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마", "판타지", "공포", "전쟁", "로맨스", "SF"]);
     const [comment, setComment] = useState('중복확인');
 
     //프로필 이미지 교체
@@ -54,7 +54,7 @@ const MyProfile = () => {
             try {
             let response = await axios({
                                         method : 'post',
-                                        url : '/api/users/signup/name',
+                                        url : '/api/users/check/name',
                                         headers : {'Content-Type' : 'application/json'},
                                         data : JSON.stringify(requestNameData)
                                         });
@@ -81,7 +81,8 @@ const MyProfile = () => {
         const userDto = { userName : nickname ,
                           userContent : content
         };
-        const genredata = selectedgenre.map(item => ({
+        console.log(selectedgenre);
+        const genreDto = selectedgenre.map(item => ({
             genreName: item
         }));
         let msg;
@@ -97,7 +98,7 @@ const MyProfile = () => {
                                         method:'put',
                                         url:'/api/user-genre/genres',
                                         headers: { 'Content-Type' : 'application/json' },
-                                        data: JSON.stringify(genredata),
+                                        data: JSON.stringify(genreDto),
                                         withCredentials : true,
             });
             console.log("요청 1 status : " + response.status);

@@ -65,7 +65,7 @@ const SignupForm = () => {
       try {
         response = await axios({
                                     method : 'post',
-                                    url : '/api/users/signup/email',
+                                    url : '/api/users/check/email',
                                     headers : {'Content-Type' : 'application/json'},
                                     data : JSON.stringify(requestEmailData)
                                   })
@@ -92,7 +92,7 @@ const SignupForm = () => {
       try {
         let response = await axios({
                                     method : 'post',
-                                    url : '/api/users/signup/name',
+                                    url : '/api/users/check/name',
                                     headers : {'Content-Type' : 'application/json'},
                                     data : JSON.stringify(requestNameData)
                                   })

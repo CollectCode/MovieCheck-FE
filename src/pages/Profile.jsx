@@ -14,6 +14,27 @@ const Profile = () => {
     const [profiledislike, setProfileDisLike] = useState('');
 
     // 첫 마운트시 유저 정보 Get
+
+    useEffect(() => {
+        const userGenre = async() => {
+            try {
+                const response = await axios({
+                                               method:'get',
+                                               url: '/api/user-genre/genres',
+                                               withCredentials : true,
+
+                });
+                console.log(response.data.data);
+                response.data.data.map((genre) => {
+                    setProfileGenre(preButton => [...preButton, genre]);
+                });
+            } catch(err)    {
+                console.log(err);
+            }
+        }
+        userGenre();
+    }, []);
+
     useEffect(() => {
         const getuser = async() => {
             try {
@@ -21,16 +42,16 @@ const Profile = () => {
                                         method:'get',
                                         url: '/api/users/mypage',
                                         withCredentials : true,
-            });
-            let user = response.data;
-            console.log(user);
-            console.log(user.data.userProfile);
-            setProfileName(user.data.userName);
-            setProfileGrade(user.data.userGrade);
-            setProfileLike(user.data.userGood);
-            setProfileDisLike(user.data.userBad);
-            if(user.data.userContent !== null) { setProfileContent(user.data.userContent); }
-            if(user.data.userProfile !== null) { setProfileImage(user.data.userProfile); }
+                });
+                let user = response.data;
+                console.log(user);
+                console.log(user.data.userProfile);
+                setProfileName(user.data.userName);
+                setProfileGrade(user.data.userGrade);
+                setProfileLike(user.data.userGood);
+                setProfileDisLike(user.data.userBad);
+                if(user.data.userContent !== null) { setProfileContent(user.data.userContent); }
+                if(user.data.userProfile !== null) { setProfileImage(user.data.userProfile); }
             } catch(err)  {
                 console.log(err);
             }
@@ -68,9 +89,16 @@ const Profile = () => {
                 </div>
                 <div className="profile-selection">
                     <h2>선호 장르</h2>
-                    <div className="profile-genres">
-                        {profilegenre.map((genre, index) => (
-                        <button key={genre} type="button" className="profile-genre-button" style={{ 'font-size' : '20px'}}>{index+1}순위 : {genre}</button>
+                    <div className="like-buttons">
+                        {Array.isArray(profilegenre) && profilegenre.map((genre, index) => (
+                            <button 
+                                key={genre.genreKey || index} // genreKey가 null일 경우 index 사용
+                                type="button" 
+                                className="profile-genre-button" 
+                                style={{ fontSize: '20px' }}
+                            >
+                                {index + 1} 순위 : {genre.genreName} {/* genreName에 접근 */}
+                            </button>
                         ))}
                     </div>
                 </div>

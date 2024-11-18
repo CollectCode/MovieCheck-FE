@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
 // Header components
-const LoginedHeader = ({setIsLogined}, nickName) => {
+const LoginedHeader = ({setIsLogined}) => {
 
   // 로그아웃 버튼 클릭 이벤트
   const handleLogout = async() =>  {

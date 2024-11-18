@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
 // Header components
-const UnLoginedHeader = (userName) => {
+const UnLoginedHeader = () => {
   return (
     <header className="header">
       <h1>

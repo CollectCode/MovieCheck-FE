@@ -8,6 +8,7 @@ const SearchBar = () => {
   const handleSearch = () => {
       // 검색 버튼 클릭 시 처리할 로직
       alert("검색어:" + searchTerm);
+      console.log("asdf");
   };
   return (
     <div className="search-bar">

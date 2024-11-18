@@ -14,12 +14,12 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import './App.css';
 
 const App = () => {
-  const [isLogined, setIsLogined] = useState(true);
+  const [isLogined, setIsLogined] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setIsLogined(!!document.cookie);
-  });
+  }, []);
 
   return (
     <TransitionGroup>
