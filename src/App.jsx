@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import axios from 'axios';
 import LoginedHeader from './components/LoginedHeader';
 import UnLoginedHeader from './components/UnLoginedHeader';
 import NavigationBar from './components/NavigationBar';
@@ -14,7 +15,7 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import './App.css';
 
 const App = () => {
-  const [isLogined, setIsLogined] = useState(true);
+  const [isLogined, setIsLogined] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const App = () => {
     <TransitionGroup>
       <CSSTransition key={location.key} classNames="fade" timeout={400}>
         <div className="app">
-          {!!isLogined ? <LoginedHeader setIsLogined={setIsLogined} /> : <UnLoginedHeader />}
+          {!!isLogined ? <LoginedHeader setIsLogined={setIsLogined}/> : <UnLoginedHeader />}
           <div className="container">
             <NavigationBar />
             <div className="main-content">
