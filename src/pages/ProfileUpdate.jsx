@@ -72,7 +72,7 @@ const MyProfile = () => {
                 console.log(err);
             }
         } else  {
-            alert("Exist nickname");
+            alert("현재 사용중인 닉네임 입니다.");
         }
     }
 
