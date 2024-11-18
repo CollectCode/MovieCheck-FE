@@ -75,11 +75,11 @@ const Profile = () => {
                     <div className="user-value">{profilecontent}</div>
                 </div>
                 <div className="profile-form-group">
-                    <label className="profile-label">누적 좋아요</label>
+                    <label className="profile-label">좋아요</label>
                     <div className="user-value">{profilelike}</div>
                 </div>
                 <div className="profile-form-group">
-                    <label className="profile-label">누적 싫어요</label>
+                    <label className="profile-label">싫어요</label>
                     <div className="user-value">{profiledislike}</div>
                 </div>
                 <div className="profile-selection">

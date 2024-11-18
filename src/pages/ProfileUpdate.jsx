@@ -13,15 +13,16 @@ const MyProfile = () => {
     const [checkname, setCheckname] = useState(false);
     const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마", "판타지", "공포", "전쟁", "로맨스", "SF"]);
     const [comment, setComment] = useState('중복확인');
+    const [imageform, setImageForm] = useState('');
 
     //프로필 이미지 교체
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        console.log(file);
         if (file) {
             const reader = new FileReader(); // Filereader 로드
             reader.onloadend = () => {
-                setProfileImage(reader.result); // 선택한 이미지를 상태로 업데이트
+                setProfileImage(reader.result);
+                setImageForm(file);
             };
             reader.readAsDataURL(file); // 파일을 Data URL로 읽기
         }
@@ -76,14 +77,17 @@ const MyProfile = () => {
 
     // 내 정보 수정 요청
     const handleUpdate = async(e) =>    {
+        const formData = new FormData();
+        formData.append('userImage', imageform); // 실제 파일 객체를 추가
+        formData.forEach((value, key) => {
+            console.log(key, value);
+        });
         const genreDto = selectedgenre.map(item => ({
             genreName: item
         }));
         const userDto = { userName : nickname ,
                           userContent : content,
-                          userProfile : profileImage,
         };
-        console.log(userDto);
         let msg;
 
         // 선호 장르 변경요청
@@ -118,6 +122,22 @@ const MyProfile = () => {
             msg = err.response.data.msg;
             console.log(err);
             alert(msg);
+        }
+        
+        // 프로필 이미지 변경요청
+        try {
+            let response3 = await axios({
+                method:'post',
+                url:'/api/users/uploadImage',
+                headers: { 'Content-Type' : 'multipart/form-data' },
+                data: formData,
+                withCredentials : true,
+            });
+            console.log("요청 3 status : " + response3.status);
+            console.log("요청 3 data : " + response3.data);
+            console.log("요청 3 msg : " + response3.data.msg);
+        } catch(err3)   {
+            console.log(err3);
         }
     }
 
