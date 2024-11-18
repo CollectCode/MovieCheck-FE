@@ -14,7 +14,7 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import './App.css';
 
 const App = () => {
-  const [isLogined, setIsLogined] = useState(false);
+  const [isLogined, setIsLogined] = useState(true);
   const location = useLocation();
 
   useEffect(() => {

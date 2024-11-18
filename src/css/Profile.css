@@ -68,13 +68,23 @@
     justify-content: space-evenly;
 }
 
+.profile-nogenre-button {
+    padding: 12px 24px;
+    margin: 20px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #c0c1c2;
+    color: black;
+    font-weight: bold;
+}
+
 .profile-genre-button {
     padding: 12px 24px;
     margin: 20px 20px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
-    color: white;
+    color: black;
     font-weight: bold;
 }
 
@@ -122,46 +132,6 @@
 
 .profile-check  {
     margin-left: 50px;
-}
-
-#action {
-    background-color: #FF5733;
-}
-
-#thriller   {
-    background-color: #900C3F;
-}
-
-#animation  {
-    background-color: #FFC300;
-}
-
-#comedy {
-    background-color: #28B463;
-}
-
-#drama  {
-    background-color: #3498DB;
-}
-
-#fantacy    {
-    background-color: #8E44AD;
-}
-
-#horror {
-    background-color: #C0392B;
-}
-
-#war    {
-    background-color: #7D3C98;
-}
-
-#romance    {
-    background-color: #EAB8D1;
-}
-
-#sf {
-    background-color: #2E86C1;
 }
 
 .profile-face   {

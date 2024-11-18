@@ -16,7 +16,7 @@ const Profile = () => {
     // 첫 마운트시 유저 정보 Get
 
     useEffect(() => {
-        const userGenre = async() => {
+        const getuser = async() => {
             try {
                 const response = await axios({
                                                method:'get',
@@ -31,12 +31,7 @@ const Profile = () => {
             } catch(err)    {
                 console.log(err);
             }
-        }
-        userGenre();
-    }, []);
 
-    useEffect(() => {
-        const getuser = async() => {
             try {
                 const response = await axios({
                                         method:'get',
@@ -90,16 +85,17 @@ const Profile = () => {
                 <div className="profile-selection">
                     <h2>선호 장르</h2>
                     <div className="like-buttons">
-                        {Array.isArray(profilegenre) && profilegenre.map((genre, index) => (
+                        {profilegenre.length > 0 ? profilegenre.map((genre, index) => (
                             <button 
                                 key={genre.genreKey || index} // genreKey가 null일 경우 index 사용
                                 type="button" 
                                 className="profile-genre-button" 
-                                style={{ fontSize: '20px' }}
+                                style={{ fontSize: '20px', backgroundColor: index === 0 ? '#FFD700' : index === 1 ? '#007BFF' : index === 2 ? '#6F42C1' : 'initial' }}
+                                id={index}
                             >
                                 {index + 1} 순위 : {genre.genreName} {/* genreName에 접근 */}
                             </button>
-                        ))}
+                        )) : <button className='profile-nogenre-button' style={{ fontSize: '20px' }}>선호 장르가 없습니다. 골라주세요!</button>}
                     </div>
                 </div>
                 <div className="profile-buttons">

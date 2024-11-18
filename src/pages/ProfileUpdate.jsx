@@ -9,8 +9,6 @@ const MyProfile = () => {
     const [hovered, setHovered] = useState(false);
     const [selectedgenre, setSelectedGenre] = useState([]);
     const [nickname, setNickname] = useState('');
-    const [password, setPassword] = useState('');
-    const [repassword, setRePassword] = useState('');
     const [content, setContent] = useState('');
     const [checkname, setCheckname] = useState(false);
     const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마", "판타지", "공포", "전쟁", "로맨스", "SF"]);
@@ -49,7 +47,7 @@ const MyProfile = () => {
     const handleCheckName = async(e) =>  {
         if(nickname !== defaultname)    {
             const requestNameData =  {
-            userName : nickname,
+                userName : nickname,
             }
             try {
             let response = await axios({
@@ -78,14 +76,33 @@ const MyProfile = () => {
 
     // 내 정보 수정 요청
     const handleUpdate = async(e) =>    {
-        const userDto = { userName : nickname ,
-                          userContent : content
-        };
-        console.log(selectedgenre);
         const genreDto = selectedgenre.map(item => ({
             genreName: item
         }));
+        const userDto = { userName : nickname ,
+                          userContent : content,
+                          userProfile : profileImage,
+        };
+        console.log(userDto);
         let msg;
+
+        // 선호 장르 변경요청
+        try {
+            let response2 = await axios({
+                method:'put',
+                url:'/api/user-genre/genres',
+                headers: { 'Content-Type' : 'application/json' },
+                data: JSON.stringify(genreDto),
+                withCredentials : true,
+            });
+                        console.log("요청 2 status : " + response2.status);
+            console.log("요청 2 data : " + response2.data);
+            console.log("요청 2 msg : " + response2.data.msg);
+        } catch(err2)   {
+            console.log(err2);
+        }
+
+        // 한줄 소개 및 닉네임 변경 요청
         try {
             let response = await axios({
                                         method:'put',
@@ -94,25 +111,14 @@ const MyProfile = () => {
                                         data: JSON.stringify(userDto),
                                         withCredentials : true,
             });
-            let response2 = await axios({
-                                        method:'put',
-                                        url:'/api/user-genre/genres',
-                                        headers: { 'Content-Type' : 'application/json' },
-                                        data: JSON.stringify(genreDto),
-                                        withCredentials : true,
-            });
             console.log("요청 1 status : " + response.status);
             console.log("요청 1 data : " + response.data);
             console.log("요청 1 msg : " + response.data.msg);
-            console.log("요청 2 status : " + response2.status);
-            console.log("요청 2 data : " + response2.data);
-            console.log("요청 2 msg : " + response2.data.msg);
         } catch(err)    {
             msg = err.response.data.msg;
             console.log(err);
             alert(msg);
         }
-        
     }
 
     // 첫 마운트시 작동하는 함수
