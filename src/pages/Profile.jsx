@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/Profile.css'; // CSS 파일을 임포트합니다.
 import axios from 'axios';
 
@@ -12,33 +12,40 @@ const Profile = ({setIsLogined}) => {
     const [profilegenre, setProfileGenre] = useState([]);
     const [profilelike, setProfileLike] = useState('');
     const [profiledislike, setProfileDisLike] = useState('');
+    let navigate = useNavigate();
 
     // 유저 삭제 요청
-    const deleteuser = async() => {
-        const confirmDelete = window.confirm("정말 탈퇴하시겠습니까?"); // 확인 대화 상자
-        if(confirmDelete)   {
-            const confirmDelete2 = window.confirm("지우면 영원히 되돌릴 수 없습니다. \n정말 탈퇴하시겠습니까?"); // 재차 확인 대화 상자
-            if(confirmDelete2)   {
+    const deleteuser = async (e) => {
+        e.preventDefault(); // 꼭 버튼 기본동작을 방지해야함 안그럼 navigate 안먹힘
+        const confirmDelete = window.confirm("정말 탈퇴하시겠습니까?");
+        if (confirmDelete) {
+            const confirmDelete2 = window.confirm("지우면 영원히 되돌릴 수 없습니다. \n정말 탈퇴하시겠습니까?");
+            if (confirmDelete2) {
                 try {
                     const response = await axios({
-                                                    method: 'delete',
-                                                    url: '/api/users/delete',
-                                                    withCredentials: true,
+                        method: 'delete',
+                        url: '/api/users/delete',
+                        withCredentials: true,
                     });
                     console.log(response.status);
-                    if(response.status > 199 && response.status < 300)  {
+                    if (response.status >= 200 && response.status < 300) {
                         console.log(response);
                         alert(response.data.msg);
                         setIsLogined(false);
+                        navigate("/", {});
                     }
-                } catch(err)    {
-                    console.log(err);
+                } catch (err) {
+                    console.error('Error during deletion:', err.response ? err.response.data : err.message);
                 }
+            } else {
+                return;
             }
+        } else {
+            return;
         }
-    }
-    // 첫 마운트시 유저 정보 Get
+    };
 
+    // 첫 마운트시 유저 정보 Get
     useEffect(() => {
         const getuser = async() => {
             try {
@@ -95,7 +102,7 @@ const Profile = ({setIsLogined}) => {
             <form action="">
                 <div className='top-title'>
                     <h1 className="profile-title">내 정보</h1>
-                    <Link to="/"><button className='profile-delete' onClick={deleteuser}>탈퇴하기</button></Link>
+                    <button className='profile-delete' onClick={deleteuser}>탈퇴하기</button>
                 </div>
                 <div className="profile-picture">
                     <img className="user-image" src={profileimage} alt="프로필 사진" />
