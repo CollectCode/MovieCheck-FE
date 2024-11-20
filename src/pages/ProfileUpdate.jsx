@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/ProfileUpdate.css'; // CSS 파일을 임포트합니다.
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ const MyProfile = () => {
     const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마", "판타지", "공포", "전쟁", "로맨스", "SF"]);
     const [comment, setComment] = useState('중복확인');
     const [imageform, setImageForm] = useState('');
+    let navigate = useNavigate();
 
     //프로필 이미지 교체
     const handleImageChange = (event) => {
@@ -71,66 +72,75 @@ const MyProfile = () => {
                 console.log(err);
             }
         } else  {
+            setComment('확인완료');
+            setCheckname(true);
             alert("현재 사용중인 닉네임 입니다.");
         }
     }
 
     // 내 정보 수정 요청
     const handleUpdate = async(e) =>    {
-        const formData = new FormData();
-        formData.append('userImage', imageform); // 실제 파일 객체를 추가
-        formData.forEach((value, key) => {
-            console.log(key, value);
-        });
-        const genreDto = selectedgenre.map(item => ({
-            genreName: item
-        }));
-        const userDto = { userName : nickname ,
-                          userContent : content,
-        };
-        let msg;
+        e.preventDefault(); 
+        if(checkname)   {
+            const formData = new FormData();
+            formData.append('userImage', imageform); // 실제 파일 객체를 추가
+            formData.forEach((value, key) => {
+                console.log(key, value);
+            });
+            const genreDto = selectedgenre.map(item => ({
+                genreName: item
+            }));
+            const userDto = { userName : nickname ,
+                            userContent : content,
+            };
+            let msg;
 
-        // 선호 장르 변경요청
-        try {
-            let response2 = await axios({
-                method:'put',
-                url:'/api/user-genre/genres',
-                headers: { 'Content-Type' : 'application/json' },
-                data: JSON.stringify(genreDto),
-                withCredentials : true,
-            });
-        } catch(err2)   {
-            console.log(err2);
-        }
+            // 선호 장르 변경요청
+            try {
+                let response2 = await axios({
+                    method:'put',
+                    url:'/api/user-genre/genres',
+                    headers: { 'Content-Type' : 'application/json' },
+                    data: JSON.stringify(genreDto),
+                    withCredentials : true,
+                });
+            } catch(err2)   {
+                console.log(err2);
+            }
 
-        // 한줄 소개 및 닉네임 변경 요청
-        try {
-            let response = await axios({
-                                        method:'put',
-                                        url:'/api/users/update',
-                                        headers: { 'Content-Type' : 'application/json' },
-                                        data: JSON.stringify(userDto),
-                                        withCredentials : true,
-            });
-        } catch(err)    {
-            msg = err.response.data.msg;
-            console.log(err);
-            alert(msg);
-        }
-        
-        // 프로필 이미지 변경요청
-        try {
-            let response3 = await axios({
-                method:'post',
-                url:'/api/users/uploadimage',
-                headers: { 'Content-Type' : 'multipart/form-data' },
-                data: formData,
-                withCredentials : true,
-            });
-        } catch(err3)   {
-            console.log(err3);
+            // 한줄 소개 및 닉네임 변경 요청
+            try {
+                let response = await axios({
+                                            method:'put',
+                                            url:'/api/users/update',
+                                            headers: { 'Content-Type' : 'application/json' },
+                                            data: JSON.stringify(userDto),
+                                            withCredentials : true,
+                });
+            } catch(err)    {
+                msg = err.response.data.msg;
+                console.log(err);
+                alert(msg);
+            }
+            
+            // 프로필 이미지 변경요청
+            try {
+                let response3 = await axios({
+                    method:'post',
+                    url:'/api/users/uploadimage',
+                    headers: { 'Content-Type' : 'multipart/form-data' },
+                    data: formData,
+                    withCredentials : true,
+                });
+            } catch(err3)   {
+                console.log(err3);
+            }
+        } else  {
+            alert("중복확인 및 기입누락 확인해주세요.");
+            return;
         }
         alert("변경이 완료되었습니다!");
+        navigate("/", {});
     }
 
     // 첫 마운트시 작동하는 함수
@@ -227,7 +237,7 @@ const MyProfile = () => {
                     </div>
                 </div>
                 <div className="profile-update-buttons">
-                    <Link to="/"><button type="submit" className="profile-update-save" onClick={handleUpdate}>저장</button></Link>
+                    <button type="submit" className="profile-update-save" onClick={handleUpdate}>저장</button>
                     <Link to="/profile"><button className="profile-update-cancel">취소</button></Link>
                 </div>
             </form>
