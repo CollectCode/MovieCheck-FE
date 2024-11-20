@@ -20,7 +20,7 @@ const App = () => {
 
   useEffect(() => {
     setIsLogined(!!document.cookie);
-  }, []);
+  }, [isLogined]);
 
   return (
     <TransitionGroup>
@@ -35,7 +35,7 @@ const App = () => {
                 <Route path="/detail/:id" element={<MovieDetail />} />
                 <Route path="/login" element={<LoginForm setIsLogined={setIsLogined} />} />
                 <Route path="/signup" element={<SignUpForm />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile" element={<Profile setIsLogined={setIsLogined} />} />
                 <Route path="/profileupdate" element={<ProfileUpdate />} />
               </Routes>
             </div>

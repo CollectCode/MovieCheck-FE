@@ -99,9 +99,6 @@ const MyProfile = () => {
                 data: JSON.stringify(genreDto),
                 withCredentials : true,
             });
-                        console.log("요청 2 status : " + response2.status);
-            console.log("요청 2 data : " + response2.data);
-            console.log("요청 2 msg : " + response2.data.msg);
         } catch(err2)   {
             console.log(err2);
         }
@@ -115,9 +112,6 @@ const MyProfile = () => {
                                         data: JSON.stringify(userDto),
                                         withCredentials : true,
             });
-            console.log("요청 1 status : " + response.status);
-            console.log("요청 1 data : " + response.data);
-            console.log("요청 1 msg : " + response.data.msg);
         } catch(err)    {
             msg = err.response.data.msg;
             console.log(err);
@@ -128,22 +122,34 @@ const MyProfile = () => {
         try {
             let response3 = await axios({
                 method:'post',
-                url:'/api/users/uploadImage',
+                url:'/api/users/uploadimage',
                 headers: { 'Content-Type' : 'multipart/form-data' },
                 data: formData,
                 withCredentials : true,
             });
-            console.log("요청 3 status : " + response3.status);
-            console.log("요청 3 data : " + response3.data);
-            console.log("요청 3 msg : " + response3.data.msg);
         } catch(err3)   {
             console.log(err3);
         }
+        alert("변경이 완료되었습니다!");
     }
 
     // 첫 마운트시 작동하는 함수
     useEffect(() => {
         const getuser = async() => {
+            try {
+                let response = await axios({
+                                    method : 'get',
+                                    url : '/api/users/getuserimage',
+                                    withCredentials : true,
+                });
+                let image = response.data.data;
+                if(image)   {
+                    setProfileImage(`data:image/png;base64,` + response.data.data);
+                }
+            } catch(err)    {
+                console.log(err);
+            }
+
             try {
                 const response = await axios({
                                         method:'get',
@@ -153,11 +159,11 @@ const MyProfile = () => {
                 let user = response.data;
                 setDefaultName(user.data.userName);
                 setNickname(user.data.userName);
-                if(user.data.userProfile !== null) { setProfileImage(user.data.userProfile); }
-                if(user.data.userContent !== null) { setContent(user.data.userContent); }
+                setContent(user.data.userContent);
             } catch(err)  {
                 console.log(err);
-            }   
+            } 
+
         }
         getuser();
       }, []);
@@ -221,7 +227,7 @@ const MyProfile = () => {
                     </div>
                 </div>
                 <div className="profile-update-buttons">
-                    <Link to="/profile"><button type="submit" className="profile-update-save" onClick={handleUpdate}>저장</button></Link>
+                    <Link to="/"><button type="submit" className="profile-update-save" onClick={handleUpdate}>저장</button></Link>
                     <Link to="/profile"><button className="profile-update-cancel">취소</button></Link>
                 </div>
             </form>

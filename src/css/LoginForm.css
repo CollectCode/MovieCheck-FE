@@ -32,7 +32,7 @@
     margin-bottom: 5px;
   }
   
-  .input-info {
+  .input-info-id, .input-info-password {
     margin: 10px 10px 0px 0px;
     width: 100%;
     padding: 10px;

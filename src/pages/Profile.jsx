@@ -4,7 +4,7 @@ import '../css/Profile.css'; // CSS 파일을 임포트합니다.
 import axios from 'axios';
 
 
-const Profile = () => {
+const Profile = ({setIsLogined}) => {
     const [profileimage, setProfileImage] = useState('./images/user_profile/default.PNG');
     const [profilename, setProfileName] = useState('');
     const [profilegrade, setProfileGrade] = useState('');
@@ -13,6 +13,30 @@ const Profile = () => {
     const [profilelike, setProfileLike] = useState('');
     const [profiledislike, setProfileDisLike] = useState('');
 
+    // 유저 삭제 요청
+    const deleteuser = async() => {
+        const confirmDelete = window.confirm("정말 탈퇴하시겠습니까?"); // 확인 대화 상자
+        if(confirmDelete)   {
+            const confirmDelete2 = window.confirm("지우면 영원히 되돌릴 수 없습니다. \n정말 탈퇴하시겠습니까?"); // 재차 확인 대화 상자
+            if(confirmDelete2)   {
+                try {
+                    const response = await axios({
+                                                    method: 'delete',
+                                                    url: '/api/users/delete',
+                                                    withCredentials: true,
+                    });
+                    console.log(response.status);
+                    if(response.status > 199 && response.status < 300)  {
+                        console.log(response);
+                        alert(response.data.msg);
+                        setIsLogined(false);
+                    }
+                } catch(err)    {
+                    console.log(err);
+                }
+            }
+        }
+    }
     // 첫 마운트시 유저 정보 Get
 
     useEffect(() => {
@@ -39,15 +63,27 @@ const Profile = () => {
                                         withCredentials : true,
                 });
                 let user = response.data;
-                console.log(user);
-                console.log(user.data.userProfile);
                 setProfileName(user.data.userName);
                 setProfileGrade(user.data.userGrade);
                 setProfileLike(user.data.userGood);
                 setProfileDisLike(user.data.userBad);
-                if(user.data.userContent !== null) { setProfileContent(user.data.userContent); }
-                if(user.data.userProfile !== null) { setProfileImage(user.data.userProfile); }
+                setProfileContent(user.data.userContent);
             } catch(err)  {
+                console.log(err);
+            }
+
+            try {
+                let response = await axios({
+                                    method : 'get',
+                                    url : '/api/users/getuserimage',
+                                    withCredentials : true,
+                });
+                let image = response.data.data;
+                console.log("이미지 데이터 타입 : " + image);
+                if (image) {  // image가 null, undefined, 빈 문자열이 아닐 때
+                    setProfileImage(`data:image/png;base64,` + response.data.data);
+                }
+            } catch(err)    {
                 console.log(err);
             }
         }
@@ -57,7 +93,10 @@ const Profile = () => {
     return (
         <div className="profile-container">
             <form action="">
-                <h1 className="profile-title">내 정보</h1>
+                <div className='top-title'>
+                    <h1 className="profile-title">내 정보</h1>
+                    <Link to="/"><button className='profile-delete' onClick={deleteuser}>탈퇴하기</button></Link>
+                </div>
                 <div className="profile-picture">
                     <img className="user-image" src={profileimage} alt="프로필 사진" />
                 </div>

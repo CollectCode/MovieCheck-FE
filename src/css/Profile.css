@@ -7,6 +7,11 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.top-title  {
+    display: flex;
+    justify-content: space-between;
+}
+
 .profile-title {
     text-align: left;   
 }
@@ -113,6 +118,19 @@
     transition: background 0.3s;
 }
 
+.profile-delete {
+    padding: 10px 20px;
+    margin: 15px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
 .profile-check  {
     padding: 7px 15px;
     margin: 7px;
@@ -128,6 +146,10 @@
 
 .profile-save:hover, .profile-cancel:hover {
     background-color: #0056b3;
+}
+
+.profile-delete:hover {
+    background-color: rgb(182, 43, 18);
 }
 
 .profile-check  {

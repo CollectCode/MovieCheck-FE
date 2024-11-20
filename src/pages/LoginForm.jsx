@@ -13,7 +13,14 @@ const LoginForm = ({setIsLogined}) => {
   const resetInput = () => {
       setId("");
       setPassword("");
-      document.getElementsByClassName("input-info").value = "";
+      document.getElementsByClassName("input-info-id").value = "";
+      document.getElementsByClassName("input-info-password").value = "";
+  }
+
+  // 비밀번호만 초기화
+  const resetPassword = () => {
+    setPassword("");
+    document.getElementsByClassName("input-info-password").value = "";
   }
 
   // 로그인 버튼 클릭 이벤트
@@ -40,8 +47,12 @@ const LoginForm = ({setIsLogined}) => {
         msg = err.response.data.msg;
         if(err.response.status > 399 && err.response.status < 500) {
           alert(msg);
+          if(err.response.status === 404) {
+            resetInput();
+          } else if(err.response.status === 401)  {
+            resetPassword();
+          }
         }
-        resetInput();
       }
     };  
 
@@ -52,7 +63,7 @@ const LoginForm = ({setIsLogined}) => {
         <div className="login-input-group">
           <label className="logininfo">ID(이메일)</label>
           <input
-            className="input-info"
+            className="input-info-id"
             type="text"
             placeholder="ID 입력(이메일)"
             value={id}
@@ -64,7 +75,7 @@ const LoginForm = ({setIsLogined}) => {
           <label className="logininfo">PASSWORD</label>
           <input
             type="password"
-            className="input-info"
+            className="input-info-password"
             placeholder="비밀번호 입력"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

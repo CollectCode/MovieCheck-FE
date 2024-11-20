@@ -46,7 +46,7 @@ const LoginedHeader = ({setIsLogined}) => {
       </h1>
       <SearchBar />
       <nav className="header-nav">
-        <Link to="/profile">{nickname}님 환영합니다.&nbsp;&nbsp;&nbsp;</Link>
+        <Link to="/profile" setIsLogined={setIsLogined}>{nickname}님 환영합니다.&nbsp;&nbsp;&nbsp;</Link>
         <Link to="/" onClick={handleLogout}>로그아웃</Link>
       </nav>
     </header>
