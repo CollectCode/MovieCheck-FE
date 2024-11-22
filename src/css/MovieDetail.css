@@ -14,13 +14,12 @@ body {
 }
 
 .movie-image {
-    width: 200px; /* 영화 이미지의 너비 */
-    height: auto; /* 비율에 맞추어 높이 조정 */
-    margin-right: 20px;
+    width: 300px; /* 영화 이미지의 너비 */
+    margin-right: 40px;
 }
 
 .movie-info {
-    max-width: 600px; /* 정보 부분의 최대 너비 */
+    max-width: 700px; /* 정보 부분의 최대 너비 */
 }
 
 .review-section {
@@ -82,4 +81,16 @@ body {
 
 .like-button:hover, .dislike-button:hover {
     background-color: #666;
+}
+
+.movie-crew {
+    margin-left: 100px;
+}
+
+.actors {
+    display: flex;
+}
+
+.actor  {
+    margin-right: 60px;
 }

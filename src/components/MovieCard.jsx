@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // MovieCard components
-const MovieCard = ({ key, title, poster }) => {
+const MovieCard = ({ id, title, poster }) => {
   return (
     <div className="movie-card">
-      <Link to="/detail/${key}" state={{ id : key, poster : poster, title : title }}>
+      <Link to={`/detail/${id}`} state={{ id: id, poster: poster, title: title }}>
         <img src={poster} alt={title} />
         <h3>{title}</h3>
       </Link>

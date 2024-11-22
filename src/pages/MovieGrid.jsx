@@ -16,7 +16,7 @@ const MovieGrid = () => {
           method: 'get',
           url: '/api/movies',
         });
-        console.log(response.data.movies.movieKey);
+        console.log(response.data.movies[0].movieKey);
         console.log(response.data.movies.length);
         console.log(response.data.movies);
         setMovies(response.data.movies);
@@ -32,7 +32,7 @@ const MovieGrid = () => {
     <div className="wrap_movie_grid">
       <div className="movie-grid">
       {movies.map((movie) => (
-        <MovieCard key={movie.movieKey} title={movie.movieTitle} poster={movie.moviePoster} />
+        <MovieCard key={movie.movieKey} title={movie.movieTitle} poster={movie.movieImage} id={movie.movieKey}/>
       ))}
       </div>
         <PageNation pageperItems={10} />

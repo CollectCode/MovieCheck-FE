@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/MovieDetail.css';
 import axios from 'axios';
@@ -7,9 +7,16 @@ import axios from 'axios';
 const MovieDetail = () => {
     const location = useLocation();
     const { id, poster } = location.state || {}; // state에서 데이터 가져오기
+    const[title, setTitle] = useState('');
+    const[overview, setOverview] = useState('');
+    const[score, setScore] = useState('평점이 없습니다.');
+    const[runtime, setRunTime] = useState('');
+    const[release, setRelease] = useState('');
+    const[director, setDirector] = useState('');
+    const[actors, setActors] = useState([]);
 
     useEffect(() => {
-        console.log(id + poster);
+        console.log("무비 아이디 : " + id);
         const putmovieId = { movieKey : id };
         const getMovieDetails = async() =>  {
             try {
@@ -19,7 +26,15 @@ const MovieDetail = () => {
                     headers: { 'Content-Type' : 'application/json' },
                     data: JSON.stringify(putmovieId),
                 });
-                console.log(response);
+                console.log(response.data);
+                let info = response.data;
+                setTitle(info.movieTitle);
+                setOverview(info.movieOverview);
+                setScore(info.movieScore);
+                setRunTime(info.movieRuntime);
+                setRelease(info.movieRelease);
+                setDirector(info.movieDirector);
+                setActors(info.actors);
             } catch(err)    {
                 console.log(err);
             }
@@ -29,25 +44,24 @@ const MovieDetail = () => {
 
     return (
         <div className="movie-detail-container">
-            <h1>영화 제목</h1>
+            <h1>{title}</h1>
             <div className="movie-introduction">
                 <img src={poster} alt="영화 이미지" className="movie-image" />
                 <div className="movie-info"> 
                     <h2>소개</h2>
-                    <p>
-                        영화에서 가장 믿을 수 있는 시리즈인 <strong>에이리언</strong>의 리부트 스토리.
-                        <br />
-                        - 이젠 더이상 다가올 수 없는 전쟁의 후유증을 겪고 있는 인류.
-                        <br />
-                        ...
-                    </p>
+                    <p>{overview}</p>
+                </div>
+                <div className="movie-crew">
+                <h1>감독 이름 : {director}</h1>
+                <h2>출연진</h2>
+                <div className='actors'>
+                    {actors.map((actor) => (
+                        <div className="actor">
+                            <img src={actor.actorImage} alt="" width="130px"/><br></br> {actor.actorName}
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div className="movie-crew">
-                <h2>감독</h2>
-                <p>감독 이름</p>
-                <h2>출연진</h2>
-                <p>출연진 이름</p>
             </div>
             <div className="review-section">
                 <h2>리뷰 쓰기</h2>
