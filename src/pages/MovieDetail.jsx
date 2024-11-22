@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/MovieDetail.css';
+import axios from 'axios';
 
 // MovieDetail page
 const MovieDetail = () => {
-
     const location = useLocation();
     const { id, poster } = location.state || {}; // state에서 데이터 가져오기
+
+    useEffect(() => {
+        console.log(id + poster);
+        const putmovieId = { movieKey : id };
+        const getMovieDetails = async() =>  {
+            try {
+                let response = await axios({
+                    method: 'post',
+                    url: '/api/movies/detail',
+                    headers: { 'Content-Type' : 'application/json' },
+                    data: JSON.stringify(putmovieId),
+                });
+                console.log(response);
+            } catch(err)    {
+                console.log(err);
+            }
+        }
+        getMovieDetails();
+    }, []);
 
     return (
         <div className="movie-detail-container">

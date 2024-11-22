@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Profile.css'; // CSS 파일을 임포트합니다.
 import axios from 'axios';
@@ -11,11 +11,10 @@ const Profile = ({setIsLogined}) => {
     const [profilecontent, setProfileContent] = useState('');
     const [profilegenre, setProfileGenre] = useState([]);
     const [profilelike, setProfileLike] = useState('');
-    const [profiledislike, setProfileDisLike] = useState('');
     let navigate = useNavigate();
 
     // 유저 삭제 요청
-    const deleteuser = async (e) => {
+    const deleteuser = useCallback(async (e) => {
         e.preventDefault(); // 꼭 버튼 기본동작을 방지해야함 안그럼 navigate 안먹힘
         const confirmDelete = window.confirm("정말 탈퇴하시겠습니까?");
         if (confirmDelete) {
@@ -43,11 +42,33 @@ const Profile = ({setIsLogined}) => {
         } else {
             return;
         }
-    };
+    }, []);
 
     // 첫 마운트시 유저 정보 Get
     useEffect(() => {
         const getuser = async() => {
+            try {
+                const response = await axios({
+                                        method:'get',
+                                        url: '/api/users/mypage',
+                                        withCredentials : true,
+                });
+                console.log(response.data);
+                let user = response.data;
+                setProfileName(user.data.userName);
+                setProfileGrade(user.data.userGrade);
+                setProfileLike(user.data.userGood);
+                setProfileContent(user.data.userContent);
+                if (user.data.userProfile) {
+                    const newProfileImage = user.data.userProfile;
+                    if (newProfileImage !== profileimage) {
+                        setProfileImage(newProfileImage);
+                    }
+                }
+                
+            } catch(err)  {
+                console.log(err);
+            }
             try {
                 const response = await axios({
                                                method:'get',
@@ -56,46 +77,13 @@ const Profile = ({setIsLogined}) => {
 
                 });
                 console.log(response.data.data);
-                response.data.data.map((genre) => {
-                    setProfileGenre(preButton => [...preButton, genre]);
-                });
+                setProfileGenre(response.data.data);
             } catch(err)    {
                 console.log(err);
             }
-
-            try {
-                const response = await axios({
-                                        method:'get',
-                                        url: '/api/users/mypage',
-                                        withCredentials : true,
-                });
-                let user = response.data;
-                setProfileName(user.data.userName);
-                setProfileGrade(user.data.userGrade);
-                setProfileLike(user.data.userGood);
-                setProfileDisLike(user.data.userBad);
-                setProfileContent(user.data.userContent);
-            } catch(err)  {
-                console.log(err);
-            }
-
-            try {
-                let response = await axios({
-                                    method : 'get',
-                                    url : '/api/users/getuserimage',
-                                    withCredentials : true,
-                });
-                let image = response.data.data;
-                console.log("이미지 데이터 타입 : " + image);
-                if (image) {  // image가 null, undefined, 빈 문자열이 아닐 때
-                    setProfileImage(`data:image/png;base64,` + response.data.data);
-                }
-            } catch(err)    {
-                console.log(err);
-            }
-        }
-        getuser();
-      }, []);
+      }
+      getuser();
+    }, []);
 
     return (
         <div className="profile-container">
@@ -123,10 +111,6 @@ const Profile = ({setIsLogined}) => {
                 <div className="profile-form-group">
                     <label className="profile-label">좋아요</label>
                     <div className="user-value">{profilelike}</div>
-                </div>
-                <div className="profile-form-group">
-                    <label className="profile-label">싫어요</label>
-                    <div className="user-value">{profiledislike}</div>
                 </div>
                 <div className="profile-selection">
                     <h2>선호 장르</h2>

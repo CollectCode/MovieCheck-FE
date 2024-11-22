@@ -152,10 +152,7 @@ const MyProfile = () => {
                                     url : '/api/users/getuserimage',
                                     withCredentials : true,
                 });
-                let image = response.data.data;
-                if(image)   {
-                    setProfileImage(`data:image/png;base64,` + response.data.data);
-                }
+                
             } catch(err)    {
                 console.log(err);
             }
@@ -167,6 +164,9 @@ const MyProfile = () => {
                                         withCredentials : true,
                 });
                 let user = response.data;
+                if (user.data.userProfile) {
+                    setProfileImage(user.data.userProfile);
+                }
                 setDefaultName(user.data.userName);
                 setNickname(user.data.userName);
                 setContent(user.data.userContent);
