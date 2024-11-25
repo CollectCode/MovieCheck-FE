@@ -19,11 +19,11 @@ const LoginedHeader = ({ setIsSearched, setIsLogined, setMovies }) => {
       setIsLogined(false);
       let msg = response.data.msg;
       alert(msg);
-      // 모든 쿠키의 이름을 가져옵니다.
+      // 모든 쿠키의 이름을 Get
       const allCookies = Cookies.get();
       for (const cookieName in allCookies) {
           if (allCookies.hasOwnProperty(cookieName)) {
-              Cookies.remove(cookieName); // 각 쿠키를 삭제합니다.
+              Cookies.remove(cookieName); // 각 쿠키를 Delete
           }
       }
     } catch(err)  {
@@ -31,6 +31,7 @@ const LoginedHeader = ({ setIsSearched, setIsLogined, setMovies }) => {
     }
   }
 
+  // 닉네임 중복확인
   useEffect(() => {
     const checkname = async(e) => {
         try {
@@ -47,6 +48,7 @@ const LoginedHeader = ({ setIsSearched, setIsLogined, setMovies }) => {
       }
     checkname();
   }, [nickname]);
+
   return (
     <header className="header">
       <h1>
