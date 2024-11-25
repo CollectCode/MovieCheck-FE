@@ -1,3 +1,5 @@
+import { React } from 'react';
+
 const SkeletonCard = () => (
     <div className="skeleton-card">
       <div className="skeleton-poster"></div>
