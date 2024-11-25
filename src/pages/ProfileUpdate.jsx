@@ -143,6 +143,10 @@ const MyProfile = () => {
         navigate("/", {});
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
     // 첫 마운트시 작동하는 함수
     useEffect(() => {
         const getuser = async() => {

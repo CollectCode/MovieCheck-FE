@@ -33,4 +33,43 @@
   text-align: center; /* 중앙 정렬 */
   color: #fff; /* 텍스트 색상 */
 }
-  
+
+.fade-enter {
+  opacity: 0;
+  transform: scale(0.9); 
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1000ms ease-in, transform 1000ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 1000ms ease-in, transform 1000ms ease-in;
+}
+
+.skeleton-card {
+  background: #333;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+.skeleton-poster {
+  width: 100%;
+  height: 150px;
+  background: #333;
+}
+.skeleton-title {
+  width: 70%;
+  height: 20px;
+  background: #333;
+  margin-top: 10px;
+}

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import Cookies from 'js-cookie';
 
 // Header components
-const LoginedHeader = ({setIsLogined}) => {
+const LoginedHeader = ({ setIsSearched, setIsLogined, setMovies }) => {
   const [nickname, setNickName] = useState('');
   // 로그아웃 버튼 클릭 이벤트
   const handleLogout = async() =>  {
@@ -18,6 +19,13 @@ const LoginedHeader = ({setIsLogined}) => {
       setIsLogined(false);
       let msg = response.data.msg;
       alert(msg);
+      // 모든 쿠키의 이름을 가져옵니다.
+      const allCookies = Cookies.get();
+      for (const cookieName in allCookies) {
+          if (allCookies.hasOwnProperty(cookieName)) {
+              Cookies.remove(cookieName); // 각 쿠키를 삭제합니다.
+          }
+      }
     } catch(err)  {
       console.log(err.response.data.msg);
     }
@@ -44,7 +52,7 @@ const LoginedHeader = ({setIsLogined}) => {
       <h1>
         <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>무비 체크</Link>
       </h1>
-      <SearchBar />
+      <SearchBar setIsSearched={setIsSearched} setMovies={setMovies} />
       <nav className="header-nav">
         <Link to="/profile" setIsLogined={setIsLogined}>{nickname}님 환영합니다.&nbsp;&nbsp;&nbsp;</Link>
         <Link to="/" onClick={handleLogout}>로그아웃</Link>

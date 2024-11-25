@@ -18,6 +18,10 @@ const MovieDetail = () => {
     const[genres, setGenres] = useState([]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+
+    useEffect(() => {
         const putmovieId = { movieKey : id };
         const getMovieDetails = async() =>  {
             try {
@@ -36,13 +40,13 @@ const MovieDetail = () => {
                 setRelease(info.movieRelease);
                 setDirector(info.directorDto);
                 setActors(info.actorDto);
-                setGenres(info.genres);
+                setGenres(info.genresName);
             } catch(err)    {
                 console.log(err);
             }
         }
         getMovieDetails();
-    }, []);
+    }, [id]);
 
     return (
         <div className="movie-detail-container">

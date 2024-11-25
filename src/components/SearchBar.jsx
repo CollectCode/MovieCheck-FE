@@ -1,8 +1,9 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
+import axios from 'axios';
 import '../css/SearchBar.css';
 
 // SearchBar components
-const SearchBar = () => {
+const SearchBar = ({ setIsSearched, setMovies }) => {
   const [searchTerm, setSearchTerm] = useState('');
   
   const handleSearch = () => {
@@ -10,6 +11,32 @@ const SearchBar = () => {
       alert("검색어:" + searchTerm);
       console.log("asdf");
   };
+
+  useEffect(() => {
+    const searchResult = async() => {
+      if(!searchTerm)  {
+        setIsSearched(false);
+      } else {
+        try {
+          const response = await axios({
+            method: 'get',
+            url: '/api/movies/search',
+            params: { page : 0,
+                      size: 1000,
+                      keyword : searchTerm
+                    }
+          });
+          console.log(response.data.totalPages);
+          setMovies(response.data.movies);
+          setIsSearched(true);
+        } catch(err)  {
+          console.log(err);
+        }
+      }
+    }
+   searchResult();
+  }, [searchTerm]);
+
   return (
     <div className="search-bar">
         <input

@@ -15,7 +15,14 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import './App.css';
 
 const App = () => {
+  const [movies, setMovies] = useState([]);
   const [isLogined, setIsLogined] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isSearched, setIsSearched] = useState(false);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = localStorage.getItem('currentPage');
+    return savedPage ? parseInt(savedPage, 10) : 1; // 초기값 설정
+  });
   const location = useLocation();
 
   useEffect(() => {
@@ -26,12 +33,12 @@ const App = () => {
     <TransitionGroup>
       <CSSTransition key={location.key} classNames="fade" timeout={200}>
         <div className="app">
-          {!!isLogined ? <LoginedHeader setIsLogined={setIsLogined}/> : <UnLoginedHeader />}
+          {!!isLogined ? <LoginedHeader setIsSearched={setIsSearched} setIsLogined={setIsLogined} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} /> : <UnLoginedHeader setIsSearched={setIsSearched} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} />}
           <div className="container">
             <NavigationBar />
             <div className="main-content">
               <Routes location={location}>
-                <Route path="/" element={<MovieGrid />} />
+                <Route path="/" element={<MovieGrid isSearched={isSearched} movies={movies} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>}/>
                 <Route path="/detail/:id" element={<MovieDetail />} />
                 <Route path="/login" element={<LoginForm setIsLogined={setIsLogined} />} />
                 <Route path="/signup" element={<SignUpForm />} />

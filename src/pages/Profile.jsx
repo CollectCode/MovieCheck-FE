@@ -10,7 +10,7 @@ const Profile = ({setIsLogined}) => {
     const [profilegrade, setProfileGrade] = useState('');
     const [profilecontent, setProfileContent] = useState('');
     const [profilegenre, setProfileGenre] = useState([]);
-    const [profilelike, setProfileLike] = useState('');
+    const [profilelike, setProfileLike] = useState('0');
     let navigate = useNavigate();
 
     // 유저 삭제 요청
@@ -53,13 +53,14 @@ const Profile = ({setIsLogined}) => {
                                         url: '/api/users/mypage',
                                         withCredentials : true,
                 });
-                console.log(response.data);
                 let user = response.data;
                 setProfileName(user.data.userName);
-                setProfileGrade(user.data.userGrade);
-                setProfileLike(user.data.userGood);
                 setProfileContent(user.data.userContent);
-                if (user.data.userProfile) {
+                setProfileGrade(user.data.userGrade);
+                if(user.data.userGood != null)    {
+                    setProfileLike(user.data.userGood);
+                }
+                if (user.data.userProfile != null) {
                     const newProfileImage = user.data.userProfile;
                     if (newProfileImage !== profileimage) {
                         setProfileImage(newProfileImage);
@@ -76,7 +77,6 @@ const Profile = ({setIsLogined}) => {
                                                withCredentials : true,
 
                 });
-                console.log(response.data.data);
                 setProfileGenre(response.data.data);
             } catch(err)    {
                 console.log(err);

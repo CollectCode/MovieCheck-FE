@@ -1,21 +1,24 @@
 import React from 'react';
 
-// Navigation Components
-const NavigationBar = () => {
+const NavigationBar = ({ onSelectGenre }) => {
+  const genres = [
+    '추천', '액션', '범죄', '애니메이션', '코미디',
+    '드라마', '판타지', '공포', '전쟁', '로맨스', 'SF',
+  ];
+
   return (
     <nav className="navigation-bar">
       <ul>
         <li className="genrechoice">장 르 선 택</li>
-        <li className="genre">액션</li>
-        <li className="genre">범죄</li>
-        <li className="genre">애니메이션</li>
-        <li className="genre">코미디</li>
-        <li className="genre">드라마</li>
-        <li className="genre">판타지</li>
-        <li className="genre">공포</li>
-        <li className="genre">전쟁</li>
-        <li className="genre">로맨스</li>
-        <li className="genre">SF</li>
+        {genres.map((genre) => (
+          <li
+            key={genre}
+            className="genre"
+            onClick={() => onSelectGenre(genre)}
+          >
+            {genre}
+          </li>
+        ))}
       </ul>
     </nav>
   );

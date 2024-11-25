@@ -11,6 +11,7 @@ body {
 .movie-information  {
     display: flex;
 }
+
 .movie-introduction {
     display: flex;
 }

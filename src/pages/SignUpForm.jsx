@@ -96,17 +96,15 @@ const SignupForm = () => {
                                     headers : {'Content-Type' : 'application/json'},
                                     data : JSON.stringify(requestNameData)
                                   })
-      setCheckName(true);
       console.log("닉네임 : " + requestNameData.userName);
-      let msg = response.data.msg;
-      if(msg === 'unavailable nickname') {
-        setCheckName(false);
-      } else {
+      if(response.status >= 200 && response.status < 300) {
+        alert(response.data.msg);
         setCheckName(true);
-      }
-      alert(msg);
-      } catch(err) {
-        console.log(err);
+      }} catch(err) {
+        if(err.response.status > 399 && err.response.status < 500)  {
+          alert(err.response.data.msg);
+          setCheckName(false);
+        }
       }
     }
 
