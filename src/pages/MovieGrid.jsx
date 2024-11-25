@@ -6,7 +6,7 @@ import '../css/MovieGrid.css'; // 스타일 시트
 import axios from 'axios';
 import SkeletonCard from '../components/SkeletonCard';
 
-const MovieGrid = ({isSearched, movies, setMovies, setTotalPages, setCurrentPage, currentPage, totalPages}) => {
+const MovieGrid = ({ selectedGenre, isSearched, movies, setMovies, setTotalPages, setCurrentPage, currentPage, totalPages}) => {
   // MovieGrid page
   const [isLoading, setIsLoading] = useState(false);
   const [pageSize, setPageSize] = useState(10);
@@ -42,6 +42,54 @@ const MovieGrid = ({isSearched, movies, setMovies, setTotalPages, setCurrentPage
     };
     getMovies(currentPage, pageSize);
   }, [currentPage, pageSize, isSearched]);
+
+  // 장르에 따라 영화 불러오기
+  useEffect(() => {
+    setIsLoading(true);
+    const getMovies = async (page, size) => {
+      if(selectedGenre !== "추천")  {
+        console.log(selectedGenre);
+        try {
+          const response = await axios({
+            method: 'get',
+            url: '/api/movies/genre',
+            params: {
+              page: page-1,
+              size: size,
+              genre: selectedGenre,
+            }
+          });
+          setMovies(response.data.movies);
+          setTotalPages(response.data.totalPages);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setIsLoading(false);
+        }
+      } else  {
+        console.log(selectedGenre);
+        try {
+          const response = await axios({
+            method: 'get',
+            url: '/api/movies/user',
+            params: {
+              page: page-1,
+              size: size,
+            },
+            withCredentials: true,
+          });
+          console.log(response.data);
+          setMovies(response.data.movies);
+          setTotalPages(response.data.totalPages);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    getMovies(currentPage, pageSize);
+  }, [selectedGenre]);
 
   return (
     <TransitionGroup>

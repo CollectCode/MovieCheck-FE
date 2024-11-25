@@ -15,6 +15,7 @@ import ProfileUpdate from './pages/ProfileUpdate';
 import './App.css';
 
 const App = () => {
+  const [selectedGenre, setSelectedGenre] = useState('');
   const [movies, setMovies] = useState([]);
   const [isLogined, setIsLogined] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
@@ -35,10 +36,10 @@ const App = () => {
         <div className="app">
           {!!isLogined ? <LoginedHeader setIsSearched={setIsSearched} setIsLogined={setIsLogined} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} /> : <UnLoginedHeader setIsSearched={setIsSearched} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} />}
           <div className="container">
-            <NavigationBar />
+            <NavigationBar setSelectedGenre = {setSelectedGenre} />
             <div className="main-content">
               <Routes location={location}>
-                <Route path="/" element={<MovieGrid isSearched={isSearched} movies={movies} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>}/>
+                <Route path="/" element={<MovieGrid selectedGenre={selectedGenre} isSearched={isSearched} movies={movies} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>}/>
                 <Route path="/detail/:id" element={<MovieDetail />} />
                 <Route path="/login" element={<LoginForm setIsLogined={setIsLogined} />} />
                 <Route path="/signup" element={<SignUpForm />} />

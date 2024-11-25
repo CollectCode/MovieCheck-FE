@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NavigationBar = ({ onSelectGenre }) => {
+const NavigationBar = ({ setSelectedGenre }) => {
   const genres = [
     '추천', '액션', '범죄', '애니메이션', '코미디',
     '드라마', '판타지', '공포', '전쟁', '로맨스', 'SF',
@@ -14,7 +14,7 @@ const NavigationBar = ({ onSelectGenre }) => {
           <li
             key={genre}
             className="genre"
-            onClick={() => onSelectGenre(genre)}
+            onClick={() => setSelectedGenre(genre)}
           >
             {genre}
           </li>
