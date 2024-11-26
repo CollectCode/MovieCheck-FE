@@ -1,20 +1,24 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const NavigationBar = ({ setSelectedGenre }) => {
+const NavigationBar = ({ setSelectedGenre, selectedGenre }) => {
   const genres = [
-    '추천', '액션', '범죄', '애니메이션', '코미디',
+    '전체보기', '사용자 추천', '액션', '범죄', '애니메이션', '코미디',
     '드라마', '판타지', '공포', '전쟁', '로맨스', 'SF',
   ];
+  const navigate = useNavigate();
 
   return (
     <nav className="navigation-bar">
       <ul>
-        <li className="genrechoice">장 르 선 택</li>
         {genres.map((genre) => (
           <li
             key={genre}
-            className="genre"
-            onClick={() => setSelectedGenre(genre)}
+            className={`genre ${selectedGenre === genre ? 'selected' : ''}`} // 선택된 장르에 'selected' 클래스 추가
+            onClick={() => {
+              setSelectedGenre(genre);
+              navigate("/", {});
+            }}
           >
             {genre}
           </li>

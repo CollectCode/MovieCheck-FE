@@ -63,6 +63,42 @@ body {
   background-color: #444;
 }
 
+.navigation-bar {
+  background-color: #343a40; /* 내비게이션 바 배경색 */
+  padding: 10px;
+}
+
+.genre {
+  cursor: pointer; /* 포인터 커서 */
+  padding: 5px 10px; /* 패딩 추가 */
+  color: #ffffff; /* 기본 글자색 */
+  transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.genre:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* 호버 시 배경색 */
+}
+
+.selected {
+  font-weight: bold; /* 굵게 표시 */
+  color: white; /* 글자색 */
+  background-color: #007bff; /* 배경색 (파란색) */
+  border-radius: 5px; /* 모서리 둥글게 */
+  padding: 5px 10px; /* 패딩 추가 */
+  transition: background-color 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+.selected:hover {
+  background-color: #0056b3; /* 호버 시 더 어두운 파란색 */
+}
+
+.selected-genre {
+  margin-top: 10px; /* 선택된 장르 표시와 상단 요소 간격 */
+  font-size: 16px; /* 폰트 크기 조정 */
+  color: white; /* 색상 조정 */
+}
+
+
 .main-content {
   flex-grow: 1;
   padding: 20px;
@@ -106,14 +142,6 @@ body {
 
 .pagination button {
   margin: 0 5px;
-}
-
-.genrechoice  {
-  margin-left: 10px;
-  font-size: 30px;
-  font-weight: bold;
-  border-bottom: 2px solid #444;
-  color: #cec1c1;
 }
 
 .fade-enter {

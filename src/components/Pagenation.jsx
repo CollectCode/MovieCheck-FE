@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/Pagenation.css';
 
 // Pagination component
@@ -19,6 +19,10 @@ const Pagination = ({ setCurrentPage, currentPage, totalPages }) => {
     console.log(page);
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, [currentPage]);
 
   // 페이지 버튼 생성
   const renderPageNumbers = () => {

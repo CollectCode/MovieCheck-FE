@@ -12,14 +12,16 @@ import LoginForm from './pages/LoginForm';
 import SignUpForm from './pages/SignUpForm';
 import Profile from './pages/Profile';
 import ProfileUpdate from './pages/ProfileUpdate';
+import MovieLoader from './components/MovieLoader';
 import './App.css';
 
 const App = () => {
-  const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('전체보기');
   const [movies, setMovies] = useState([]);
   const [isLogined, setIsLogined] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const [isSearched, setIsSearched] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
     return savedPage ? parseInt(savedPage, 10) : 1; // 초기값 설정
@@ -30,16 +32,21 @@ const App = () => {
     setIsLogined(!!document.cookie);
   }, [isLogined]);
 
+  useEffect(() => {
+    setSearchTerm("");
+  }, [selectedGenre])
+
   return (
     <TransitionGroup>
-      <CSSTransition key={location.key} classNames="fade" timeout={200}>
+      <CSSTransition key={location.key} classNames="fade" timeout={300}>
         <div className="app">
-          {!!isLogined ? <LoginedHeader setIsSearched={setIsSearched} setIsLogined={setIsLogined} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} /> : <UnLoginedHeader setIsSearched={setIsSearched} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} />}
+          {!!isLogined ? <LoginedHeader selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} setIsSearched={setIsSearched} setIsLogined={setIsLogined} searchTerm={searchTerm} setSearchTerm={setSearchTerm} /> 
+                      : <UnLoginedHeader selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} setIsSearched={setIsSearched} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />}
           <div className="container">
-            <NavigationBar setSelectedGenre = {setSelectedGenre} />
+            <NavigationBar setSelectedGenre={setSelectedGenre} selectedGenre={selectedGenre} />
             <div className="main-content">
               <Routes location={location}>
-                <Route path="/" element={<MovieGrid selectedGenre={selectedGenre} isSearched={isSearched} movies={movies} setMovies={setMovies} setTotalPages={setTotalPages} setCurrentPage={setCurrentPage} currentPage={currentPage} totalPages={totalPages}/>}/>
+                <Route path="/" element={<MovieLoader searchTerm={searchTerm} movies={movies} setMovies={setMovies} isLogined={isLogined} setSelectedGenre={setSelectedGenre} selectedGenre={selectedGenre} isSearched={isSearched} setCurrentPage={setCurrentPage} currentPage={currentPage} />}/>
                 <Route path="/detail/:id" element={<MovieDetail />} />
                 <Route path="/login" element={<LoginForm setIsLogined={setIsLogined} />} />
                 <Route path="/signup" element={<SignUpForm />} />
