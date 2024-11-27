@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const NavigationBar = ({ setSelectedGenre, selectedGenre }) => {
+  const [scrollY, setScrollY] = useState(0);
   const genres = [
     '전체보기', '사용자 추천', '액션', '범죄', '애니메이션', '코미디',
     '드라마', '판타지', '공포', '전쟁', '로맨스', 'SF',

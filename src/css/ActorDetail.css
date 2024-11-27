@@ -1,0 +1,122 @@
+.actor-detail-container {
+    max-width: 710px; /* 전체 컨테이너 너비 축소 */
+    margin: 60px auto;
+    padding: 30px;
+    font-family: 'Arial', sans-serif;
+    color: #ffffff; /* 텍스트 색상을 흰색으로 */
+    background-color: #1e1e1e; /* 컨테이너 배경을 어두운 색상으로 변경 */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.actor-information {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.actor-introduction {
+    display: flex;
+    align-items: flex-start; /* 텍스트가 이미지와 잘 맞게 정렬 */
+    gap: 15px; /* 이미지와 텍스트 간 간격 줄임 */
+}
+
+.actor-image {
+    width: 150px; /* 이미지 크기 축소 */
+    height: 220px; /* 크기에 맞는 비율 유지 */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2); /* 이미지에 약간의 강조 */
+    border: 2px solid #555;
+}
+
+.actor-info {
+    margin-left: 40px;
+    flex: 1;
+}
+
+.actor-info h2 {
+    line-height: 3;
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.actor-info p {
+    margin: 5px 0;
+    font-size: 18px;
+    color: #cccccc; /* 부가 텍스트를 연한 회색으로 */
+    line-height: 1.5; /* 가독성 향상 */
+}
+
+.actor-movies {
+    margin-top: 20px;
+}
+
+.actor-movies h2 {
+    font-size: 20px; /* 제목 크기를 약간 줄임 */
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.movie-list {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: flex-start;
+}
+
+.movie-item {
+    text-align: center;
+    width: 100px; /* 영화 카드 크기 축소 */
+    background-color: #333;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin-right: 10px;
+}
+
+.movie-poster {
+    width: 100%; /* 포스터 크기를 카드에 맞게 조정 */
+    height: 150px; /* 비율 조정 */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.movie-item p {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #cccccc; /* 텍스트를 약간 연하게 */
+}
+
+/* 사이드바와 페이지 전체 배경 색을 맞추기 위한 추가 스타일 */
+body {
+    background-color: #121212; /* 페이지 전체 배경 */
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.sidebar {
+    background-color: #1e1e1e; /* 사이드바 배경 색상 통일 */
+    color: #cccccc;
+}
+
+.sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    color: #cccccc;
+}
+
+footer {
+    text-align: center;
+    color: #ffffff;
+    background-color: #1e1e1e;
+    padding: 10px 0;
+    margin-top: 20px;
+    font-size: 14px;
+}

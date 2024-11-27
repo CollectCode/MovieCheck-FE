@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import axios from 'axios';
 import LoginedHeader from './components/LoginedHeader';
 import UnLoginedHeader from './components/UnLoginedHeader';
 import NavigationBar from './components/NavigationBar';
-import MovieGrid from './pages/MovieGrid';
 import Footer from './components/Footer';
 import MovieDetail from './pages/MovieDetail';
+import ActorDetail from './pages/ActorDetail';
 import LoginForm from './pages/LoginForm';
 import SignUpForm from './pages/SignUpForm';
 import Profile from './pages/Profile';
@@ -19,7 +18,6 @@ const App = () => {
   const [selectedGenre, setSelectedGenre] = useState('전체보기');
   const [movies, setMovies] = useState([]);
   const [isLogined, setIsLogined] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
   const [isSearched, setIsSearched] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(() => {
@@ -47,6 +45,7 @@ const App = () => {
             <div className="main-content">
               <Routes location={location}>
                 <Route path="/" element={<MovieLoader searchTerm={searchTerm} movies={movies} setMovies={setMovies} isLogined={isLogined} setSelectedGenre={setSelectedGenre} selectedGenre={selectedGenre} isSearched={isSearched} setCurrentPage={setCurrentPage} currentPage={currentPage} />}/>
+                <Route path="/actor/:id" element={<ActorDetail />} />
                 <Route path="/detail/:id" element={<MovieDetail />} />
                 <Route path="/login" element={<LoginForm setIsLogined={setIsLogined} />} />
                 <Route path="/signup" element={<SignUpForm />} />

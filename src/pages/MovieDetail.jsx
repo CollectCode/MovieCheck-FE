@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import '../css/MovieDetail.css';
 import axios from 'axios';
 import Comment from '../components/Comment';
 
 // MovieDetail page
 const MovieDetail = () => {
-    const location = useLocation();
-    const { id, poster } = location.state || {}; // state에서 데이터 가져오기
+    const[poster, setPoster] = useState('');
     const[title, setTitle] = useState('');
     const[overview, setOverview] = useState('');
     const[score, setScore] = useState('평점이 없습니다.');
@@ -16,24 +15,25 @@ const MovieDetail = () => {
     const[director, setDirector] = useState('');
     const[actors, setActors] = useState([]);
     const[genres, setGenres] = useState([]);
+    const { id } = useParams();
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
-        const putmovieId = { movieKey : id };
+        console.log(id);
         const getMovieDetails = async() =>  {
             try {
                 let response = await axios({
-                    method: 'post',
-                    url: '/api/movies/detail',
+                    method: 'get',
+                    url: `/api/movies/detail?id=${id}`,
                     headers: { 'Content-Type' : 'application/json' },
-                    data: JSON.stringify(putmovieId),
                 });
                 console.log(response.data);
                 let info = response.data;
                 setTitle(info.movieTitle);
+                setPoster(info.moviePoster);
                 setOverview(info.movieOverview);
                 setScore(info.movieScore);
                 setRunTime(info.movieRuntime);
@@ -42,7 +42,7 @@ const MovieDetail = () => {
                 setActors(info.actorDto);
                 setGenres(info.genresName);
             } catch(err)    {
-                console.log(err);
+                console.log(err.data);
             }
         }
         getMovieDetails();
@@ -72,16 +72,19 @@ const MovieDetail = () => {
                         </div>
                     </div>
                     <div className="movie-crew">
-                        <h2>감독</h2>
+                        <h2>감 독</h2>
                         <div className='director'>
                             <img src={director.directorImage} alt="" width="150px"/><br></br>{director.directorName}
                         </div>
-                        <h2>주연</h2>
+                        <h2>주 연</h2>
                         <div className='actors'>
                             {actors.map((actor) => (
-                                <div className="actor">
-                                    <img src={actor.actorImage} alt="" width="150px"/><br></br>{actor.actorName}
-                                </div>
+                                <Link to={`/actor/${actor.actorKey}`} key={actor.actorKey} style={{ textDecoration : "none", color : "white"}}>
+                                    <div className="actor">
+                                        <img src={actor.actorImage} alt={actor.actorName} width="150px" /><br />
+                                        {actor.actorName}
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
