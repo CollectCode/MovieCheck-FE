@@ -3,6 +3,10 @@ import '../css/SearchBar.css';
 
 const SearchBar = ({ setIsSearched, searchTerm, setSearchTerm }) => {
 
+  const handleOnRefresh = ()  =>  {
+    setSearchTerm("");
+  }
+
   useEffect(() => {
     const searchResult = async () => {
       if (searchTerm) { // 검색어가 있을 때만 실행
@@ -28,6 +32,7 @@ const SearchBar = ({ setIsSearched, searchTerm, setSearchTerm }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input" 
       />
+      <button className='refresh-button' onClick={handleOnRefresh}>초기화</button>
     </div>
   );
 };

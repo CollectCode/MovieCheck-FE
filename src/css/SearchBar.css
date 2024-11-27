@@ -16,3 +16,22 @@
 .search-input   {
     margin-right: 20px;
 }
+
+.refresh-button {
+    padding-top: 3px;
+    background-color: white;
+    color: black;
+    border: none; 
+    text-align: center; 
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer; 
+    border-radius: 5px;
+    transition: background-color 0.3s; 
+    width: 85px;
+    font-weight: bold;
+}
+
+.refresh-button:hover {
+    background-color: #108fd8;
+}
