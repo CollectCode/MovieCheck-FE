@@ -13,7 +13,7 @@ const Modal = ({ isOpen, closeModal, modalInfo }) => {
                     &times;
                 </span>
                 <h3>작성자 정보</h3>
-                <img src={modalInfo.userProfile} alt="" style={{ width : '300px', height : '300px'}}/>
+                <img src={modalInfo.userProfile} alt="" style={{ width : '50%', height : '20%'}}/>
                 <p>닉네임: {modalInfo.userName}</p>
                 <p>등급: {modalInfo.userGrade}</p>
                 <span>성별 : </span>{modalInfo.userGender == 1 ? <span> 남 </span> : <span> 여 </span>}
