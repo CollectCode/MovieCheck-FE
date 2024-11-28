@@ -18,7 +18,6 @@ const SignupForm = () => {
   // 회원가입 버튼클릭 이벤트
   const handleSignup = async(e) => {
       e.preventDefault();
-      
       const requestSignupData = {
         userPassword : password,
         userPasswordConfirm : passwordConfirm,
@@ -107,7 +106,9 @@ const SignupForm = () => {
         }
       }
     }
-
+  
+  
+  
   return (
     <div className="signup-container">
       <h2 className="signup-title">회 원 가 입<span className="title-notice"><br></br>&nbsp;&nbsp;*은 필수 기입항목 입니다.</span></h2>

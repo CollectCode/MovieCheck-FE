@@ -44,6 +44,11 @@ body {
     margin-right: 60px;
 }
 
+.actor:hover    {
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
 .loading-container {
     position: fixed; 
     top: 50%;

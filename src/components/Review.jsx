@@ -6,37 +6,34 @@ import Modal from './Modal';
 
 const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const [content, setContent] = useState('');
-    const [likes, setLikes] = useState(Array(reviews.length).fill(0)); // 리뷰 별 좋아요 카운트
-    const [modalInfo, setModalInfo] = useState(null); // 모달에 표시할 사용자 정보
+    const [likes, setLikes] = useState(Array(reviews.length).fill(0));
+    const [modalInfo, setModalInfo] = useState(null);
+    const [replyContent, setReplyContent] = useState('');
+    const [editingIndex, setEditingIndex] = useState(null);
+    const [replyIndex, setReplyIndex] = useState(null); // 답글을 작성할 리뷰 인덱스
     const navigate = useNavigate();
 
-    // 시간 형식 처리
     const formatDate = (dateTime) => {
         return dateTime.toString().replace('T', ' ').split('.')[0];
     };
 
-    // 리뷰 제출 처리
     const handleOnSubmit = async () => {
         if (isLogined) {
-            if(content) {
-                const sendData = {
-                    movieKey: movieId,
-                    reviewContent: content,
-                };
+            if (content) {
+                const sendData = { movieKey: movieId, reviewContent: content };
                 try {
-                    const response = await axios.post('/api/reviews/create', sendData, {
+                    await axios.post('/api/reviews/create', sendData, {
                         headers: { 'Content-Type': 'application/json' },
                         withCredentials: true,
                     });
-                    console.log(response.data);
+                    window.location.reload();
                 } catch (err) {
-                    if (err.status === 409) {
+                    if (err.response.status === 409) {
                         alert("영화당 하나의 리뷰만 작성하실 수 있습니다.");
                     }
                     console.error(err);
                 }
-                window.location.reload();
-            }  else  {
+            } else {
                 alert("내용을 적어주세요.");
             }
         } else {
@@ -45,30 +42,57 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         }
     };
 
-    // 좋아요 처리
+    const handleReplySubmit = (index) => {
+        if (replyContent) {
+            const updatedReviews = [...reviews];
+            updatedReviews[index].replies = updatedReviews[index].replies || [];
+            updatedReviews[index].replies.push(replyContent);
+            setReplyContent('');
+            // 서버에 답글을 추가하는 요청을 보낼 수도 있습니다.
+        } else {
+            alert("답글 내용을 입력해주세요.");
+        }
+    };
+
+    const handleEdit = (index) => {
+        setEditingIndex(index);
+        setContent(reviews[index].reviewContent);
+    };
+
+    const handleEditSubmit = async (index) => {
+        if (content) {
+            try {
+                await axios.put(`/api/reviews/update/${reviews[index].id}`, { reviewContent: content });
+                window.location.reload();
+            } catch (err) {
+                console.error(err);
+            }
+            setEditingIndex(null);
+        } else {
+            alert("내용을 입력해주세요.");
+        }
+    };
+
     const handleLike = (index) => {
         const updatedLikes = [...likes];
         updatedLikes[index] += 1;
         setLikes(updatedLikes);
     };
 
-    // 모달 열기
     const openModal = (reviewer) => {
         setModalInfo(reviewer);
     };
 
-    // 모달 닫기
     const closeModal = () => {
-        setModalInfo(null); // modalInfo를 초기화하여 모달을 닫음
+        setModalInfo(null);
     };
-
 
     return (
         <div className="review-wrapper">
-            <h2>리뷰 쓰기</h2>
+            <h2>리뷰 작성</h2>
             <div className="review-section">
                 <textarea
-                    placeholder="영화를 감상한 후 의견을 작성해주세요."
+                    placeholder="영화에 대한 의견을 작성해주세요."
                     className="review-input"
                     onChange={(e) => setContent(e.target.value)}
                 ></textarea>
@@ -83,27 +107,57 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                         {reviews.map((review, index) => (
                             <div className="review-details" key={index}>
                                 <div className="review-header">
-                                    <div className="user-info">
+                                    <div className="user-info"
+                                        onClick={() => openModal(reviewers[index])}>
                                         <img
                                             src={reviewers[index]?.userProfile || 'default-profile.png'}
                                             alt="사용자 프로필"
                                             className="user-profile"
                                         />
-                                        <span
-                                            className="nickname"
-                                            onClick={() => openModal(reviewers[index])}
-                                        >
+                                        <span>
                                             {reviewers[index]?.userName}
                                         </span>
                                     </div>
-                                    <span className="review-date">{formatDate(review.reviewTime)}</span>
+                                    <div className="review-date">{formatDate(review.reviewTime)}</div>
                                 </div>
-                                <p className="review-content">{review.reviewContent}</p>
+                                {editingIndex === index ? (
+                                    <div className="edit-review">
+                                        <textarea
+                                            value={content}
+                                            onChange={(e) => setContent(e.target.value)}
+                                        ></textarea>
+                                        <button onClick={() => handleEditSubmit(index)}>완료</button>
+                                    </div>
+                                ) : (
+                                    <p className="review-content">{review.reviewContent}</p>
+                                )}
                                 <div className="review-actions">
+                                    <div className='cud-buttons'>
+                                        <button className='comment-button' onClick={() => setReplyIndex(replyIndex === index ? null : index)}>답글</button>
+                                        <button className='update-button' onClick={() => handleEdit(index)}>수정</button>
+                                        <button className='delete-button'>삭제</button>
+                                    </div>
                                     <button className="like-button" onClick={() => handleLike(index)}>
                                         좋아요 👍 {likes[index]}
                                     </button>
                                 </div>
+                                {replyIndex === index && (
+                                    <div className="reply-section">
+                                        <textarea
+                                            placeholder="답글을 작성하세요."
+                                            value={replyContent} 
+                                            onChange={(e) => setReplyContent(e.target.value)}
+                                        />
+                                        <button onClick={() => handleReplySubmit(index)}>답글 작성</button>
+                                    </div>
+                                )}
+                                {review.replies && review.replies.length > 0 && (
+                                    <div className="replies">
+                                        {review.replies.map((reply, replyIndex) => (
+                                            <div key={replyIndex} className="reply-content">{reply}</div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -111,18 +165,8 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
             ) : (
                 <h2 style={{ textAlign: 'center' }}>리뷰가 없어요! 작성해주세요...</h2>
             )}
-
-            {/* 모달 창임 */}
             {modalInfo && (
-                <div>
-                    {/* 모달 열기 버튼 예시 */}
-                    <button onClick={() => openModal({ userName: '홍길동', email: 'example@example.com' })}>
-                        작성자 정보 보기
-                    </button>
-        
-                    {/* 모달 창 */}
-                    <Modal isOpen={!!modalInfo} closeModal={closeModal} modalInfo={modalInfo} />
-                </div>
+                <Modal isOpen={!!modalInfo} closeModal={closeModal} modalInfo={modalInfo} />
             )}
         </div>
     );

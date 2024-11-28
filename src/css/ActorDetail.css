@@ -1,6 +1,6 @@
 .actor-detail-container {
     max-width: 710px; /* 전체 컨테이너 너비 축소 */
-    margin: 60px auto;
+    margin: 60px 350px;
     padding: 30px;
     font-family: 'Arial', sans-serif;
     color: #ffffff; /* 텍스트 색상을 흰색으로 */
@@ -75,6 +75,11 @@
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     margin-right: 10px;
+}
+
+.movie-item:hover   {
+    transform: scale(1.05);
+    transition: 0.3s;
 }
 
 .movie-poster {

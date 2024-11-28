@@ -40,6 +40,7 @@
 .submit-review:hover    {
     background-color: rgb(15, 124, 187);
 }
+
 .existing-reviews {
     margin-top: 20px;
 }
@@ -62,6 +63,9 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .user-profile {
@@ -70,14 +74,8 @@
     border-radius: 50%;
 }
 
-.nickname {
-    color: #0aafff;
-    cursor: pointer;
-    font-weight: bold;
-}
-
 .review-content {
-    margin-top: 10px;
+    margin: 20px;
 }
 
 .like-button {
@@ -87,4 +85,55 @@
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.like-button:hover    {
+    background: #027ab6;
+}
+
+.comment-button {
+    background: #0aafff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.comment-button:hover   {
+    background:#0190d8;
+}
+
+.update-button  {
+    background: #02a30f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.update-button:hover   {
+    background-color: #00830b;
+}
+
+.delete-button  {
+    background: #f70303;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.delete-button:hover    {
+    background-color: #bb0000;
+}
+
+.review-actions {
+    display: flex;
+    justify-content: space-between;
 }

@@ -44,7 +44,7 @@
 }
 
 .profile-update-input {
-    width: 75%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #245cc2;
     border-radius: 4px;
@@ -101,7 +101,8 @@
 }
 
 .profile-update-buttons {
-    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .profile-update-save, .profile-update-cancel{
