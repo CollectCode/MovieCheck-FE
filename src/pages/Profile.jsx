@@ -95,13 +95,13 @@ const Profile = ({ setIsLogined }) => {
                         <div className="user-value">{profilegrade}</div>
                     </div>
                     <div className="profile-section">
-                        <label className="profile-label">한줄 소개</label>
-                        <div className="user-value">{profilecontent}</div>
-                    </div>
-                    <div className="profile-section">
                         <label className="profile-label">좋아요</label>
                         <div className="user-value">{profilelike}</div>
                     </div>
+                </div>
+                <div className="profile-introduction">
+                    <label className="profile-label">한줄 소개</label>
+                    <div className="user-value">{profilecontent}</div>
                 </div>
                 <div className="profile-selection">
                     <div className="selection-title">선호 장르</div>

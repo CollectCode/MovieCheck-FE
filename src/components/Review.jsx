@@ -54,6 +54,10 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         }
     };
 
+    const handleDelete = (index) => {
+
+    }
+
     const handleEdit = (index) => {
         setEditingIndex(index);
         setContent(reviews[index].reviewContent);
@@ -62,8 +66,13 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const handleEditSubmit = async (index) => {
         if (content) {
             try {
-                await axios.put(`/api/reviews/update/${reviews[index].id}`, { reviewContent: content });
-                window.location.reload();
+                let response = await axios({
+                    method: 'post',
+                    url: '/api/reviews/create',
+                    headers: { 'Content-Type' : 'application/json' },
+                    withCredentials: true,
+                });
+                console.log(response.data);
             } catch (err) {
                 console.error(err);
             }
@@ -135,7 +144,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                     <div className='cud-buttons'>
                                         <button className='comment-button' onClick={() => setReplyIndex(replyIndex === index ? null : index)}>답글</button>
                                         <button className='update-button' onClick={() => handleEdit(index)}>수정</button>
-                                        <button className='delete-button'>삭제</button>
+                                        <button className='delete-button' onClick={() => handleDelete(index)}>삭제</button>
                                     </div>
                                     <button className="like-button" onClick={() => handleLike(index)}>
                                         좋아요 👍 {likes[index]}

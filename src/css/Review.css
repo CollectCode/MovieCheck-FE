@@ -27,13 +27,13 @@
 }
 
 .submit-review {
-    padding: 25px;
+    padding: 20px;
     background-color: #0373ac;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 10px;
 }
 

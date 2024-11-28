@@ -26,7 +26,11 @@ const SignupForm = () => {
         userGender : gender,
         userContent : content,
       }
-      if(checkEmail && checkName && password && passwordConfirm && gender && content) {
+      if((password.length < 8 || password.length > 17) || (passwordConfirm.length < 8 || passwordConfirm.length > 17)) {
+        alert("비밀번호는 8~17자 사이로 입력해주세요.");
+        return;
+      } 
+      if(checkEmail && checkName && password && passwordConfirm && gender) {
       try {
           if(password !== passwordConfirm) {
             alert("비밀번호가 일치하지 않습니다.");
@@ -56,59 +60,79 @@ const SignupForm = () => {
     };
     
     // 이메일 중복체크 이벤트
-    const handleCheckEmail = async(e) =>  {
-      const requestEmailData =  {
-        userEmail : email,
+    const handleCheckEmail = async (e) => {
+      const requestEmailData = {
+          userEmail: email,
+      };
+  
+      // 이메일 형식 확인 정규식
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  
+      // 이메일 형식이 올바른지 확인
+      if (!emailPattern.test(email)) {
+          alert("유효한 이메일 주소를 입력해주세요.");
+          setCheckEmail(false);
+          return;
       }
+  
       let response;
       try {
-        response = await axios({
-                                    method : 'post',
-                                    url : '/api/users/check/email',
-                                    headers : {'Content-Type' : 'application/json'},
-                                    data : JSON.stringify(requestEmailData)
-                                  })
-        
-        let msg = response.data.msg;
-        if(response.status >= 200 && response.status < 300){
-          alert(msg);
-          setCheckEmail(true);
-        }
-      } catch(err) {
-        let msg = err.response.data.msg;
-        if(err.response.status > 399 && err.response.status < 500) {
-          alert(msg);
-          setCheckEmail(false);
-        }
+          response = await axios({
+              method: 'get',
+              url: '/api/users/check/email',
+              headers: { 'Content-Type': 'application/json' },
+              params : { userEmail: email },
+          });
+  
+          let msg = response.data.msg;
+          if (response.status >= 200 && response.status < 300) {
+              alert(msg);
+              setCheckEmail(true);
+          }
+      } catch (err) {
+          console.log(err.response);
+          let msg = err.response.data.msg;
+          if (err.response.status > 399 && err.response.status <= 500) {
+              alert(msg);
+              setCheckEmail(false);
+          }
       }
+  };
+
+  // 닉네임 중복체크 이벤트
+  const handleCheckName = async (e) => {
+
+    // 닉네임 형식 확인 정규식 (3~15자, 한글, 알파벳, 숫자, 언더스코어만 허용)
+    const namePattern = /^[가-힣a-zA-Z0-9_ ]{3,15}$/;
+
+    // 닉네임 형식이 올바른지 확인
+    if (!namePattern.test(nickname)) {
+        alert("닉네임은 3~15자 길이의 한글, 알파벳, 숫자, 공백 및 언더스코어(_)만 사용할 수 있습니다.");
+        setCheckName(false);
+        return;
     }
 
-    // 닉네임 중복체크 이벤트
-    const handleCheckName = async(e) =>  {
-      const requestNameData =  {
-        userName : nickname,
-      }
-      try {
+    try {
         let response = await axios({
-                                    method : 'post',
-                                    url : '/api/users/check/name',
-                                    headers : {'Content-Type' : 'application/json'},
-                                    data : JSON.stringify(requestNameData)
-                                  })
-      console.log("닉네임 : " + requestNameData.userName);
-      if(response.status >= 200 && response.status < 300) {
-        alert(response.data.msg);
-        setCheckName(true);
-      }} catch(err) {
-        if(err.response.status > 399 && err.response.status < 500)  {
-          alert(err.response.data.msg);
-          setCheckName(false);
+            method: 'get',
+            url: '/api/users/check/name',
+            headers: { 'Content-Type': 'application/json' },
+            params: { userName: nickname },
+        });
+
+        if (response.status >= 200 && response.status < 300) {
+            alert(response.data.msg);
+            setCheckName(true);
         }
-      }
+    } catch (err) {
+        if (err.response.status > 399 && err.response.status <= 500) {
+            alert(err.response.data.msg);
+            setCheckName(false);
+        }
     }
-  
-  
-  
+  };
+
+
   return (
     <div className="signup-container">
       <h2 className="signup-title">회 원 가 입<span className="title-notice"><br></br>&nbsp;&nbsp;*은 필수 기입항목 입니다.</span></h2>
@@ -162,7 +186,6 @@ const SignupForm = () => {
               placeholder="본인을 소개해주세요!"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              required
             />
         </div>
         <div className="signup-gender-group">

@@ -5,7 +5,8 @@ body {
 }
 
 .movie-detail-container {
-    max-width: calc(100% - 125px);
+    margin-right: 300px;
+    min-width: 1500px;  
 }
 
 

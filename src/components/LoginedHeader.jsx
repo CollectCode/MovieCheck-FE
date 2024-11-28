@@ -19,15 +19,15 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
       setIsLogined(false);
       let msg = response.data.msg;
       alert(msg);
-      // 모든 쿠키의 이름을 Get
-      const allCookies = Cookies.get();
-      for (const cookieName in allCookies) {
-          if (allCookies.hasOwnProperty(cookieName)) {
-              Cookies.remove(cookieName); // 각 쿠키를 Delete
-          }
-      }
     } catch(err)  {
       console.log(err.response.data.msg);
+    } finally {
+      const allCookies = Cookies.get();
+      for (const cookieName in allCookies) {
+        if (allCookies.hasOwnProperty(cookieName)) {
+            Cookies.remove(cookieName); // 각 쿠키를 Delete
+        }
+      }
     }
   }
 
@@ -43,7 +43,7 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
           });
           setNickName(response.data.data.userName);
         } catch(err)  {
-          console.log(err);
+          console.log(err.data);
         }
       }
     checkname();
