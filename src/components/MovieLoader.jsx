@@ -92,6 +92,7 @@ const MovieLoader = ({ searchTerm, movies, setMovies, isLogined, setSelectedGenr
       totalPages={totalPages}
       setCurrentPage={setCurrentPage}
       isSearched={isSearched}
+      isLogined={isLogined}
     />
   );
 };

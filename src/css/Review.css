@@ -1,0 +1,85 @@
+.review-wrapper {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    width: 95%;
+    margin: 20px auto;
+}
+
+.review-section {
+    display: flex;
+}
+
+.review-section textarea {
+    width: 90%;
+    height: 100px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.submit-review {
+    padding: 25px;
+    background-color: #0aafff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.submit-review:hover    {
+    background-color: rgb(9, 111, 170);
+}
+.existing-reviews {
+    margin-top: 20px;
+}
+
+.review-details {
+    background: #444;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.nickname {
+    color: #0aafff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.review-content {
+    margin-top: 10px;
+}
+
+.like-button {
+    background: #0aafff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

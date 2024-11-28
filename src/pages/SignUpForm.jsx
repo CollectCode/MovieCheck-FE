@@ -169,6 +169,7 @@ const SignupForm = () => {
           <label>
             <input
               type="radio"
+              name='gender'
               value="1"
               onChange={(e) => setGender(e.target.value)}
             /> 남
@@ -176,6 +177,7 @@ const SignupForm = () => {
           <label>
             <input
               type="radio"
+              name='gender'
               value="2"
               onChange={(e) => setGender(e.target.value)}
             /> 여

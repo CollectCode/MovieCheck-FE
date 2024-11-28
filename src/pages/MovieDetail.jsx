@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../css/MovieDetail.css';
 import axios from 'axios';
-import Comment from '../components/Comment';
+import Review from '../components/Review';
 
 // MovieDetail page
-const MovieDetail = () => {
+const MovieDetail = ({isLogined}) => {
     const[poster, setPoster] = useState('');
     const[title, setTitle] = useState('');
     const[overview, setOverview] = useState('');
@@ -15,6 +15,8 @@ const MovieDetail = () => {
     const[director, setDirector] = useState('');
     const[actors, setActors] = useState([]);
     const[genres, setGenres] = useState([]);
+    const[reviews, setReviews] = useState([]);
+    const[reviewers, setReviewers] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -22,14 +24,13 @@ const MovieDetail = () => {
     }, []);
 
     useEffect(() => {
-        console.log(id);
         const getMovieDetails = async() =>  {
             try {
                 let response = await axios({
                     method: 'get',
                     url: `/api/movies/detail?id=${id}`,
-                    headers: { 'Content-Type' : 'application/json' },
-                });
+                    headers: { 'Content-Type': 'application/json' },
+                });                
                 console.log(response.data);
                 let info = response.data;
                 setTitle(info.movieTitle);
@@ -45,7 +46,25 @@ const MovieDetail = () => {
                 console.log(err.data);
             }
         }
+
+        const getReview = async() =>    {
+            console.log(id);
+            try {
+                let response = await axios({
+                    method: 'get',
+                    url: `/api/reviews?id=${id}`,
+                    headers: { 'Content-Type' : 'application/json' },
+                });
+                setReviews(response.data.reviews);
+                setReviewers(response.data.reviewers);
+                console.log("리뷰 데이터");
+                console.log(response.data);
+            } catch(err)    {
+                console.log(err);
+            }
+        }
         getMovieDetails();
+        getReview();
     }, [id]);
 
     return (
@@ -90,7 +109,7 @@ const MovieDetail = () => {
                     </div>
                 </div>
             </div>
-            <Comment />
+            <Review movieId={id} isLogined={isLogined} reviews={reviews} reviewers={reviewers}/>
         </div>
     );
 };

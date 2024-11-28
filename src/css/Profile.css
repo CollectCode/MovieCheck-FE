@@ -1,175 +1,196 @@
 .profile-container {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 40px;
-    background-color: #444;
-    border-radius: 25px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 상단에 맞춤 */
+    min-height: calc(100vh - 60px); /* header 높이만큼 조정 */
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 0;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    padding: 20px 30px; /* 여백 조정 */
+    padding-top: 60px; /* header 높이만큼 여백 추가 */
 }
 
-.top-title  {
+.profile-card {
+    background: #2a2a2a;
+    border-radius: 15px;
+    padding: 50px 60px; /* 내부 여백 증가 */
+    width: 100%;
+    max-width: 1000px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+    font-size: 20px; /* 텍스트 크기 증가 */
+}
+
+.profile-card h2 {
+    font-size: 32px; /* 제목 크기 증가 */
+    margin-bottom: 25px;
+}
+
+.profile-card .info-section {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px; /* 섹션 간 간격 증가 */
+    font-size: 22px; /* 정보 텍스트 크기 */
+}
+
+.profile-card .info-item {
+    background: #333;
+    border-radius: 10px;
+    padding: 20px 25px; /* 내부 여백 확장 */
+    flex: 1;
+    text-align: center;
+    margin: 0 15px; /* 좌우 간격 */
+    font-size: 20px; /* 텍스트 크기 */
+}
+
+.profile-card .genre-section {
+    margin-top: 35px; /* 선호 장르 간격 */
+    padding: 25px;
+    background: #2e2e2e;
+    border-radius: 10px;
+    font-size: 22px; /* 선호 장르 텍스트 크기 */
+}
+
+.profile-card .genre-badge {
+    display: inline-block;
+    padding: 15px 20px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 20px; /* 배지 텍스트 크기 */
+    color: #fff;
+}
+
+.top-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
 .profile-title {
-    text-align: left;   
+    font-size: 2rem; /* 반응형 폰트 크기 */
+    font-weight: bold;
+    margin: 0;
+}
+
+.profile-delete {
+    background-color: #ff4d4f;
+    border: none;
+    padding: 12px 18px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.profile-delete:hover {
+    background-color: #e43d3f;
 }
 
 .profile-picture {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    position: relative;
-}   
-
-.profile-picture img {
-    width: 200px; /* 이미지 크기 조절 */
-    height: 200px; /* 이미지 크기 조절 */
-    border-radius: 30%; /* 이미지도 동그라미 모양 */
-    object-fit: cover; /* 비율 유지 */
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-.profile-form-group {
-    margin: 15px auto;
+.user-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 반응형 그리드 */
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.profile-section {
+    background: #333;
+    padding: 20px 25px;
+    border-radius: 10px;
     text-align: center;
 }
 
 .profile-label {
+    font-weight: bold;
     display: block;
-    margin-bottom: 25px;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-.profile-label > span   {
-    font-size: 14px;
-    text-decoration: underline;
-    color:rgb(54, 204, 134);
-}
-
-.profile-input {
-    width: 75%;
-    padding: 10px;
-    border: 1px solid #245cc2;
-    border-radius: 4px;
-}
-
-.profile-description {
-    margin: 15px 0;
-    text-align: center;
-}
-
-.profile-selection {
-    margin: 30px;
-}
-
-.profile-selection > h2 {
-    text-align: center;
-}
-
-.like-buttons   {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.profile-nogenre-button {
-    padding: 12px 24px;
-    margin: 20px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #c0c1c2;
-    color: black;
-    font-weight: bold;
-}
-
-.profile-genre-button {
-    padding: 12px 24px;
-    margin: 20px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: black;
-    font-weight: bold;
-}
-
-.profile-genres {
-    margin: 0 auto;
-    width: 300px;
-    text-align: center;
-    background-color: #c0c1c2;
-    border-radius: 10px;
-}
-
-.profile-buttons {
-    text-align: center;
-}
-
-.profile-save, .profile-cancel{
-    padding: 10px 25px;
-    margin: 5px 25px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.profile-delete {
-    padding: 10px 20px;
-    margin: 15px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: red;
-    color: white;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.profile-check  {
-    padding: 7px 15px;
-    margin: 7px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: bold;
-    transition: background 0.3s;
-}
-
-.profile-save:hover, .profile-cancel:hover {
-    background-color: #0056b3;
-}
-
-.profile-delete:hover {
-    background-color: rgb(182, 43, 18);
-}
-
-.profile-check  {
-    margin-left: 50px;
-}
-
-.profile-face   {
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 35px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
 }
 
 .user-value {
-    margin: 0 auto;
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+.profile-selection {
+    width: auto;
+    margin-top: 25px;
     padding: 15px;
-    background-color: #c0c1c2;
-    border-radius: 8px;
-    color: black;
-    font-size: 20px;
-    width: 40%;
+    background: #444;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.selection-title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
     font-weight: bold;
+}
+
+.like-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.profile-genre-button {
+    padding: 12px 25px;
+    border-radius: 25px;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.profile-genre-button:nth-child(1) {
+    background-color: #ff6347;
+}
+
+.profile-genre-button:nth-child(2) {
+    background-color: #ffa500;
+}
+
+.profile-genre-button:nth-child(3) {
+    background-color: #ffff00;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 35px;
+}
+
+.profile-save {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.profile-save:hover {
+    background-color: #0056b3;
 }
