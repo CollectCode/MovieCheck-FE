@@ -1,10 +1,12 @@
 .profile-update-container {
-    max-width: 800px;
-    margin: 50px 300px;
-    padding: 40px;
-    background-color: #444;
-    border-radius: 25px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 200px;
+    padding: 30px 60px; /* 내부 여백 증가 */
+    background: #2a2a2a;
+    border-radius: 15px;
+    width: 100%;
+    font-size: 20px; /* 텍스트 크기 증가 */
+    max-width: calc(100% - 700px);   
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .profile-update-title {
@@ -61,7 +63,7 @@
     border-radius: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: #666;
     margin-bottom: 20px;
 }
@@ -80,7 +82,7 @@
 
 .profile-update-genre-button {
     padding: 10px 25px;
-    margin: 20px;
+    margin: 20px 50px 20px 20px;
     border: none;
     border-radius: 5px;
     background-color: #007bff;
@@ -136,46 +138,6 @@
     margin-left: 50px;
 }
 
-#action {
-    background-color: #FF5733;
-}
-
-#thriller   {
-    background-color: #900C3F;
-}s
-
-#animation  {
-    background-color: #FFC300;
-}
-
-#comedy {
-    background-color: #28B463;
-}
-
-#drama  {
-    background-color: #3498DB;
-}
-
-#fantacy    {
-    background-color: #8E44AD;
-}
-
-#horror {
-    background-color: #C0392B;
-}
-
-#war    {
-    background-color: #7D3C98;
-}
-
-#romance    {
-    background-color: #EAB8D1;
-}
-
-#sf {
-    background-color: #2E86C1;
-}
-
 .choosedgenre   {
     font-weight: bold;
     font-size: 20px;
@@ -221,4 +183,49 @@
 .setGenre   {
     display: flex;
     justify-content: space-evenly;
+}
+
+.loading-container {
+    position: fixed; /* 화면에 고정 */
+    top: 50%; /* 세로 중앙 */
+    left: 50%; /* 가로 중앙 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면 전체 높이 */
+    width: 100vw; /* 화면 전체 너비 */
+    background: rgba(0, 0, 0, 0.5); /* 배경색 추가 */
+    z-index: 1000; /* 다른 요소 위에 표시 */
+  }
+  
+.loading-content {
+    position: fixed; /* 화면에 고정 */
+    top: 50%; /* 세로 중앙 */
+    left: 50%; /* 가로 중앙 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    color: white; /* 텍스트 색상 */
+}
+
+
+.loader {
+    border: 8px solid #f3f3f3; /* 연한 회색 */
+    border-top: 8px solid #3498db; /* 파란색 */
+    border-radius: 50%;
+    width: 50px; /* 로딩 애니메이션 크기 */
+    height: 50px; /* 로딩 애니메이션 크기 */
+    animation: spin 1s linear infinite; /* 애니메이션 */
+    margin-bottom: 10px; /* 메시지와 간격 */
+}
+
+/* 애니메이션 정의 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

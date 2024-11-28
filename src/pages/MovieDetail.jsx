@@ -5,32 +5,33 @@ import axios from 'axios';
 import Review from '../components/Review';
 
 // MovieDetail page
-const MovieDetail = ({isLogined}) => {
-    const[poster, setPoster] = useState('');
-    const[title, setTitle] = useState('');
-    const[overview, setOverview] = useState('');
-    const[score, setScore] = useState('평점이 없습니다.');
-    const[runtime, setRunTime] = useState('');
-    const[release, setRelease] = useState('');
-    const[director, setDirector] = useState('');
-    const[actors, setActors] = useState([]);
-    const[genres, setGenres] = useState([]);
-    const[reviews, setReviews] = useState([]);
-    const[reviewers, setReviewers] = useState([]);
+const MovieDetail = ({ isLogined }) => {
+    const [poster, setPoster] = useState('');
+    const [title, setTitle] = useState('');
+    const [overview, setOverview] = useState('');
+    const [score, setScore] = useState('평점이 없습니다.');
+    const [runtime, setRunTime] = useState('');
+    const [release, setRelease] = useState('');
+    const [director, setDirector] = useState({});
+    const [actors, setActors] = useState([]);
+    const [genres, setGenres] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [reviewers, setReviewers] = useState([]);
     const { id } = useParams();
+    const [isLoading, setIsLoading] = useState(true); // 초기값을 true로 설정
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
-        const getMovieDetails = async() =>  {
+        const getMovieDetails = async () => {
             try {
                 let response = await axios({
                     method: 'get',
                     url: `/api/movies/detail?id=${id}`,
                     headers: { 'Content-Type': 'application/json' },
-                });                
+                });
                 console.log(response.data);
                 let info = response.data;
                 setTitle(info.movieTitle);
@@ -42,74 +43,87 @@ const MovieDetail = ({isLogined}) => {
                 setDirector(info.directorDto);
                 setActors(info.actorDto);
                 setGenres(info.genresName);
-            } catch(err)    {
-                console.log(err.data);
+            } catch (err) {
+                console.log(err);
             }
-        }
+        };
 
-        const getReview = async() =>    {
-            console.log(id);
+        const getReview = async () => {
             try {
                 let response = await axios({
                     method: 'get',
                     url: `/api/reviews?id=${id}`,
-                    headers: { 'Content-Type' : 'application/json' },
+                    headers: { 'Content-Type': 'application/json' },
                 });
                 setReviews(response.data.reviews);
                 setReviewers(response.data.reviewers);
                 console.log("리뷰 데이터");
                 console.log(response.data);
-            } catch(err)    {
+            } catch (err) {
                 console.log(err);
+            } finally {
+                setIsLoading(false); // 모든 작업이 끝난 후 로딩 상태를 false로 설정
             }
-        }
+        };
+
         getMovieDetails();
         getReview();
     }, [id]);
 
     return (
         <div className="movie-detail-container">
-            <h1>{title}</h1>
-            <div className='movie-information'>
-                <div className="movie-introduction">
-                    <img src={poster} alt="영화 이미지" className="movie-image" />
-                    <div className="movie-info">
-                        <div className='movie-info-content'>
-                            <h1>영화 소개</h1>
-                            <h3>줄거리</h3>
-                            <p>{overview}</p>
-                            <h3>장르</h3>
-                            <div>[{genres.map((genre, index) => (
-                                index < genres.length-1 ? <span>{genre}, </span> : <span>{genre}</span>
-                            ))}]</div>
-                            <h3>개봉일</h3>
-                            <p>{release}</p>
-                            <h3>평점</h3>
-                            <p>{score}</p>
-                            <h3>상영 시간(분)</h3>
-                            <p>{runtime}</p>
-                        </div>
-                    </div>
-                    <div className="movie-crew">
-                        <h2>감 독</h2>
-                        <div className='director'>
-                            <img src={director.directorImage} alt="" width="150px"/><br></br>{director.directorName}
-                        </div>
-                        <h2>주 연</h2>
-                        <div className='actors'>
-                            {actors.map((actor) => (
-                                <Link to={`/actor/${actor.actorKey}`} key={actor.actorKey} style={{ textDecoration : "none", color : "white"}}>
-                                    <div className="actor">
-                                        <img src={actor.actorImage} alt={actor.actorName} width="150px" /><br />
-                                        {actor.actorName}
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
+            {isLoading ? (
+                <div className="loading-content">
+                    <div className="loader"></div> {/* 로딩 애니메이션 */}
+                    <p>로딩중...</p>
                 </div>
-            </div>
-            <Review movieId={id} isLogined={isLogined} reviews={reviews} reviewers={reviewers}/>
+            ) : (
+                <div>
+                    <h1>{title}</h1>
+                    <div className='movie-information'>
+                        <div className="movie-introduction">
+                            <img src={poster} alt="영화 이미지" className="movie-image" />
+                            <div className="movie-info">
+                                <div className='movie-info-content'>
+                                    <h1>영화 소개</h1>
+                                    <h3>장르</h3>
+                                    <div>[{genres.map((genre, index) => (
+                                        index < genres.length - 1 ? <span key={index}>{genre}, </span> : <span key={index}>{genre}</span>
+                                    ))}]</div>
+                                    <h3>개봉일</h3>
+                                    <p>{release}</p>
+                                    <h3>평점</h3>
+                                    <p>{score}</p>
+                                    <h3>상영 시간(분)</h3>
+                                    <p>{runtime}</p>
+                                    <h3>줄거리</h3>
+                                    <p>{overview}</p>
+                                </div>
+                            </div>
+                            <div className="movie-crew">
+                                <h1>영화 출연진</h1>
+                                <h2>감 독</h2>
+                                <div className='director'>
+                                    <img src={director.directorImage} alt="" width="150px" /><br />
+                                    {director.directorName}
+                                </div>
+                                <h2>주 연</h2>
+                                <div className='actors'>
+                                    {actors.map((actor) => (
+                                        <Link to={`/actor/${actor.actorKey}`} key={actor.actorKey} style={{ textDecoration: "none", color: "white" }}>
+                                            <div className="actor">
+                                                <img src={actor.actorImage} alt={actor.actorName} width="150px" /><br />
+                                                {actor.actorName}
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <Review movieId={id} isLogined={isLogined} reviews={reviews} reviewers={reviewers} />
+                </div>
+            )}
         </div>
     );
 };

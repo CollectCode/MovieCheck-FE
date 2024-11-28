@@ -10,6 +10,7 @@ const Profile = ({ setIsLogined }) => {
     const [profilecontent, setProfileContent] = useState('');
     const [profilegenre, setProfileGenre] = useState([]);
     const [profilelike, setProfileLike] = useState('0');
+    const [isLoading, setIsLoading] = useState();
     let navigate = useNavigate();
 
     const deleteuser = useCallback(async (e) => {
@@ -37,6 +38,7 @@ const Profile = ({ setIsLogined }) => {
     }, []);
 
     useEffect(() => {
+        setIsLoading(true);
         const getuser = async () => {
             try {
                 const userResponse = await axios.get('/api/users/mypage', { withCredentials: true });
@@ -49,19 +51,30 @@ const Profile = ({ setIsLogined }) => {
             } catch (err) {
                 console.error(err);
             }
-
+        };
+        const getUserGenres = async () =>   {
             try {
                 const genreResponse = await axios.get('/api/user-genre/genres', { withCredentials: true });
                 setProfileGenre(genreResponse.data.data);
             } catch (err) {
                 console.error(err);
+            } finally   {
+                setIsLoading(false);
             }
-        };
+        }
         getuser();
+        getUserGenres();
     }, []);
 
     return (
         <div className="profile-container">
+            {isLoading ?
+            (
+            <div className="loading-content">
+                <div className="loader"></div> {/* 로딩 애니메이션 */}
+                <p>로딩중...</p>
+            </div>
+            ) : (
             <div className="profile-card">
                 <div className="top-title">
                     <h1 className="profile-title">내 정보</h1>
@@ -113,6 +126,7 @@ const Profile = ({ setIsLogined }) => {
                     </Link>
                 </div>
             </div>
+           )}
         </div>
     );
 };

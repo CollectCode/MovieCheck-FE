@@ -36,7 +36,28 @@ const App = () => {
     }, [selectedGenre]);
 
     // 특정 경로에서 NavigationBar를 숨김
-    const hideNavigationBar = ['/login', '/signup', '/profile', '/profileupdate'].includes(location.pathname);
+    const hideNavigationBar = () => {
+        const path = location.pathname;
+        const basePaths = ['/login', '/signup', '/profile', '/profileupdate'];
+
+        // 기본 경로들에 대한 검사
+        if (basePaths.includes(path)) {
+            return true;
+        }
+
+        // /detail/:id 경로에 대한 정규 표현식 검사
+        const detailPathPattern = /^\/detail\/[^/]+$/; // 숫자나 문자열 ID를 가진 경로(영화)
+        if (detailPathPattern.test(path)) {
+            return true;
+        }
+
+        const actorPathPattern = /^\/actor\/[^/]+$/; // 숫자나 문자열 ID를 가진 경로(배우)
+        if (actorPathPattern.test(path))    {
+            return true;
+        }
+
+        return false;
+    };
 
     return (
         <TransitionGroup>
@@ -61,7 +82,7 @@ const App = () => {
                         />
                     )}
                     <div className="container">
-                        {!hideNavigationBar && (
+                        {!hideNavigationBar() && (
                             <NavigationBar setSelectedGenre={setSelectedGenre} selectedGenre={selectedGenre} />
                         )}
                         <div className="main-content">

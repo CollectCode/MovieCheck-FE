@@ -11,6 +11,11 @@
     display: flex;
 }
 
+.review-actions {
+    display: flex;
+    justify-content: end;
+}
+
 .review-section textarea {
     width: 90%;
     height: 100px;
@@ -23,7 +28,7 @@
 
 .submit-review {
     padding: 25px;
-    background-color: #0aafff;
+    background-color: #0373ac;
     color: white;
     border: none;
     border-radius: 5px;
@@ -33,7 +38,7 @@
 }
 
 .submit-review:hover    {
-    background-color: rgb(9, 111, 170);
+    background-color: rgb(15, 124, 187);
 }
 .existing-reviews {
     margin-top: 20px;

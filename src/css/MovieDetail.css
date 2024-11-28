@@ -5,8 +5,9 @@ body {
 }
 
 .movie-detail-container {
-    padding: 20px;
+    max-width: calc(100% - 125px);
 }
+
 
 .movie-information  {
     display: flex;
@@ -19,8 +20,7 @@ body {
 .movie-image {
     width: 450px; /* 영화 이미지의 너비 */
     height: 600px;
-    margin-top: 25px;
-    margin-right: 40px;
+    margin: auto 20px;
 }
 
 .movie-info {
@@ -42,4 +42,49 @@ body {
 
 .actor  {
     margin-right: 60px;
+}
+
+.loading-container {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 1000;
+}
+
+.loading-content {
+    position: fixed; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+}
+
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+/* 애니메이션 정의 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

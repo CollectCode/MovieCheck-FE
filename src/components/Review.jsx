@@ -73,7 +73,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                     onChange={(e) => setContent(e.target.value)}
                 ></textarea>
                 <button className="submit-review" onClick={handleOnSubmit}>
-                    리뷰 등록
+                    리뷰등록
                 </button>
             </div>
             {reviews && reviews.length > 0 ? (

@@ -12,9 +12,10 @@ const MovieGrid = ({ movies, isLoading, currentPage, totalPages, setCurrentPage 
         <div className="wrap_movie_grid">
           <div className="movie-grid">
             {isLoading
-              ? Array.from({ length: 10 }).map((_, index) => (
-                  <SkeletonCard key={index} />
-                ))
+              ? <div className="loading-content">
+                  <div className="loader"></div> {/* 로딩 애니메이션 */}
+                  <p>로딩중...</p>
+                </div>
               : movies.map((movie) => (
                   <MovieCard
                     key={movie.movieKey}
@@ -22,7 +23,7 @@ const MovieGrid = ({ movies, isLoading, currentPage, totalPages, setCurrentPage 
                     poster={movie.moviePoster}
                     id={movie.movieKey}
                   />
-                ))}
+            ))}
           </div>
             <PageNation
               setCurrentPage={setCurrentPage}
