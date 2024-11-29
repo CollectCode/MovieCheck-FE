@@ -52,6 +52,11 @@
     margin-bottom: 15px;
 }
 
+.review-usergrade {
+  font-size: 12px;
+  text-align: center;
+}
+
 .review-header {
     display: flex;
     justify-content: space-between;
@@ -63,7 +68,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: white; 
     cursor: pointer;
     font-weight: bold;
 }
@@ -248,7 +253,13 @@
   align-items: center;
   width: 80px; /* 프로필 섹션 너비 고정 */
   margin-right: 15px;
-  margin-top: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.reply-usergrade  {
+  font-size: 13px;
 }
 
 .reply-user-profile {
@@ -325,4 +336,9 @@
 
 .delete-button-reply:hover    {
   background-color: #bb0000;
+}
+
+.user-infos {
+  display: flex;
+  flex-direction: column;
 }

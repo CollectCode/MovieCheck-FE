@@ -171,9 +171,10 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                             alt="사용자 프로필"
                                             className="user-profile"
                                         />
-                                        <span>
-                                            {reviewers[index]?.userName}
-                                        </span>
+                                        <div className='user-infos'>
+                                            <span className='review-username'>{reviewers[index]?.userName}</span>
+                                            <span className='review-usergrade'>{reviewers[index]?.userGrade}</span>
+                                        </div>
                                     </div>
                                     <div className="review-date">{formatDate(review.reviewTime)}</div>
                                 </div>
@@ -225,6 +226,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                                 className="reply-user-profile"
                                             />
                                             <span className="reply-username">{reviewers[replyIdx]?.userName}</span>
+                                            <span className="reply-usergrade">{reviewers[replyIdx]?.userGrade}</span>
                                             </div>
                                                 <div className="reply-content">
                                                     <div className="reply-header">
