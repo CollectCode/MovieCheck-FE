@@ -9,6 +9,12 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
   const [nickname, setNickName] = useState('');
   // 로그아웃 버튼 클릭 이벤트
   const handleLogout = async() =>  {
+    const allCookies = Cookies.get();
+    for (const cookieName in allCookies) {
+      if (allCookies.hasOwnProperty(cookieName)) {
+          Cookies.remove(cookieName); // 각 쿠키를 Delete
+      }
+    }
     try {
       const response = await axios ({
                                       method: 'post',
@@ -21,13 +27,6 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
       alert(msg);
     } catch(err)  {
       console.log(err.response.data.msg);
-    } finally {
-      const allCookies = Cookies.get();
-      for (const cookieName in allCookies) {
-        if (allCookies.hasOwnProperty(cookieName)) {
-            Cookies.remove(cookieName); // 각 쿠키를 Delete
-        }
-      }
     }
   }
 
@@ -48,6 +47,7 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
       }
     checkname();
   }, [nickname]);
+  
 
   return (
     <header className="header">
@@ -65,6 +65,5 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
       </nav>
     </header>
   );
-};
-
+}
 export default LoginedHeader;

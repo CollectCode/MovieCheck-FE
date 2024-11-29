@@ -1,10 +1,46 @@
 .search-bar {
     display: flex;
-    width: 50%; /* 너비를 80%로 설정 (원하는 비율로 조정 가능) */
-    margin: auto auto; /* 중앙 정렬 */
+    width: 40%; /* 너비를 40%로 설정 */
+    margin: 15px auto; /* 중앙 정렬 */
     border-radius: 20px; /* 모서리 둥글게 */
     height: 40px;
+    position: fixed; /* 고정 위치 */
+    top: 20px; /* 상단에서 20px 떨어진 위치 */
+    left: 50%; /* 화면의 중앙 */
+    transform: translateX(-50%); /* 중앙 정렬을 위한 변환 */
+    z-index: 1000; /* 다른 요소 위에 표시되도록 */
 }
+
+.search-button  {   
+    height: 40px;
+    width: 60px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.search-input {
+    margin-right: 20px;
+}
+
+.refresh-button {
+    padding-top: 3px;
+    background-color: white;
+    color: black;
+    border: none; 
+    text-align: center; 
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer; 
+    border-radius: 5px;
+    transition: background-color 0.3s; 
+    width: 85px;
+    font-weight: bold;
+}
+
+.refresh-button:hover {
+    background-color: #108fd8;
+}
+
 
 .search-button  {   
     height: 40px;

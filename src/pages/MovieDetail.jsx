@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import '../css/MovieDetail.css';
 import axios from 'axios';
 import Review from '../components/Review';
+import Cookies from 'js-cookie';
+
 
 // MovieDetail page
 const MovieDetail = ({ isLogined }) => {
@@ -19,6 +21,7 @@ const MovieDetail = ({ isLogined }) => {
     const [reviewers, setReviewers] = useState([]);
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(true); // 초기값을 true로 설정
+    const userKey = Cookies.get("userKey");
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -59,13 +62,13 @@ const MovieDetail = ({ isLogined }) => {
                 setReviewers(response.data.reviewers);
                 console.log("리뷰 데이터");
                 console.log(response.data);
+                console.log(userKey);
             } catch (err) {
                 console.log(err);
             } finally {
                 setIsLoading(false); // 모든 작업이 끝난 후 로딩 상태를 false로 설정
             }
         };
-
         getMovieDetails();
         getReview();
     }, [id]);

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../css/ProfileUpdate.css'; // CSS 파일을 임포트합니다.
 import axios from 'axios';
 
 const ProfileUpdate = () => {
+    let navigate = useNavigate();
+    const location = useLocation();
+    const { profilegenres = [] } = location.state || {}; // 기본값으로 빈 배열 설정
     const [defaultname, setDefaultName] = useState('');
     const [profileImage, setProfileImage] = useState('./images/user_profile/default.PNG');
     const [hovered, setHovered] = useState(false);
@@ -15,7 +18,6 @@ const ProfileUpdate = () => {
     const [comment, setComment] = useState('중복확인');
     const [imageform, setImageForm] = useState('');
     const [isLoading, setIsLoading] = useState('');
-    let navigate = useNavigate();
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -30,19 +32,19 @@ const ProfileUpdate = () => {
     };
 
     const handleButtonClick = (newgenre) => {
-        if (selectedgenre.length < 3) {
-            const newarr = genres.filter(item => item !== newgenre);
-            setGenres(newarr);
-            setSelectedGenre(preButton => [...preButton, newgenre]);
+        if (selectedgenre.length < 3 && !selectedgenre.includes(newgenre)) {
+            setSelectedGenre((prev) => [...prev, newgenre]); // 선택된 순서를 유지
+            setGenres((prev) => prev.filter((item) => item !== newgenre)); // 선택된 장르를 제거
         }
     };
-
+    
+    
     const handleDeleteClick = (deletegenre) => {
-        const newarr = selectedgenre.filter(item => item !== deletegenre);
-        setSelectedGenre(newarr);
-        setGenres(preButton => [...preButton, deletegenre]);
+        setSelectedGenre((prev) => prev.filter((item) => item !== deletegenre)); // 선택된 장르에서 삭제
+        setGenres((prev) => [...prev, deletegenre]); // 삭제된 장르를 다시 추가
     };
-
+    
+    
     const handleCheckName = async (e) => {
         if (nickname !== defaultname) {
             const requestNameData = { userName: nickname };
@@ -69,12 +71,13 @@ const ProfileUpdate = () => {
         } else {
             setComment('확인완료');
             setCheckname(true);
-            alert("현재 사용중인 닉네임 입니다.");
+            alert("사용가능한 닉네임 입니다.");
         }
     };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
+        console.log(selectedgenre);
         if (checkname) {
             const formData = new FormData();
             formData.append('userImage', imageform);
@@ -146,10 +149,12 @@ const ProfileUpdate = () => {
                 setDefaultName(user.data.userName);
                 setNickname(user.data.userName);
                 setContent(user.data.userContent);
+                setSelectedGenre(profilegenres.map(genre => genre.genreName));
             } catch (err) {
                 console.log(err);
             } finally   {
                 setIsLoading(false);
+                console.log(profilegenres);
             }
         }
         getuser();
@@ -161,6 +166,14 @@ const ProfileUpdate = () => {
             setComment('중복확인');
         }
     }, [nickname]);
+
+    useEffect(() => {
+        setGenres((prevGenres) =>
+            ["액션", "범죄", "애니메이션", "코미디", "드라마", "판타지", "공포", "전쟁", "로맨스", "SF"].filter(
+                (genre) => !selectedgenre.includes(genre)
+            )
+        );
+    }, [selectedgenre]);
 
     return (
         <div className="profile-update-container">
@@ -179,7 +192,7 @@ const ProfileUpdate = () => {
                         onMouseLeave={() => setHovered(false)}
                         onClick={() => document.getElementById('fileInput').click()}
                         src={profileImage} alt="프로필 사진" />
-                    {hovered && <div className="overlay">프로필 추가/변경</div>}
+                    {hovered && <div className="overlay">프로필 변경</div>}
                 </div>
                 <input
                     type="file"
@@ -200,13 +213,15 @@ const ProfileUpdate = () => {
                 <div className="profile-update-selection">
                     <h2 className="selection-title">선호 장르 설정</h2>
                     <div className="profile-update-genres">
-                        {genres.map((genre) => (
+                        {
+                        genres.map((genre) => (
+                            !selectedgenre.includes(genre) ?
                             <button
                                 key={genre}
                                 className="profile-update-genre-button"
                                 onClick={() => handleButtonClick(genre)}
                                 type='button'
-                            >{genre}</button>
+                            >{genre}</button> : <></>
                         ))}
                     </div>
                     <div className='setGenre'>
@@ -214,7 +229,7 @@ const ProfileUpdate = () => {
                         <div className="choosedgenre">
                             {selectedgenre.map((btn, index) => (
                                 <button key={btn} type='button' id="selected-button" style={{ marginLeft: '25px' }} onClick={() => handleDeleteClick(btn)}>
-                                    {index + 1}순위: {btn}
+                                    {btn}
                                 </button>
                             ))}
                         </div>

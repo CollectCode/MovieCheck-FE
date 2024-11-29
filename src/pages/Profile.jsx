@@ -109,7 +109,7 @@ const Profile = ({ setIsLogined }) => {
                         {profilegenre.length > 0 ? (
                             profilegenre.map((genre, index) => (
                                 <button key={genre.genreKey || index} className="profile-genre-button">
-                                    {index + 1}순위: {genre.genreName}
+                                    {genre.genreName}
                                 </button>
                             ))
                         ) : (
@@ -117,10 +117,13 @@ const Profile = ({ setIsLogined }) => {
                         )}
                     </div>
                 </div>
-                <div className="profile-buttons">
-                    <Link to="/profileupdate">
-                        <button className="profile-save">정보 수정</button>
-                    </Link>
+                    <div className="profile-buttons">
+                        <Link
+                            to="/profileupdate"
+                            state={{ profilegenres: profilegenre }}
+                        >
+                            <button className="profile-save">정보 수정</button>
+                        </Link>
                     <Link to="/">
                         <button className="profile-save">취소</button>
                     </Link>

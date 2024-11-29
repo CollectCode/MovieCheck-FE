@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/Review.css';
 import Modal from './Modal';
+import Cookies from 'js-cookie';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // 모달 스타일
 
 const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const [content, setContent] = useState('');
@@ -11,6 +14,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const [replyContent, setReplyContent] = useState('');
     const [editingIndex, setEditingIndex] = useState(null);
     const [replyIndex, setReplyIndex] = useState(null); // 답글을 작성할 리뷰 인덱스
+    const userKey = Cookies.get('userKey');
     const navigate = useNavigate();
 
     const formatDate = (dateTime) => {
@@ -54,8 +58,33 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         }
     };
 
-    const handleDelete = (index) => {
-
+    const handleDelete = async(review) => {
+        confirmAlert({
+            title : '리뷰삭제',
+            message: '리뷰를 삭제하시겠습니까?',
+            buttons: [
+                {
+                    label: '예',
+                    onClick: async()  => {
+                        try {
+                            let response = await axios({
+                                method: 'delete',
+                                url: '/api/reviews/delete',
+                                params: { reviewKey : review.reviewKey },
+                            });
+                            alert('삭제가 완료되었습니다.');
+                            window.location.reload();
+                        } catch(err)    {
+                            alert('삭제에 실패하였습니다.');
+                            console.log(err);
+                        }
+                    }
+                }, {
+                    label: '아니오',
+                    onClick: () => alert('삭제를 취소하였습니다.')
+                }
+            ]
+        });
     }
 
     const handleEdit = (index) => {
@@ -143,8 +172,14 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                 <div className="review-actions">
                                     <div className='cud-buttons'>
                                         <button className='comment-button' onClick={() => setReplyIndex(replyIndex === index ? null : index)}>답글</button>
-                                        <button className='update-button' onClick={() => handleEdit(index)}>수정</button>
-                                        <button className='delete-button' onClick={() => handleDelete(index)}>삭제</button>
+                                        {
+                                            userKey == reviewers[index].userKey ? (
+                                            <>
+                                                <button className='update-button' onClick={() => handleEdit(index)}>수정</button>
+                                                <button className='delete-button' onClick={() => handleDelete(review)}>삭제</button>
+                                            </>
+                                            ) : null // userKey가 다를 경우 아무것도 출력하지 않음
+                                        }
                                     </div>
                                     <button className="like-button" onClick={() => handleLike(index)}>
                                         좋아요 👍 {likes[index]}

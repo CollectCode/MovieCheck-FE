@@ -62,12 +62,12 @@ body {
 
 .navigation-bar ul {
   list-style-type: none;
-  padding: 0px 15px;
+  padding: 0px 10px;
 }
 
 .navigation-bar li.genre {
   padding: 10px;
-  margin: 15px 0px;
+  margin: 5px 0px;
   cursor: pointer;
   transition: background 0.1s;
   border-radius: 10px;

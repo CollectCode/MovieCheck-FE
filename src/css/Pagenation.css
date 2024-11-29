@@ -1,6 +1,8 @@
 .pagination {
-    margin: 20px auto; /* Footer와의 간격 조정 */
-}
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: center; /* 중앙 정렬 */
+    margin-top: 20px; /* 위쪽 여백 추가 */
+  }
 
 .pageNums   {
     font-size: 25px;

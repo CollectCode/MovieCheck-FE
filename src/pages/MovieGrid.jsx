@@ -10,7 +10,7 @@ const MovieGrid = ({ movies, isLoading, currentPage, totalPages, setCurrentPage 
     <TransitionGroup>
       <CSSTransition key={currentPage} classNames="fade" timeout={1000}>
         <div className="wrap_movie_grid">
-          <div className="movie-grid">
+          <div className="movie-grid" style={{ marginBottom : isLoading ? '200px' : '20px' }}>
             {isLoading
               ? <div className="loading-content">
                   <div className="loader"></div> {/* 로딩 애니메이션 */}

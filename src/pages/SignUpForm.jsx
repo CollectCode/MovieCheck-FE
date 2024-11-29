@@ -157,6 +157,7 @@ const SignupForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <div className='password-group'>(8~20자 입력)</div>
         </div>
         <div className="signup-input-group">
           <label>*비밀번호확인 : </label>
@@ -167,6 +168,7 @@ const SignupForm = () => {
               onChange={(e) => setPasswordConfirm(e.target.value)}
               required
             />
+            <div className='password-group'>(8~20자 입력)</div>
         </div>
         <div className="signup-input-group">
           <label>*닉네임 :</label>
