@@ -1,14 +1,12 @@
 .search-bar {
     display: flex;
-    width: 40%; /* 너비를 40%로 설정 */
-    margin: 15px auto; /* 중앙 정렬 */
-    border-radius: 20px; /* 모서리 둥글게 */
+    width: 40%;
+    margin: 20px auto; 
+    border-radius: 20px; 
     height: 40px;
-    position: fixed; /* 고정 위치 */
-    top: 20px; /* 상단에서 20px 떨어진 위치 */
-    left: 50%; /* 화면의 중앙 */
-    transform: translateX(-50%); /* 중앙 정렬을 위한 변환 */
-    z-index: 1000; /* 다른 요소 위에 표시되도록 */
+    top: 20px; 
+    left: 50%;
+    z-index: 1000; 
 }
 
 .search-button  {   

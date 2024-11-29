@@ -25,6 +25,7 @@ const App = () => {
         const savedPage = localStorage.getItem('currentPage');
         return savedPage ? parseInt(savedPage, 10) : 1; // 초기값 설정
     });
+    const [loading, setLoading] = useState(true); // 로딩 상태 추가
     const location = useLocation();
 
     useEffect(() => {

@@ -66,7 +66,9 @@ const MovieDetail = ({ isLogined }) => {
             } catch (err) {
                 console.log(err);
             } finally {
-                setIsLoading(false); // 모든 작업이 끝난 후 로딩 상태를 false로 설정
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 500);
             }
         };
         getMovieDetails();

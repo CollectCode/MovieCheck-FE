@@ -11,6 +11,7 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
   const handleLogout = async() =>  {
     const allCookies = Cookies.get();
     for (const cookieName in allCookies) {
+      console.log(cookieName);
       if (allCookies.hasOwnProperty(cookieName)) {
           Cookies.remove(cookieName); // 각 쿠키를 Delete
       }
@@ -26,7 +27,9 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
       let msg = response.data.msg;
       alert(msg);
     } catch(err)  {
+      setIsLogined(false);
       console.log(err.response.data.msg);
+      window.location.reload();
     }
   }
 

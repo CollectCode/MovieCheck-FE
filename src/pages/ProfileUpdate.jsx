@@ -83,7 +83,6 @@ const ProfileUpdate = () => {
             formData.append('userImage', imageform);
             const genreDto = selectedgenre.map(item => ({ genreName: item }));
             const userDto = { userName: nickname, userContent: content };
-
             try {
                 await axios({
                     method: 'put',

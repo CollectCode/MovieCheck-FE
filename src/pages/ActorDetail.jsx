@@ -39,7 +39,9 @@ const ActorDetail = () => {
             } catch (err) {
                 console.error("Failed to fetch actor details:", err);
             } finally {
-                setIsLoading(false); // 모든 작업이 끝난 후 로딩 상태를 false로 설정
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 500);
             }
         };
         if (id) {
@@ -56,21 +58,21 @@ const ActorDetail = () => {
                 </div>
             ) : (
                 <div>
-                    <h1>배우 소개</h1>
                     <div className="actor-information">
-                        <div className="actor-introduction">
-                            <img src={actorImage} alt={`${actorName} 사진`} className="actor-image" />
-                            <div className="actor-info">
-                                <h2>{actorName}</h2>
-                                <p>
-                                    <strong>생일:</strong> {actorBirthday === null ? <strong>???</strong> : actorBirthday}
-                                    {actorDeathday === null ? <strong>~</strong> : `~ ${actorDeathday}`}
-                                </p>
-                                <p>
-                                    <strong>출생지:</strong> {actorBirthplace === null ? <strong>정보가 없습니다.</strong> : actorBirthplace}
-                                </p>
+                        <h1>배우 소개</h1>
+                            <div className="actor-introduction">
+                                <img src={actorImage} alt={`${actorName} 사진`} className="actor-image" />
+                                <div className="actor-info">
+                                    <h2>{actorName}</h2>
+                                    <p>
+                                        <strong>생일:</strong> {actorBirthday === null ? <strong>???</strong> : actorBirthday}
+                                        {actorDeathday === null ? <strong>~</strong> : `~ ${actorDeathday}`}
+                                    </p>
+                                    <p>
+                                        <strong>출생지:</strong> {actorBirthplace === null ? <strong>정보가 없습니다.</strong> : actorBirthplace}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
                         <div className="actor-movies">
                             <h2>출연 작품</h2>
                             <div className="movie-list">

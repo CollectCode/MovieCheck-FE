@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import '../css/Modal.css'; // 모달 관련 CSS 파일
 
 const Modal = ({ isOpen, closeModal, modalInfo }) => {
     const [loading, setLoading] = useState(true); // 로딩 상태 추가
+    const [genres, setGenres] = useState([]);
 
     useEffect(() => {
-        if (isOpen) {
-            setLoading(true); // 모달이 열릴 때 로딩 시작
-            // 사용자 정보를 로드하는 비동기 작업을 여기서 할 수 있습니다.
-            // 예를 들어, API 요청을 통해 사용자 정보를 가져올 수 있습니다.
-            // 데이터가 로드되면 setLoading(false)로 로딩 종료
+        if (isOpen && modalInfo.userKey) {
+            setLoading(true); 
             const loadUserInfo = async () => {
-                // 이 부분에 API 요청을 추가할 수 있습니다.
-                // 예시: await fetchUserInfo(modalInfo.userId);
+                let response = await axios({
+                    method: 'get',
+                    url: '/api/user-genre/modal/genres',
+                    params: { userKey : modalInfo.userKey },
+                });
+                console.log(response.data.data);
+                setGenres(response.data.data);   
                 setTimeout(() => {
                     setLoading(false); // 로딩 완료
-                }, 1000); // 예시로 1초 후에 로딩 종료
+                }, 500); // 예시로 1초 후에 로딩 종료
             };
             loadUserInfo();
         }
@@ -39,8 +43,8 @@ const Modal = ({ isOpen, closeModal, modalInfo }) => {
                         <p>닉네임: {modalInfo.userName}</p>
                         <p>등급: {modalInfo.userGrade}</p>
                         <span>성별: </span>{modalInfo.userGender === 1 ? <span> 남 </span> : <span> 여 </span>}
-                        <p>좋아요: {modalInfo.userLikes}</p>
-                        <p>선호 장르: {modalInfo.userGenres?.join(', ')}</p> {/* 선호 장르 표시 */}
+                        <p>좋아요: {modalInfo.reviewLike}</p>
+                        <p>선호 장르: [ {genres.map((genre, index) => genre.genreName + (genres.length > index+1 ? ", " : " "))}]</p> {/* 선호 장르 표시 */}
                     </>
                 )}
             </div>

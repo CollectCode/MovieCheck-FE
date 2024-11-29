@@ -1,4 +1,4 @@
-.actor-detail-container {
+.actor-information {
     max-width: 710px; /* 전체 컨테이너 너비 축소 */
     margin: 60px 350px;
     padding: 30px;
@@ -7,9 +7,6 @@
     background-color: #1e1e1e; /* 컨테이너 배경을 어두운 색상으로 변경 */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.actor-information {
     display: flex;
     flex-direction: column;
     gap: 20px;
