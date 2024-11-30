@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 
 // Header components
-const UnLoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, searchTerm, setSearchTerm }) => {
+const UnLoginedHeader = ({ setCurrentPage, selectedGenre, setSelectedGenre, setIsSearched, searchTerm, setSearchTerm }) => {
   return (
     <header className="header">
       <h1>
-        <Link to="/" style={{ textDecoration: 'none', color: 'white' }} onClick={() => setSelectedGenre("전체보기")}>무비 체크</Link>
+        <Link to="/" style={{ textDecoration: 'none', color: 'white' }} onClick={() => {setSelectedGenre("전체보기"); setCurrentPage(1);}} >무비 체크</Link>
       </h1>
       {
         selectedGenre === "전체보기" 

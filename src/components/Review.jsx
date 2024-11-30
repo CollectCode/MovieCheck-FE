@@ -12,9 +12,12 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const [editContent, setEditContent] = useState('');
     const [likes, setLikes] = useState(Array(reviews.length).fill(0));
     const [modalInfo, setModalInfo] = useState(null);
-    const [replyContent, setReplyContent] = useState('');
     const [editingIndex, setEditingIndex] = useState(null);
+    const [replyContent, setReplyContent] = useState(''); // 답글을 작성할 내용
     const [replyIndex, setReplyIndex] = useState(null); // 답글을 작성할 리뷰 인덱스
+    const [editingReplyIndex, setEditingReplyIndex] = useState(null); // 수정 중인 댓글의 인덱스
+    const [editingReplyContent, setEditingReplyContent] = useState(''); // 수정 중인 댓글 내용
+
     const userKey = Cookies.get('userKey');
     const navigate = useNavigate();
 
@@ -48,14 +51,32 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         }
     };
 
-    const handleReplySubmit = (index) => {
-        if (replyContent) {
-            const updatedReviews = [...reviews];
-            updatedReviews[index].replies = updatedReviews[index].replies || [];
-            updatedReviews[index].replies.push(replyContent);
-            setReplyContent('');
-        } else {
-            alert("댓글 내용을 입력해주세요.");
+    const handleReplySubmit = async(review) => {
+        if(isLogined)   {
+            if(replyContent)    {
+            const repData = { 
+                reviewKey : review.reviewKey,
+                commentContent : replyContent,
+            }
+            try {
+                let response = await axios({
+                    method: 'post',
+                    url: '/api/comment',
+                    headers: { 'Content-Type' : 'application/json' },
+                    data: JSON.stringify(repData),
+                    withCredentials: true, 
+                });
+                alert("답글을 성공적으로 등록하였습니다!");
+                window.location.reload();
+            } catch(err)    {
+                console.log(err);
+            }
+            } else  {
+                alert("답글 내용을 기입해주세요");
+            }
+        } else  {
+            alert("로그인이 필요한 서비스 입니다.");
+            navigate("/login", {});
         }
     };
 
@@ -99,9 +120,59 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         }
     };
 
+    const handleEditReply = (index, reply) => {
+        if (editingReplyIndex === index) {
+            setEditingReplyIndex(null);
+            setEditingReplyContent('');
+        } else {
+            setEditingReplyIndex(index);
+            setEditingReplyContent(reply.commentContent);
+        }
+    };
+
+    const handleEditReplySubmit = async (reply) => {
+        // 양쪽 공백 제거
+        if (editingReplyContent.trim()) {
+            try {
+                const response = await axios({
+                    method: 'post',
+                    url: '/api/comment',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: JSON.stringify({
+                        reviewKey : reply.reviewKey,
+                        commentKey: reply.commentKey,
+                        commentContent: editingReplyContent,
+                    }),
+                    withCredentials: true,
+                });
+                alert('댓글이 수정되었습니다.');
+                window.location.reload();
+            } catch (err) {
+                console.error(err);
+                alert('댓글 수정에 실패했습니다.');
+            }
+        } else {
+            alert('내용을 입력해주세요.');
+        }
+    };
+
+    const handleDeleteReply = async(reply) =>  {
+        try {
+            let response = await axios({
+                method: 'delete',
+                url: '/api/comment',
+                params: { commentKey : reply.commentKey },
+                withCredentials: true,
+            });
+            alert("댓글 제거 완료했습니다!");
+            window.location.reload();
+        } catch(err)    {
+            console.log(err);
+        }
+    }
+
     const handleEditSubmit = async (index) => {
         const editData = { reviewKey: reviews[index].reviewKey, reviewContent: editContent, movieKey : movieId};
-        console.log(editData);
         if (editContent) {
             try {
                 let response = await axios({
@@ -111,7 +182,6 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                     data : JSON.stringify(editData),
                     withCredentials: true,
                 });
-                console.log(response.data);
                 window.location.reload();
                 alert("리뷰 변경 완료.");
             } catch (err) {
@@ -136,13 +206,6 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const closeModal = () => {
         setModalInfo(null);
     };
-
-    useEffect(() => {
-        console.log(movieId);
-        console.log(isLogined);
-        console.log(reviews);
-        console.log(reviewers);
-    }, [])
 
     return (
         <div className="review-wrapper">
@@ -172,8 +235,8 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                             className="user-profile"
                                         />
                                         <div className='user-infos'>
-                                            <span className='review-username'>{reviewers[index]?.userName}</span>
                                             <span className='review-usergrade'>{reviewers[index]?.userGrade}</span>
+                                            <span className='review-username'>{reviewers[index]?.userName}</span>
                                         </div>
                                     </div>
                                     <div className="review-date">{formatDate(review.reviewTime)}</div>
@@ -205,6 +268,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                         좋아요 👍 {likes[index]}
                                     </button>
                                 </div>
+                                <div className="divider"></div>
                                 {replyIndex === index && (
                                     <div className="reply-section">
                                         <textarea
@@ -212,36 +276,60 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                         value={replyContent}
                                         onChange={(e) => setReplyContent(e.target.value)}
                                         />
-                                        <button onClick={() => handleReplySubmit(index)}>답글작성</button>
+                                        <button onClick={() => handleReplySubmit(review)}>답글작성</button>
                                     </div>
                                     )}
-                                    {review.replies && review.replies.length > 0 && (
+                                    {review.commentDto && review.commentDto.length > 0 && (
                                     <div className="replies">
-                                        {review.replies.map((reply, replyIdx) => (
-                                        <div key={replyIdx} className="reply-item">
-                                            <div className="reply-profile" onClick={() => openModal(reviewers[index])}>
-                                            <img
-                                                src={reviewers[replyIdx]?.userProfile || 'default-profile.png'}
-                                                alt="사용자 프로필"
-                                                className="reply-user-profile"
-                                            />
-                                            <span className="reply-username">{reviewers[replyIdx]?.userName}</span>
-                                            <span className="reply-usergrade">{reviewers[replyIdx]?.userGrade}</span>
-                                            </div>
+                                        {review.commentDto.map((reply, replyIdx) => (
+                                            <div key={replyIdx} className="reply-item">
+                                                <div className="reply-profile" onClick={() => openModal(review.commenters[replyIdx])}>
+                                                    <img
+                                                        src={review.commenters[replyIdx]?.userProfile || 'default-profile.png'}
+                                                        alt="사용자 프로필"
+                                                        className="reply-user-profile"
+                                                    />
+                                                    <span className="reply-usergrade">{review.commenters[replyIdx]?.userGrade}</span>
+                                                    <span className="reply-username">{review.commenters[replyIdx]?.userName}</span>
+                                                </div>
                                                 <div className="reply-content">
                                                     <div className="reply-header">
-                                                        <span className="reply-time">여기에 작성 시간을 추가하세요</span>
+                                                        <span className="reply-time">{formatDate(review.commentDto[replyIdx]?.commenTime)}</span>
                                                     </div>
-                                                <p className="reply-text">{reply}</p>
-                                                <div className='buttons-reply'>
-                                                    <button className='update-button-reply' onClick={() => handleEditReview(index)}>수정</button>
-                                                    <button className='delete-button-reply' onClick={() => handleDeleteReview(review)}>삭제</button>
+                                                    {editingReplyIndex === replyIdx ? (
+                                                        <div className="edit-reply-content">
+                                                            <textarea
+                                                                value={editingReplyContent}
+                                                                onChange={(e) => setEditingReplyContent(e.target.value)}
+                                                            ></textarea>
+                                                            <button onClick={() => handleEditReplySubmit(reply)}>수정완료</button>
+                                                        </div>
+                                                    ) : (
+                                                        <p className="reply-text">{reply.commentContent}</p>
+                                                    )}
+                                                    <div className="buttons-reply">
+                                                        {userKey == review.commenters[replyIdx]?.userKey ? (
+                                                            <>
+                                                                <button
+                                                                    className="update-button-reply"
+                                                                    onClick={() => handleEditReply(replyIdx, reply)}
+                                                                >
+                                                                    수정
+                                                                </button>
+                                                                <button
+                                                                    className="delete-button-reply"
+                                                                    onClick={() => handleDeleteReply(reply)}
+                                                                >
+                                                                    삭제
+                                                                </button>
+                                                            </>
+                                                        ) : null}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         ))}
                                     </div>
-                                    )}
+                                )}
                             </div>
                         ))}
                     </div>

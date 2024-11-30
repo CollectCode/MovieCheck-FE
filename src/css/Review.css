@@ -11,11 +11,6 @@
     display: flex;
 }
 
-.review-actions {
-    display: flex;
-    justify-content: end;
-}
-
 .review-section textarea {
     width: 90%;
     height: 100px;
@@ -54,13 +49,11 @@
 
 .review-usergrade {
   font-size: 12px;
-  text-align: center;
 }
 
 .review-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 10px;
 }
 
@@ -143,16 +136,21 @@
     justify-content: space-between;
 }
 
+.divider {
+  border-top: 1px solid white; /* 하얀색 상단 경계선 */
+  margin: 20px 0; /* 위아래 여백 */
+}
+
+
 .edit-content {
-    background-color: #222; /* 배경색 설정 */
-    border-radius: 8px; /* 모서리 둥글게 */
-    padding: 20px; /* 내부 여백 */
-    margin: 20px 0; /* 위아래 여백 */
-    display: flex; /* 플렉스 박스 사용 */
-    flex-direction: row; /* 세로 방향 정렬 */
-    width: 100%; /* 전체 너비 사용 */
-    max-width: 1350px; /* 최대 너비 설정 */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+    background-color: #222;
+    border-radius: 8px; 
+    padding: 20px;
+    margin: 20px 0; 
+    display: flex; 
+    flex-direction: row; 
+    width: 97%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
 }
 
 .edit-content textarea {
@@ -341,4 +339,39 @@
 .user-infos {
   display: flex;
   flex-direction: column;
+}
+
+.edit-reply-content {
+  background-color: #222;
+  border-radius: 8px; 
+  padding: 10px;
+  display: flex; 
+  flex-direction: row; 
+  max-width: 1320px; 
+  margin-bottom: 40px;
+}
+
+.edit-reply-content textarea {
+  width: 90%;
+  height: 100px; /* 텍스트 영역 높이 설정 */
+  border-radius: 4px; /* 모서리 둥글게 */
+  border: 1px solid #ddd; /* 테두리 색상 */
+  resize: none; /* 크기 조절 비활성화 */
+  font-size: 14px; /* 폰트 크기 설정 */
+  background-color: #fff; /* 텍스트 영역 배경색 */
+}
+
+.edit-reply-content button {
+  margin-left: 15px;
+  padding: 20px;
+  background-color: #0373ac;
+  color: white;   
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.edit-reply-content button:hover {
+  background-color: #0a6da0; /* 호버 시 배경색 변경 */
 }

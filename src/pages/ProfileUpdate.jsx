@@ -50,10 +50,10 @@ const ProfileUpdate = () => {
             const requestNameData = { userName: nickname };
             try {
                 let response = await axios({
-                    method: 'post',
+                    method: 'get',
                     url: '/api/users/check/name',
                     headers: { 'Content-Type': 'application/json' },
-                    data: JSON.stringify(requestNameData)
+                    params: { userName : nickname },
                 });
                 setCheckname(true);
                 let msg = response.data.msg;

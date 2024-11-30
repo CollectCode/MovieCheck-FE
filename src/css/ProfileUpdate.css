@@ -1,11 +1,9 @@
 .profile-update-container {
-    margin: 20px 200px;
+    margin-right: 200px;
     padding: 30px 60px; /* 내부 여백 증가 */
     background: #2a2a2a;
     border-radius: 15px;
-    width: 100%;
     font-size: 20px; /* 텍스트 크기 증가 */
-    max-width: calc(100% - 700px);   
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
 }
 

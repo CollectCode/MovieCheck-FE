@@ -35,7 +35,6 @@ const MovieDetail = ({ isLogined }) => {
                     url: `/api/movies/detail?id=${id}`,
                     headers: { 'Content-Type': 'application/json' },
                 });
-                console.log(response.data);
                 let info = response.data;
                 setTitle(info.movieTitle);
                 setPoster(info.moviePoster);
@@ -60,9 +59,6 @@ const MovieDetail = ({ isLogined }) => {
                 });
                 setReviews(response.data.reviews);
                 setReviewers(response.data.reviewers);
-                console.log("리뷰 데이터");
-                console.log(response.data);
-                console.log(userKey);
             } catch (err) {
                 console.log(err);
             } finally {

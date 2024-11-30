@@ -5,10 +5,9 @@ body {
 }
 
 .movie-detail-container {
-    margin-right: 300px;
-    min-width: 1500px;  
+    margin-right: 100px;
+    min-width: 1300px;  
 }
-
 
 .movie-information  {
     display: flex;
@@ -42,7 +41,7 @@ body {
 }
 
 .actor  {
-    margin-right: 60px;
+    margin-right: 50px;
 }
 
 .actor:hover    {

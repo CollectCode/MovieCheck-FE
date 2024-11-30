@@ -66,6 +66,7 @@ const App = () => {
                 <div className="app">
                     {!!isLogined ? (
                         <LoginedHeader
+                            setCurrentPage={setCurrentPage}
                             selectedGenre={selectedGenre}
                             setSelectedGenre={setSelectedGenre}
                             setIsSearched={setIsSearched}
@@ -75,6 +76,7 @@ const App = () => {
                         />
                     ) : (
                         <UnLoginedHeader
+                        setCurrentPage={setCurrentPage}
                             selectedGenre={selectedGenre}
                             setSelectedGenre={setSelectedGenre}
                             setIsSearched={setIsSearched}

@@ -4,7 +4,7 @@ import '../css/Profile.css';
 import axios from 'axios';
 
 const Profile = ({ setIsLogined }) => {
-    const [profileimage, setProfileImage] = useState('./images/user_profile/default.PNG');
+    const [profileimage, setProfileImage] = useState('');
     const [profilename, setProfileName] = useState('');
     const [profilegrade, setProfileGrade] = useState('');
     const [profilecontent, setProfileContent] = useState('');
@@ -15,10 +15,8 @@ const Profile = ({ setIsLogined }) => {
 
     const deleteuser = useCallback(async (e) => {
         e.preventDefault();
-        const confirmDelete = window.confirm('정말 탈퇴하시겠습니까?');
-        if (confirmDelete) {
-            const confirmDelete2 = window.confirm('지우면 영원히 되돌릴 수 없습니다. \n정말 탈퇴하시겠습니까?');
-            if (confirmDelete2) {
+        if (window.confirm('정말 탈퇴하시겠습니까?')) {
+            if (window.confirm('지우면 영원히 되돌릴 수 없습니다. \n정말 탈퇴하시겠습니까?')) {
                 try {
                     const response = await axios({
                         method: 'delete',

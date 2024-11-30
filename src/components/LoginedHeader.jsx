@@ -5,7 +5,7 @@ import SearchBar from './SearchBar';
 import Cookies from 'js-cookie';
 
 // Header components
-const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLogined, searchTerm, setSearchTerm }) => {
+const LoginedHeader = ({ setCurrentPage, selectedGenre, setSelectedGenre, setIsSearched, setIsLogined, searchTerm, setSearchTerm }) => {
   const [nickname, setNickName] = useState('');
   // 로그아웃 버튼 클릭 이벤트
   const handleLogout = async() =>  {
@@ -55,7 +55,7 @@ const LoginedHeader = ({ selectedGenre, setSelectedGenre, setIsSearched, setIsLo
   return (
     <header className="header">
       <h1>
-        <Link to="/" style={{ textDecoration: 'none', color: 'white' }} onClick={() => setSelectedGenre("전체보기")}>무비 체크</Link>
+        <Link to="/" style={{ textDecoration: 'none', color: 'white' }} onClick={() => {setSelectedGenre("전체보기"); setCurrentPage(1);}}>무비 체크</Link>
       </h1>
       {
         selectedGenre === "전체보기" 
