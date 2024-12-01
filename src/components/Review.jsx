@@ -7,17 +7,19 @@ import Cookies from 'js-cookie';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // 모달 스타일
 
-const Review = ({ movieId, isLogined, reviews, reviewers }) => {
+const Review = ({ movieId, isLogined }) => {
     const [content, setContent] = useState('');
     const [editContent, setEditContent] = useState('');
-    const [likes, setLikes] = useState(Array(reviews.length).fill(0));
     const [modalInfo, setModalInfo] = useState(null);
     const [editingIndex, setEditingIndex] = useState(null);
     const [replyContent, setReplyContent] = useState(''); // 답글을 작성할 내용
     const [replyIndex, setReplyIndex] = useState(null); // 답글을 작성할 리뷰 인덱스
     const [editingReplyIndex, setEditingReplyIndex] = useState(null); // 수정 중인 댓글의 인덱스
     const [editingReplyContent, setEditingReplyContent] = useState(''); // 수정 중인 댓글 내용
-
+    const [reviewOrComment, setReviewOrComment] = useState(0);
+    const [likeButtons, setLikeButtons] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [reviewers, setReviewers] = useState([]);
     const userKey = Cookies.get('userKey');
     const navigate = useNavigate();
 
@@ -66,6 +68,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                     data: JSON.stringify(repData),
                     withCredentials: true, 
                 });
+                console.log(response);
                 alert("답글을 성공적으로 등록하였습니다!");
                 window.location.reload();
             } catch(err)    {
@@ -94,6 +97,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                 url: '/api/reviews/delete',
                                 params: { reviewKey : review.reviewKey },
                             });
+                            console.log(response);
                             alert('삭제가 완료되었습니다.');
                             window.location.reload();
                         } catch(err)    {
@@ -114,20 +118,24 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         if (editingIndex === index) {
             setEditingIndex(null);
             setEditContent(''); // 내용 초기화
+            setReviewOrComment(0);
         } else {
             setEditingIndex(index);
             setEditContent(reviews[index].reviewContent); // 수정할 내용 불러오기
         }
+        setReviewOrComment(1);
     };
 
     const handleEditReply = (index, reply) => {
         if (editingReplyIndex === index) {
             setEditingReplyIndex(null);
             setEditingReplyContent('');
+            setReviewOrComment(0);
         } else {
             setEditingReplyIndex(index);
             setEditingReplyContent(reply.commentContent);
         }
+        setReviewOrComment(2);
     };
 
     const handleEditReplySubmit = async (reply) => {
@@ -145,6 +153,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                     }),
                     withCredentials: true,
                 });
+                console.log(response);
                 alert('댓글이 수정되었습니다.');
                 window.location.reload();
             } catch (err) {
@@ -164,6 +173,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                 params: { commentKey : reply.commentKey },
                 withCredentials: true,
             });
+            console.log(response);
             alert("댓글 제거 완료했습니다!");
             window.location.reload();
         } catch(err)    {
@@ -182,6 +192,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                     data : JSON.stringify(editData),
                     withCredentials: true,
                 });
+                console.log(response);
                 window.location.reload();
                 alert("리뷰 변경 완료.");
             } catch (err) {
@@ -193,11 +204,52 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
         }
     };
 
-    const handleLike = (index) => {
-        const updatedLikes = [...likes];
-        updatedLikes[index] += 1;
-        setLikes(updatedLikes);
+    const handleLike = async (review, index) => {
+        if(isLogined)   {
+            try {
+                const updatedReviews = [...reviews];
+                const isLiked = likeButtons.includes(review.reviewKey);
+                if (isLiked) {
+                    // 좋아요 취소
+                    updatedReviews[index].reviewLike -= 1;
+                    setLikeButtons((prev) =>
+                        prev.filter((key) => key !== review.reviewKey)
+                    );
+                } else {
+                    // 좋아요 추가
+                    updatedReviews[index].reviewLike += 1;
+                    setLikeButtons((prev) => [...prev, review.reviewKey]);
+                }
+                setReviews(updatedReviews);
+
+                let response = await axios.get('/api/like', {
+                    headers: { 'Content-Type': 'application/json' },
+                    params: { reviewKey: review.reviewKey },
+                    withCredentials: true,
+                });
+
+                console.log(response.data);
+            } catch (err) {
+                console.error(err);
+                // 서버 요청 실패 시 UI 복구
+                const revertedReviews = [...reviews];
+                if (likeButtons.includes(review.reviewKey)) {
+                    revertedReviews[index].reviewLike -= 1;
+                    setLikeButtons((prev) =>
+                        prev.filter((key) => key !== review.reviewKey)
+                    );
+                } else {
+                    revertedReviews[index].reviewLike += 1;
+                    setLikeButtons((prev) => [...prev, review.reviewKey]);
+                }
+                setReviews(revertedReviews);
+            }
+        } else  {
+            alert("로그인이 필요한 서비스 입니다.");
+            navigate("/login", {});
+        }
     };
+    
 
     const openModal = (reviewer) => {
         setModalInfo(reviewer);
@@ -206,6 +258,38 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
     const closeModal = () => {
         setModalInfo(null);
     };
+
+    useEffect(() => {
+        const getReview = async () => {
+            console.log(movieId);
+            try {
+                let response = await axios({
+                    method: 'get',
+                    url: `/api/reviews?id=${movieId}`,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                setReviews(response.data.reviews);
+                setReviewers(response.data.reviewers);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        const getLikeButtons = async() =>   {
+            try {
+                let response = await axios({
+                    method: 'get',
+                    url: '/api/like/button',
+                    withCredentials: true,
+                });
+                setLikeButtons(response.data.map(review => review.reviewKey));
+            } catch(err)    {
+                console.log(err);
+            }
+        }
+        getReview();
+        getLikeButtons();
+    }, [movieId]);
 
     return (
         <div className="review-wrapper">
@@ -241,7 +325,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                     </div>
                                     <div className="review-date">{formatDate(review.reviewTime)}</div>
                                 </div>
-                                {editingIndex === index ? (
+                                {editingIndex === index && reviewOrComment === 1 ? (
                                     <div className="edit-content">
                                         <textarea
                                             value={editContent}
@@ -264,9 +348,16 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                             ) : null // userKey가 다를 경우 아무것도 출력하지 않음
                                         }
                                     </div>
-                                    <button className="like-button" onClick={() => handleLike(index)}>
-                                        좋아요 👍 {likes[index]}
-                                    </button>
+                                    {likeButtons.includes(review.reviewKey) 
+                                        ? 
+                                        <button className="like-button" onClick={() => handleLike(review, index)}  style={{ background : '#0aafff'}}>
+                                            좋아요 👍 {review.reviewLike}
+                                        </button>
+                                        :
+                                        <button className="like-button" onClick={() => handleLike(review, index)}>
+                                            좋아요 👍 {review.reviewLike}
+                                        </button>
+                                    }
                                 </div>
                                 <div className="divider"></div>
                                 {replyIndex === index && (
@@ -283,20 +374,20 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                     <div className="replies">
                                         {review.commentDto.map((reply, replyIdx) => (
                                             <div key={replyIdx} className="reply-item">
-                                                <div className="reply-profile" onClick={() => openModal(review.commenters[replyIdx])}>
+                                                <div className="reply-profile" onClick={() => openModal(review.commenters?.[replyIdx])}>
                                                     <img
-                                                        src={review.commenters[replyIdx]?.userProfile || 'default-profile.png'}
+                                                        src={review.commenters?.[replyIdx]?.userProfile}
                                                         alt="사용자 프로필"
                                                         className="reply-user-profile"
                                                     />
-                                                    <span className="reply-usergrade">{review.commenters[replyIdx]?.userGrade}</span>
-                                                    <span className="reply-username">{review.commenters[replyIdx]?.userName}</span>
+                                                    <span className="reply-usergrade">{review.commenters?.[replyIdx]?.userGrade}</span>
+                                                    <span className="reply-username">{review.commenters?.[replyIdx]?.userName}</span>
                                                 </div>
                                                 <div className="reply-content">
                                                     <div className="reply-header">
-                                                        <span className="reply-time">{formatDate(review.commentDto[replyIdx]?.commenTime)}</span>
+                                                        <span className="reply-time">{formatDate(review.commentDto?.[replyIdx]?.commenTime)}</span>
                                                     </div>
-                                                    {editingReplyIndex === replyIdx ? (
+                                                    {editingReplyIndex === replyIdx && reviewOrComment === 2 ? (
                                                         <div className="edit-reply-content">
                                                             <textarea
                                                                 value={editingReplyContent}
@@ -308,7 +399,7 @@ const Review = ({ movieId, isLogined, reviews, reviewers }) => {
                                                         <p className="reply-text">{reply.commentContent}</p>
                                                     )}
                                                     <div className="buttons-reply">
-                                                        {userKey == review.commenters[replyIdx]?.userKey ? (
+                                                        {userKey == review.commenters?.[replyIdx]?.userKey ? (
                                                             <>
                                                                 <button
                                                                     className="update-button-reply"

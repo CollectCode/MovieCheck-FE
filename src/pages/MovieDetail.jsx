@@ -17,8 +17,6 @@ const MovieDetail = ({ isLogined }) => {
     const [director, setDirector] = useState({});
     const [actors, setActors] = useState([]);
     const [genres, setGenres] = useState([]);
-    const [reviews, setReviews] = useState([]);
-    const [reviewers, setReviewers] = useState([]);
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(true); // 초기값을 true로 설정
     const userKey = Cookies.get("userKey");
@@ -45,20 +43,7 @@ const MovieDetail = ({ isLogined }) => {
                 setDirector(info.directorDto);
                 setActors(info.actorDto);
                 setGenres(info.genresName);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        const getReview = async () => {
-            try {
-                let response = await axios({
-                    method: 'get',
-                    url: `/api/reviews?id=${id}`,
-                    headers: { 'Content-Type': 'application/json' },
-                });
-                setReviews(response.data.reviews);
-                setReviewers(response.data.reviewers);
+                console.log(info);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -68,7 +53,6 @@ const MovieDetail = ({ isLogined }) => {
             }
         };
         getMovieDetails();
-        getReview();
     }, [id]);
 
     return (
@@ -122,7 +106,7 @@ const MovieDetail = ({ isLogined }) => {
                             </div>
                         </div>
                     </div>
-                    <Review movieId={id} isLogined={isLogined} reviews={reviews} reviewers={reviewers} />
+                    <Review movieId={id} isLogined={isLogined} setIsLoading={setIsLoading} />
                 </div>
             )}
         </div>
