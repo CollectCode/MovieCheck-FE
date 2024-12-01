@@ -17,6 +17,7 @@ const Modal = ({ isOpen, closeModal, modalInfo }) => {
                     params: { userKey : modalInfo.userKey },
                 });
                 console.log(response.data.data);
+                console.log(modalInfo);
                 setGenres(response.data.data);   
                 setTimeout(() => {
                     setLoading(false); // 로딩 완료
@@ -43,7 +44,7 @@ const Modal = ({ isOpen, closeModal, modalInfo }) => {
                         <p>닉네임: {modalInfo.userName}</p>
                         <p>등급: {modalInfo.userGrade}</p>
                         <span>성별: </span>{modalInfo.userGender === 1 ? <span> 남 </span> : <span> 여 </span>}
-                        <p>좋아요: {modalInfo.reviewLike}</p>
+                        <p>좋아요: {modalInfo.userLikeCount}</p>
                         <p>선호 장르: [ {genres.map((genre, index) => genre.genreName + (genres.length > index+1 ? ", " : " "))}]</p> {/* 선호 장르 표시 */}
                     </>
                 )}

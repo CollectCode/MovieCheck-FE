@@ -44,6 +44,7 @@ const Profile = ({ setIsLogined }) => {
                 setProfileName(user.data.userName);
                 setProfileContent(user.data.userContent);
                 setProfileGrade(user.data.userGrade);
+                setProfileLike(user.data.userLikeCount);
                 if (user.data.userGood) setProfileLike(user.data.userGood);
                 if (user.data.userProfile) setProfileImage(user.data.userProfile);
             } catch (err) {
