@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import '../css/ProfileUpdate.css'; // CSS 파일을 임포트합니다.
+import '../css/ProfileUpdate.css'; 
 import axios from 'axios';
 
 const ProfileUpdate = () => {
@@ -15,9 +15,13 @@ const ProfileUpdate = () => {
     const [content, setContent] = useState('');
     const [checkname, setCheckname] = useState(false);
     const [genres, setGenres] = useState(["액션", "범죄", "애니메이션", "코미디", "드라마", "판타지", "공포", "전쟁", "로맨스", "SF"]);
-    const [comment, setComment] = useState('중복확인');
+    const [comment, setComment] = useState('');
     const [imageform, setImageForm] = useState('');
     const [isLoading, setIsLoading] = useState('');
+    const [grade, setGrade] = useState('');
+    const [profileLike, setProfileLike] = useState('');
+    const [profilegenre, setProfileGenre] = useState('');
+    const [checkbtn, setCheckBtn] = useState('중복확인');
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -61,7 +65,7 @@ const ProfileUpdate = () => {
                     alert(msg);
                     setCheckname(false);
                 } else {
-                    setComment('확인완료');
+                    setCheckBtn('확인완료');
                     setCheckname(true);
                 }
                 alert(msg);
@@ -69,7 +73,7 @@ const ProfileUpdate = () => {
                 console.log(err);
             }
         } else {
-            setComment('확인완료');
+            setCheckBtn('확인완료');
             setCheckname(true);
             alert("사용가능한 닉네임 입니다.");
         }
@@ -148,6 +152,7 @@ const ProfileUpdate = () => {
                 setDefaultName(user.data.userName);
                 setNickname(user.data.userName);
                 setContent(user.data.userContent);
+                setGrade(user.data.userGrade);
                 setSelectedGenre(profilegenres.map(genre => genre.genreName));
             } catch (err) {
                 console.log(err);
@@ -162,7 +167,7 @@ const ProfileUpdate = () => {
     useEffect(() => {
         if (checkname) {
             setCheckname(false);
-            setComment('중복확인');
+            setCheckBtn('중복확인');
         }
     }, [nickname]);
 
@@ -174,24 +179,56 @@ const ProfileUpdate = () => {
         );
     }, [selectedgenre]);
 
+    useEffect(() => {
+        setIsLoading(true);
+        const getuser = async () => {
+            try {
+                const userResponse = await axios.get('/api/users/mypage', { withCredentials: true });
+                const user = userResponse.data;
+                setNickname(user.data.userName);
+                setComment(user.data.userContent);
+                setGrade(user.data.userGrade);
+                setProfileLike(user.data.userLikeCount);
+                if (user.data.userProfile) setProfileImage(user.data.userProfile);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        const getUserGenres = async () =>   {
+            try {
+                const genreResponse = await axios.get('/api/user-genre/genres', { withCredentials: true });
+                setProfileGenre(genreResponse.data.data);
+            } catch (err) {
+                console.error(err);
+            } finally   {
+                setIsLoading(false);
+            }
+        }
+        getuser();
+        getUserGenres();
+    }, []);
+
     return (
-        <div className="profile-update-container">
-            {isLoading
-            ? (
+        <div className="profile-container">
+            {isLoading ?
+            (
             <div className="loading-content">
                 <div className="loader"></div> {/* 로딩 애니메이션 */}
                 <p>로딩중...</p>
             </div>
             ) : (
-            <form>
-                <h1 className="profile-update-title">내 정보 수정</h1>
+            <div className="profile-card">
+                <div className="top-title">
+                    <h1 className="profile-update-title">내 정보 수정</h1>
+                </div>
                 <div className="profile-update-picture">
                     <img className="user-image"
                         onMouseEnter={() => setHovered(true)}
                         onMouseLeave={() => setHovered(false)}
                         onClick={() => document.getElementById('fileInput').click()}
-                        src={profileImage} alt="프로필 사진" />
-                    {hovered && <div className="overlay">프로필 변경</div>}
+                        src={profileImage} alt="프로필 사진"
+                        />
+                    <span class="profile-update-text">프로필 변경</span>
                 </div>
                 <input
                     type="file"
@@ -200,14 +237,24 @@ const ProfileUpdate = () => {
                     accept="image/*"
                     onChange={handleImageChange}
                 />
-                <div className="profile-update-form-group">
-                    <label className="profile-update-label">변경 닉네임</label>
-                    <input className="profile-update-input" type="text" onChange={(e) => setNickname(e.target.value)} defaultValue={nickname} />
-                    <button type='button' className="profile-update-check" onClick={handleCheckName} disabled={checkname}>{comment}</button>
+                <div className="profile-content">
+                    <div className="profile-section">
+                        <label className="profile-label">닉네임</label>
+                        <input className="profile-update-input" type="text" onChange={(e) => setNickname(e.target.value)} defaultValue={nickname} />
+                        <button type='button' className="profile-update-check" onClick={handleCheckName} disabled={checkname}>{checkbtn}</button>
+                    </div>
+                    <div className="profile-section">
+                        <label className="profile-label">등급</label>
+                        <div className="user-value">{grade}</div>
+                    </div>
+                    <div className="profile-section">
+                        <label className="profile-label">누적 좋아요</label>
+                        <div className="user-value">{profileLike}</div>
+                    </div>
                 </div>
-                <div className="profile-update-form-group">
-                    <label className="profile-update-label">변경 할 한줄 소개</label>
-                    <input className="profile-update-input" type="text" defaultValue={content} onChange={(e) => setContent(e.target.value)} />
+                <div className="profile-introduction">
+                    <label className="profile-label">한줄 소개</label>
+                    <input className="profile-update-input" type="text" onChange={(e) => setContent(e.target.value)} defaultValue={content} />
                 </div>
                 <div className="profile-update-selection">
                     <h2 className="selection-title">선호 장르 설정</h2>
@@ -234,12 +281,14 @@ const ProfileUpdate = () => {
                         </div>
                     </div>
                 </div>
-                <div className="profile-update-buttons">
-                    <button type="submit" className="profile-update-save" onClick={handleUpdate}>저장</button>
-                    <Link to="/profile"><button className="profile-update-cancel">취소</button></Link>
+                    <div className="profile-buttons"> 
+                        <button className="profile-save" onClick={handleUpdate}>정보 수정</button>
+                    <Link to="/">
+                        <button className="profile-save">취소</button>
+                    </Link>
                 </div>
-            </form>
-            )}
+            </div>
+           )}
         </div>
     );
 };

@@ -14,15 +14,33 @@
 .profile-update-picture {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-    position: relative  ;
-}   
+    align-items: center;
+    margin: 40px auto;
+    position: relative; /* 자식 요소를 절대 위치로 배치할 수 있도록 설정 */
+    height: 200px;
+    width: 200px; /* 높이와 맞추기 */
+    border-radius: 50%; /* 이미지가 동그랗게 보이도록 */
+    overflow: hidden; /* 동그란 영역 밖으로 나오는 요소 숨기기 */
+    background: #f0f0f0; /* 기본 배경 (이미지가 없을 때 대비) */
+}
+
 
 .profile-update-picture img {
-    width: 200px; /* 이미지 크기 조절 */
-    height: 200px; /* 이미지 크기 조절 */
-    border-radius: 30%; /* 이미지도 동그라미 모양 */
-    object-fit: cover; /* 비율 유지 */
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* 이미지 비율 유지하며 컨테이너에 맞춤 */
+}
+
+.profile-update-text {
+    position: absolute; /* 부모 요소를 기준으로 위치 설정 */
+    top: 50%; /* 세로 중앙 정렬 */
+    left: 50%; /* 가로 중앙 정렬 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    color: white; /* 텍스트 색상 */
+    font-size: 18px; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵기 */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* 텍스트 가독성을 위한 그림자 */
+    cursor: pointer; /* 클릭 가능하게 표시 */
 }
 
 .profile-update-form-group {
@@ -134,7 +152,16 @@
 }
 
 .profile-update-check  {
-    margin-left: 50px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.profile-label  {
+    margin-bottom: 20px;
+}
+
+.profile-section    {
+    max-height: 150px;
 }
 
 .choosedgenre   {
@@ -151,14 +178,6 @@
     font-size: 20px;
 }
 
-.user-image:hover {
-    opacity: 40%;
-    .overlay    {
-        display: block;
-        z-index: 100000;
-    }
-}
-
 .profile-update-face   {
     text-align: center;
     font-size: 30px;
@@ -166,17 +185,24 @@
     margin-bottom: 20px;
 }
 
+.user-image:hover {
+    opacity: 40%;
+}
+
+.user-value {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
 .overlay {
-    position: absolute; /* 절대 위치 설정 */
-    top:40%;
-    color: white; /* 텍스트 색상 */
-    background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+    margin-left: 40px;
+    max-width: 110px;
+    text-align: center;
+    color: white; /* 텍스트 색상 */ 
     padding: 5px 10px; /* 패딩 추가 */
     border-radius: 5px; /* 모서리 둥글게 */
     display: flex; /* 플렉스 박스 사용 */
-    align-items: center; /* 수직 중앙 정렬 */
-    justify-content: center; /* 수평 중앙 정렬 */
-    transition: opacity 0.3s ease; /* 부드러운 전환 효과 */
 }
 
 .setGenre   {
