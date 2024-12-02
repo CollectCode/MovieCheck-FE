@@ -334,7 +334,7 @@ const Review = ({ movieId, isLogined }) => {
                                         <button onClick={() => handleEditSubmit(index)}>리뷰수정</button>
                                     </div>
                                 ) : (
-                                    <p className="review-content">{review.reviewContent}</p>
+                                    index === 0 ? <div><span className="review-best">BEST</span><span>{review.reviewContent}</span></div> : <span>{review.reviewContent}</span>
                                 )}
                                 <div className="review-actions">
                                     <div className='cud-buttons'>
@@ -348,7 +348,7 @@ const Review = ({ movieId, isLogined }) => {
                                             ) : null // userKey가 다를 경우 아무것도 출력하지 않음
                                         }
                                     </div>
-                                    {likeButtons.includes(review.reviewKey) 
+                                    {likeButtons.includes(review.reviewKey) && isLogined
                                         ? 
                                         <button className="like-button" onClick={() => handleLike(review, index)}  style={{ background : '#0aafff'}}>
                                             좋아요 👍 {review.reviewLike}

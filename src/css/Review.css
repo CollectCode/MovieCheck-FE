@@ -54,7 +54,17 @@
 .review-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
+}
+
+.review-best {
+  border-radius: 5px;
+  padding: 4px;
+  border: 2px solid red;
+  color: red;
+  margin-right: 5px;
+  font-weight: bold;
 }
 
 .user-info {
@@ -77,12 +87,13 @@
 }
 
 .like-button {
+    max-height: 25px;
     background: #a5a6a7;
     color: white;
     border: none;
-    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 .like-button:hover    {
@@ -90,7 +101,8 @@
 }
 
 .comment-button {
-    background: #0aafff;
+    margin-top: 20px;
+    background: #0190d8;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -100,7 +112,7 @@
 }
 
 .comment-button:hover   {
-    background:#0190d8;
+    background:#0aafff;
 }
 
 .update-button  {
@@ -138,7 +150,7 @@
 
 .divider {
   border-top: 1px solid white; /* 하얀색 상단 경계선 */
-  margin: 20px 0; /* 위아래 여백 */
+  margin: 10px 0; /* 위아래 여백 */
 }
 
 
