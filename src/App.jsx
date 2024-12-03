@@ -13,7 +13,7 @@ import Profile from './pages/Profile';
 import ProfileUpdate from './pages/ProfileUpdate';
 import MovieLoader from './components/MovieLoader';
 import './App.css';
-// 123jasdlhsalczx
+
 const App = () => {
     const [navmode, setNavMode] = useState(0);
     const [selectedGenre, setSelectedGenre] = useState('전체보기');
