@@ -88,9 +88,7 @@ const LoginForm = ({setIsLogined}) => {
         </div>
         <div className="button-group">
           <button className="loginbtn" type="submit">로그인</button>
-          <Link className="signupbtn" to="/signup">회원가입&nbsp;&nbsp;&nbsp;</Link>
-          <div className="findidbtn">아이디 찾기&nbsp;&nbsp;&nbsp;</div>
-          <div className="findpwbtn">비밀번호 찾기</div>
+          <Link className="signupbtn" to="/signup"><div className='gosignup'>회원가입&nbsp;&nbsp;&nbsp;</div></Link>
         </div>
       </form>
     </div>

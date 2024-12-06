@@ -64,27 +64,10 @@ const MovieDetail = ({ isLogined }) => {
                 </div>
             ) : (
                 <div>
-                    <h1>{title}</h1>
                     <div className='movie-information'>
                         <div className="movie-introduction">
                             <img src={poster} alt="영화 이미지" className="movie-image" />
-                            <div className="movie-info">
-                                <div className='movie-info-content'>
-                                    <h1>영화 소개</h1>
-                                    <h3>장르</h3>
-                                    <div>[{genres.map((genre, index) => (
-                                        index < genres.length - 1 ? <span key={index}>{genre}, </span> : <span key={index}>{genre}</span>
-                                    ))}]</div>
-                                    <h3>개봉일</h3>
-                                    <p>{release}</p>
-                                    <h3>평점</h3>
-                                    <p>{score}</p>
-                                    <h3>상영 시간(분)</h3>
-                                    <p>{runtime}</p>
-                                    <h3>줄거리</h3>
-                                    <p>{overview}</p>
-                                </div>
-                            </div>
+                            <span className='movie-title'>{title}</span>
                             <div className="movie-crew">
                                 <h1>영화 출연진</h1>
                                 <h2>감 독</h2>
@@ -105,11 +88,31 @@ const MovieDetail = ({ isLogined }) => {
                                 </div>
                             </div>
                         </div>
+                        <div className="movie-info-title">
+                            <h1>영화 소개</h1>
+                            </div>
+                        <div className="movie-info">
+                                    <h3>장르</h3>
+                                    <div className='genres'>[{genres.map((genre, index) => (
+                                        index < genres.length - 1 ? <span key={index}>{genre}, </span> : <span key={index}>{genre}</span>
+                                    ))}]</div>
+                                    <h3>개봉일</h3>
+                                    <p>{release}</p>
+                                    <h3>평점</h3>
+                                    <p>{score}</p>
+                                    <h3>상영 시간(분)</h3>
+                                    <p>{runtime}</p>
+                        </div>
+                        <div className="movie-story">
+                                <h3>줄거리</h3>
+                                    <p>{overview}</p>
+                            </div>
                     </div>
                     <Review movieId={id} isLogined={isLogined} setIsLoading={setIsLoading} />
                 </div>
             )}
         </div>
+        
     );
 };
 

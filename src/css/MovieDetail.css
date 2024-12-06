@@ -11,29 +11,59 @@ body {
 
 .movie-information  {
     display: flex;
+    flex-direction: column; /* 세로 정렬 */
 }
 
 .movie-introduction {
     display: flex;
+    justify-content: space-between;
+}
+
+.movie-introduction .movie-title {
+    position: absolute;
+    display: block;
+    margin-top: 70px;
+    margin-left: 20px;
+    font-size: 2rem;
+}
+.movie-story {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .movie-image {
     width: 450px; /* 영화 이미지의 너비 */
     height: 600px;
     margin: auto 20px;
+    margin-bottom: 20px; /* 이미지 아래에 간격 추가 */
 }
 
 .movie-info {
-    position: relative;
-    max-width: 700px; /* 정보 부분의 최대 너비 */
+    display: flex; /* Flexbox를 활성화 */
+    gap: 20px; /* 항목 사이 간격 */
+    align-items: flex-start; /* 아이템 상단 정렬 */
+    justify-content: space-between;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+.movie-info .genres {
+    margin-top: 20px;
+}
+.movie-info >h3 {
+}
+.movie-info >p {
+    margin-top: 20px;
 }
 
 .movie-info-content  {
     line-height: 1.35;
+    margin-top: 70px;
 }
 
 .movie-crew {
     margin-left: 30px;
+    margin-top: 45px;
 }
 
 .actors {

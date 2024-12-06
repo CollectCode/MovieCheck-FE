@@ -61,15 +61,21 @@
   }
 
   .button-group > .signupbtn {
-    width: 33%;
+    width: 100%;
+    background-color: royalblue;
+    padding: 10px;
+    text-align: center;
     margin-bottom: 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 15px;
+    font-size: 20px;
     color: #fff;
     text-decoration: none;
     margin-top: 14px;
+  }
+  .gosignup {
+    padding-left: 10px;
   }
 
   .button-group > .findidbtn {
