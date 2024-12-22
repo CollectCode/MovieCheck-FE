@@ -83,7 +83,6 @@ const SignupForm = () => {
               headers: { 'Content-Type': 'application/json' },
               params : { userEmail: email },
           });
-  
           let msg = response.data.msg;
           if (response.status >= 200 && response.status < 300) {
               alert(msg);

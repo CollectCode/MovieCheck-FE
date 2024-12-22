@@ -35,7 +35,7 @@ const MovieGrid = ({ movies, isLoading, currentPage, totalPages, setCurrentPage 
                 <p>로딩중...</p>
               </div>
             ) : (
-              movies.map((movie) => (
+              movies?.map((movie) => (
                 <MovieCard
                   key={movie.movieKey}
                   title={movie.movieTitle}

@@ -12,6 +12,9 @@ const LoginedHeader = ({ setCurrentPage, selectedGenre, setSelectedGenre, setIsS
     const allCookies = Cookies.get();
     for (const cookieName in allCookies) {
       console.log(cookieName);
+      if(cookieName === 'abuse_interstitial') {
+        continue;
+      }
       if (allCookies.hasOwnProperty(cookieName)) {
           Cookies.remove(cookieName); // 각 쿠키를 Delete
       }

@@ -129,6 +129,7 @@ const ProfileUpdate = () => {
             return;
         }
         alert("변경이 완료되었습니다!");
+        window.location.reload();
         navigate("/", {});
     }
 
@@ -189,7 +190,7 @@ const ProfileUpdate = () => {
                 setComment(user.data.userContent);
                 setGrade(user.data.userGrade);
                 setProfileLike(user.data.userLikeCount);
-                if (user.data.userProfile) setProfileImage(user.data.userProfile);
+                setProfileImage(user.data.userProfile);
             } catch (err) {
                 console.error(err);
             }

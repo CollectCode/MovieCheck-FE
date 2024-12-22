@@ -29,9 +29,11 @@ const App = () => {
     const location = useLocation();
 
     useEffect(() => {
-        setIsLogined(!!document.cookie);
-    }, [isLogined]);
-
+        const cookies = document.cookie.split('; ');
+        const hasOtherCookies = cookies.length > 0 && cookies.some(cookie => cookie && !cookie.startsWith('abuse_interstitial='));
+        setIsLogined(hasOtherCookies);
+    }, []);
+    
     useEffect(() => {
         setSearchTerm('');
     }, [selectedGenre]);

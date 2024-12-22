@@ -45,8 +45,9 @@ const Profile = ({ setIsLogined }) => {
                 setProfileContent(user.data.userContent);
                 setProfileGrade(user.data.userGrade);
                 setProfileLike(user.data.userLikeCount);
-                if (user.data.userGood) setProfileLike(user.data.userGood);
-                if (user.data.userProfile) setProfileImage(user.data.userProfile);
+                setProfileLike(user.data.userGood);
+                setProfileImage(user.data.userProfile);
+                console.log(user);
             } catch (err) {
                 console.error(err);
             }
@@ -63,6 +64,7 @@ const Profile = ({ setIsLogined }) => {
         }
         getuser();
         getUserGenres();
+        
     }, []);
 
     return (
